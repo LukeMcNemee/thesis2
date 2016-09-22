@@ -1,0 +1,37 @@
+Still untitled
+
+1. Introduction
+2. Problem analysis (testbed, not general WSN)
+  2.1 Creating WSN network
+  2.2 Possible challenges
+3. TESTBED deployment
+  3.1 Network design
+  3.2 JeeTool (mass managment & communication)
+  3.3 HW (Arduino, JeeNodes, RF12B radio ...)
+4. Research use
+  4.1 Keys from radio signal
+    4.1.1 Quantization principle (bits from signal strength)
+    4.1.2 RSSI version
+    4.1.3 CSI (channel state) version
+  4.2 Cooperative jamming (can it improve our situation?)
+  4.3 Performance Evaluation (results from experiments)
+    4.3.1 Enthropy of data
+    4.3.2 Speed (bits of key per time)
+    4.3.3 Possible errors
+  4.4 Discussion, is it achievable and under what conditions?
+5. Education use
+  5.1 motivation for educational WSN network
+  5.2 Scenario approach (attack and repair) + iterative higher difficulty
+    5.2.1 - 5.2.5 individual scenarios
+  5.3 Evaluation principle
+  5.4 Web interface & auto run
+  5.5 PA197 use and results
+6. Summary
+
+Rssi papers
+  http://www.winlab.rutgers.edu/~narayan/PAPERS/com0901-mathur.pdf
+  http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6226870&filter%3DAND%28p_IS_Number%3A6297499%29
+  http://dl.acm.org/citation.cfm?id=1614356
+
+Cooperative jamming paper
+      http://link.springer.com/chapter/10.1007%2F978-1-4419-1385-2_4

@@ -1,0 +1,171 @@
+% Edu-hoc
+% Mírov 2016
+% Lukáš Němec
+
+-----
+
+# Edu-hoc project
+
+  * educational platform / framework
+
+  * ad-hoc networks, mostly WSN
+
+  * focus on ease of use
+
+## Provides:
+
+  * study text, examples, video
+
+  * exercises, solutions, evaluation
+
+-----
+
+# Motivation - WSN reality
+
+## limited in
+
+  * computational power
+
+  * memory
+
+  * battery power
+
+  * price
+
+  * ...
+
+-----
+
+# Motivation II. - WSN reality
+
+  * hop by hop communication
+
+  * specialized OS (performance oriented)
+
+  * C dialect (NesC)
+
+## usual tasks are not trivial
+
+  * routing
+
+  * intruder detection
+
+  * key exchange
+
+  * ...
+
+-----
+
+# Edu-hoc solution
+
+  * Arduino based network
+
+  * simple C code
+
+  * set of exercises (scenarios)
+
+  * Solve scenarios as attacker
+
+  * Fix code to prevent such attacks
+
+-----
+
+# Exercises
+
+  * currently 5 scenarios
+
+  * Each with different objective
+
+### evaluation as percentage of messages
+
+  - captured
+
+  - delivered
+
+  - modified
+
+-----
+
+# Exercises
+
+## 1. Eavesdropping
+
+ * unsecured network
+
+ * global broadcast from each node
+
+ * unique identification of each message
+
+ * capture as many messages as possible
+
+-----
+
+# Exercises
+
+## 2. Black hole - routing attack
+
+ * network with dynamic routing
+
+ * initial phase of route establishment
+
+ * prevent as many packets from reaching BS
+
+-----
+
+# Exercises
+
+## 3. Sinkhole - routing attack
+
+ * network with dynamic routing
+
+ * initial phase of route establishment
+
+ * deliver as many modified messages as possible
+
+ * capture, modify and send back
+
+ * each attacker with unique string to modify messages with
+
+-----
+
+# Exercises
+
+## 4. Jamming
+
+ * secured network
+
+ * fixed routing
+
+ * prevent as many packets from reaching BS
+
+ * No way to modify routes etc.
+
+ * solution -> Jamming
+
+-----
+
+# Exercises
+
+## 5. Relay attack
+
+ * neighbor discovery
+
+ * make two nodes neighbors even when they are not.
+
+ * evaluation not yet determined
+
+-----
+
+# Infrastructure behind
+
+ * automatic deployment for the whole network
+
+ * mass configuration, communication with nodes
+
+ * scheduled runs of individual scenarios
+
+ * web server with evaluation and current network state
+
+-----
+
+# Questions?
