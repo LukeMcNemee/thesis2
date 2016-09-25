@@ -59,6 +59,7 @@
 }
 \thesislong{thanks}{
     TODO
+    %TODO podekovat za oblizovani
 }
 %% The following section sets up the bibliography.
 \usepackage{csquotes}
@@ -102,7 +103,7 @@
 \chapter{TESTBED deployment}
   \section{Network design}
   \section{JeeTool (mass managment and communication)}
-  \section{HW (Arduino, JeeNodes, RF12B radio ...)}
+  \section{HW (Arduino, JeeNodes, RF12B radio ...)}\label{sec:hw}
 \chapter{Research use}
   \section{Keys from radio signal}
     \subsection{4.1.1 Quantization principle (bits from signal strength)}
@@ -115,8 +116,26 @@
     \subsection{Possible errors}
   \section{Discussion, is it achievable and under what conditions?}
 \chapter{Education use}
+
   \section{motivation for educational WSN network}
+  The current state of the art WSN devices usually uses specialized hardware
+  and software in order to achieve the best performance available. This,
+  unfortunately, is not the ideal prerequisite for an easy to learn matter.
+  In fact, most of WSN devices have rather complicated setup and are
+  quite challenging for novices.
+
+  Because of such discouragement, it is difficult to teach how to
+  work with WSN’s; few hours (at least) are usually required
+  to explain the basics, which is reasonable for research project or
+  something similar, but for class exercise, this would turn out to be
+  not the most effective use of time, if it would be achievable at all. And
+  we have not yet mentioned more advanced topics in this area, such as
+  common encryption or message authentication techniques.
+
+  Issue of this nature can be solved in various ways, %possible citations?
+  in case of Edu-hoc we decided to sacrifice performance \ref{sec:hw}; which is not that much important for network with educational purpose. On the other hand,
   \section{Scenario approach (attack and repair) + iterative higher difficulty}
+
     \subsection{scenarios} - 5.2.5 individual scenarios
   \section{Evaluation principle}
   \section{Web interface and auto run}

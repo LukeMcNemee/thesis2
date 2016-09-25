@@ -12,3 +12,6 @@ pdf:
 
 clean:
 	rm -f build/${filename}.* build/bibliography.bib
+
+read: pdf
+	evince ${filename}.pdf
