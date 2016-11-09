@@ -114,5 +114,5 @@ hist(hS, breaks = 50, main = "histogram of distances for non zero vectors betwee
 hist(lengths, breaks = 50, main = "histogram of lenghts of final vectors", col = "grey")
 
 boxplot(h, hS, names=c("distances between A and B","distances between AB and Sniffer"))
-
+  
 print(table(lengths))
