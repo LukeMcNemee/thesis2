@@ -72,8 +72,8 @@ h  <- c(NA)
 hS <- c(NA)
 
 alpha <- 0.5
-for (i in 1:423){ 
-#i<-2
+ 
+  i<-400
   values1 <- as.numeric(dat1[i,1:1000]) -256
   values2 <- as.numeric(dat2[i,1:1000]) -256
   values3 <- as.numeric(dat3[i,1:1000]) -256
@@ -87,9 +87,9 @@ for (i in 1:423){
   s3 <- basicStats(values3)
   r3 <- quantization(s3, values3)
   
-  #plot(r1$x, r1$y, col = "red", pch=0,  ylim=c(-0.1,1.1))
-  #points(r2$x, r2$y+0.02, col = "blue", pch=1)
-  #points(r3$x, r3$y+0.04, col = "green", pch=2)
+  plot(r1$x, r1$y, col = "red", pch=0,  ylim=c(-0.1,1.1))
+  points(r2$x, r2$y+0.02, col = "blue", pch=1)
+  points(r3$x, r3$y+0.04, col = "green", pch=2)
   
   
   x_locations = intersect(r1$x,r2$x)
@@ -104,15 +104,7 @@ for (i in 1:423){
     h <- c(h, distance(bits1, bits2))
     hS <- c(hS, distance(bits1, bits3))
   }
-  #points(x_locations, bits1 -0.02, col = "red", pch=15)
-  #points(x_locations, bits2 -0.04, col = "blue", pch=16)
-  #points(s_locations, bits3 -0.06, col = "green", pch=17)
-
-}
-hist(h, breaks = 50, main = "histogram of distances for non zero vectors between A and B", col = "grey")
-hist(hS, breaks = 50, main = "histogram of distances for non zero vectors between AB and sniffer", col = "grey")
-hist(lengths, breaks = 50, main = "histogram of lenghts of final vectors", col = "grey")
-
-boxplot(h, hS, names=c("distances between A and B","distances between AB and Sniffer"))
-
-print(table(lengths))
+  points(x_locations, bits1 -0.02, col = "red", pch=15)
+  points(x_locations, bits2 -0.04, col = "blue", pch=16)
+  points(s_locations, bits3 -0.06, col = "green", pch=17)
+  
