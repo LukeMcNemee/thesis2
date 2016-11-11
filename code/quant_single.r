@@ -67,13 +67,41 @@ distance <- function( a, b){
   return(d)
 }
 
+plotBits <- function(){
+  plot(r1$x, r1$y, col = "red", pch=0,  ylim=c(-0.1,1.1))
+  points(r2$x, r2$y+0.02, col = "blue", pch=1)
+  points(r3$x, r3$y+0.04, col = "green", pch=2)
+  points(x_locations, bits1 -0.02, col = "red", pch=15)
+  points(x_locations, bits2 -0.04, col = "blue", pch=16)
+  points(s_locations, bits3 -0.06, col = "green", pch=17)
+}
+
+plotValues <- function(top, down){
+  plot(c(-10:1010), y=rep_len(s1$mean, length.out = 1021), type = 'l', col = 'blue', ylim = c(max(values1)+top, min(values1)-down))
+  lines(c(-10:1010), y=rep_len(s2$mean, length.out = 1021), col = 'red' )
+  lines(c(-10:1010), y=rep_len(s3$mean, length.out = 1021), col = 'green' )
+  
+  lines(c(-10:1010), y=rep_len(s1$qp, length.out = 1021), col = 'blue', lty = 3 )
+  lines(c(-10:1010), y=rep_len(s2$qp, length.out = 1021), col = 'red' , lty = 3)
+  lines(c(-10:1010), y=rep_len(s3$qp, length.out = 1021), col = 'green' , lty = 3)
+
+  lines(c(-10:1010), y=rep_len(s1$qm, length.out = 1021), col = 'blue', lty = 3 )
+  lines(c(-10:1010), y=rep_len(s2$qm, length.out = 1021), col = 'red' , lty = 3)
+  lines(c(-10:1010), y=rep_len(s3$qm, length.out = 1021), col = 'green' , lty = 3)
+  
+  
+  points(c(1:1000),type="b", y=values1, col = 'blue', lty = 2, pch=16 )
+  points(c(1:1000),type="b", y=values2, col = 'red' , lty = 2, pch=16)
+  points(c(1:1000),type="b", y=values3, col = 'green', lty = 2, pch=16)
+}
+
 lengths <- c(NA)
 h  <- c(NA)
 hS <- c(NA)
 
 alpha <- 0.5
  
-  i<-400
+  i<-1
   values1 <- as.numeric(dat1[i,1:1000]) -256
   values2 <- as.numeric(dat2[i,1:1000]) -256
   values3 <- as.numeric(dat3[i,1:1000]) -256
@@ -87,9 +115,7 @@ alpha <- 0.5
   s3 <- basicStats(values3)
   r3 <- quantization(s3, values3)
   
-  plot(r1$x, r1$y, col = "red", pch=0,  ylim=c(-0.1,1.1))
-  points(r2$x, r2$y+0.02, col = "blue", pch=1)
-  points(r3$x, r3$y+0.04, col = "green", pch=2)
+  
   
   
   x_locations = intersect(r1$x,r2$x)
@@ -104,7 +130,5 @@ alpha <- 0.5
     h <- c(h, distance(bits1, bits2))
     hS <- c(hS, distance(bits1, bits3))
   }
-  points(x_locations, bits1 -0.02, col = "red", pch=15)
-  points(x_locations, bits2 -0.04, col = "blue", pch=16)
-  points(s_locations, bits3 -0.06, col = "green", pch=17)
+ 
   

@@ -1,4 +1,4 @@
-require(matrixStats)
+require(matrixStats) #install.packages('matrixStats')
 setwd("~/Dokumenty/studijni_materialy/Edu-hoc/src")
 
 dat1 = read.delim("RssiApp/values.txt", header = FALSE, sep = ";", comment.char = "&")
