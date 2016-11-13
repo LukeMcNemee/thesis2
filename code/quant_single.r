@@ -76,9 +76,10 @@ plotBits <- function(){
   points(s_locations, bits3 -0.06, col = "green", pch=17)
 }
 
-plotValues <- function(top, down){
-  plot(c(-10:1010), y=rep_len(s1$mean, length.out = 1021), type = 'l', col = 'blue', ylim = c(max(values1)+top, min(values1)-down))
-  lines(c(-10:1010), y=rep_len(s2$mean, length.out = 1021), col = 'red' )
+plotValues <- function(top, down, line){
+  plot(c(-10:1010), y=rep_len(s1$mean, length.out = 1021), type = 'l', col = 'blue',  ylim = c(max(values1)+top, min(values1)-down), 
+       xlab = "bits", ylab="dB")
+  lines(c(-10:1010), y=rep_len(s2$mean, length.out = 1021), col = 'red')
   lines(c(-10:1010), y=rep_len(s3$mean, length.out = 1021), col = 'green' )
   
   lines(c(-10:1010), y=rep_len(s1$qp, length.out = 1021), col = 'blue', lty = 3 )
@@ -93,6 +94,58 @@ plotValues <- function(top, down){
   points(c(1:1000),type="b", y=values1, col = 'blue', lty = 2, pch=16 )
   points(c(1:1000),type="b", y=values2, col = 'red' , lty = 2, pch=16)
   points(c(1:1000),type="b", y=values3, col = 'green', lty = 2, pch=16)
+  
+  same <- getSamePoints(x_locations, bits1, bits2)
+  diff <- getDiffPoints(x_locations, bits1, bits2)
+  other <- setdiff(setdiff(c(1:1000), same), diff)
+  points(other, y=rep_len(line, length.out = length(other)), col = "black", pch=20, cex=0.1)
+  points(na.omit(same), y=rep_len(line, length.out = length(na.omit(same))), col = "green", pch=20, cex=0.1)
+  points(diff, y=rep_len(line, length.out = length(diff)), col = "red", pch=20, cex=0.1)
+  text(-10, line, "AB", cex = 0.5)
+  
+  same <- getSamePoints(x_locations, bits1, bits3)
+  diff <- getDiffPoints(x_locations, bits1, bits3)
+  other <- setdiff(setdiff(c(1:1000), same), diff)
+  points(other, y=rep_len(line-0.2, length.out = length(other)), col = "black", pch=20, cex=0.1)
+  points(na.omit(same), y=rep_len(line-0.2, length.out = length(na.omit(same))), col = "green", pch=20, cex=0.1)
+  points(diff, y=rep_len(line-0.2, length.out = length(diff)), col = "red", pch=20, cex=0.1)
+  text(-10, line-0.2, "AS", cex = 0.5)
+  
+  same <- getSamePoints(x_locations, bits3, bits2)
+  diff <- getDiffPoints(x_locations, bits3, bits2)
+  other <- setdiff(setdiff(c(1:1000), same), diff)
+  points(other, y=rep_len(line - 0.4, length.out = length(other)), col = "black", pch=20, cex=0.1)
+  points(na.omit(same), y=rep_len(line - 0.4, length.out = length(na.omit(same))), col = "green", pch=20, cex=0.1)
+  points(diff, y=rep_len(line - 0.4, length.out = length(diff)), col = "red", pch=20, cex=0.1)
+  text(-10, line - 0.4, "BS", cex = 0.5)
+  
+}
+
+getSamePoints <- function(locations, bitsA, bitsB){
+  result <- c(NA)
+  if(length(locations)==0){
+    return(na.omit(result))
+  }
+  for(i in 1:length(locations)){
+    if(bitsA[i] == bitsB[i]){
+      result <- c(result, locations[i])
+    }
+  }
+  print(result)
+  return(result)
+}
+
+getDiffPoints <- function(locations, bitsA, bitsB){
+  result <- c(NA)
+  if(length(locations)==0){
+    return(na.omit(result))
+  }
+  for(i in 1:length(locations)){
+    if(bitsA[i] != bitsB[i]){
+      result <- c(result, locations[i])
+    }
+  }
+  return(na.omit(result))
 }
 
 lengths <- c(NA)
