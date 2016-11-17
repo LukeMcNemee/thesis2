@@ -55,11 +55,11 @@
     TeXkeywords   = {keyword1, keyword2, \ldots},
 }
 \thesislong{abstract}{
-    TODO
+    TODO abstract
 }
 \thesislong{thanks}{
-    TODO
-    %TODO podekovat za oblizovani
+    TODO thanks
+
 }
 %% The following section sets up the bibliography.
 \usepackage{csquotes}
@@ -106,7 +106,19 @@
   \section{HW (Arduino, JeeNodes, RF12B radio ...)}\label{sec:hw}
 \chapter{Research use}
   \section{Keys from radio signal}
-    \subsection{4.1.1 Quantization principle (bits from signal strength)}
+    \subsection{Quantization principle (bits from signal strength)}
+    Quantization enables to extract bits from individual values of signal strength. There are many different approaches to this problem %\CITE
+    two main approaches here are: lossless quantization CITE and contrary to that we have lossy quantization.
+
+    Main difference between these is number of generated bits per original signal strength measurements, while lossless quantization produces bit value from every measurement of signal strength, which is usefull for high performance demands, but it requires guaranteed varinace in the radio channel (e.g. the nodes are constantly moving, or the nevironment is changing) during the key establishment phase. CITE Otherwise the resulting keys could possibly be wery weak. CITE
+
+    Lossy quantization on the other hand does not have guaranteed output lenght per number of measured values, which can lead to very limited length of output. However this kind of quantization is expected to have better results in static enviroments %CITE if possible
+    because its nature is to drop such bits, that fail to differ from others.
+
+    Since our network is static and without any moving nodes, we implemented lossy quantizer algorithm designed by Mathur et.al.%/TODO verify name
+    , which shoved promissing results for of the shelf wireless devices simmilar to ours, and also contained experimental results from several different scenarios, where some of these were comparable to our conditions.   
+
+
     \subsection{RSSI version}
     \subsection{CSI (channel state) version}
   \section{Cooperative jamming (can it improve our situation?)}
@@ -132,7 +144,7 @@
   we have not yet mentioned more advanced topics in this area, such as
   common encryption or message authentication techniques.
 
-  Issue of this nature can be solved in various ways, %possible citations?
+  Issue of this nature can be solved in various ways, %\CITE
   in case of Edu-hoc we decided to sacrifice performance \ref{sec:hw}; which is not that much important for network with educational purpose. On the other hand,
   \section{Scenario approach (attack and repair) + iterative higher difficulty}
 
