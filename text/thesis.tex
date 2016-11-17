@@ -116,10 +116,22 @@
     because its nature is to drop such bits, that fail to differ from others.
 
     Since our network is static and without any moving nodes, we implemented lossy quantizer algorithm designed by Mathur et.al.%/TODO verify name
-    , which shoved promissing results for of the shelf wireless devices simmilar to ours, and also contained experimental results from several different scenarios, where some of these were comparable to our conditions.   
-
+    , which shoved promissing results for the of the shelf wireless devices simmilar to ours, and also contained experimental results from several different scenarios, where some of these were comparable to our conditions.
 
     \subsection{RSSI version}
+    Quantization princeple designed by Mathur et.al. CITE works as follows:
+
+    \begin{enumerate}
+      \item both nodes send $n$ messages to each other in alternating pattern, both nodes send counter value inside these messages, which is used to synchronize messages on individual nodes. For every one of these messages signal strength is measured upon repection.
+      \item when $n$ messages have been succesfully exchanged, both nodes can proceed to the computational part.
+      \item both nodes calculate mean $m$ and standart deviation $sd$ for signal strength values of all received messages.
+      \item both nodes calculate $q^+$ and $q^-$ values, which are upper and lower quantizer bin boundaries, as follows:
+      $$q^+ = m + \alpha \cdot sd$$
+      $$q^- = m - \alpha \cdot sd$$
+      \item every signal strength measurement is then processed and it is rejected, if it lies within $q^+$ and $q^-$ boundaries, values above this range are assigned with bit value of one, values below are assigned with bit value of 0.
+      \item nodes then synchronize their measurement by exchanging couner values asciated with those messages, where signal strength measurements were asigned either one or zero bit values.
+      \item those couner values that match on both nodes are expected to be excursions in the same direction and are used in the final outcome. 
+    \end{enumerate}
     \subsection{CSI (channel state) version}
   \section{Cooperative jamming (can it improve our situation?)}
   \section{Performance Evaluation (results from experiments)}
