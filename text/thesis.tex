@@ -108,9 +108,11 @@
   \section{Keys from radio signal}
     \subsection{Quantization principle (bits from signal strength)}
     Quantization enables to extract bits from individual values of signal strength. There are many different approaches to this problem %\CITE
-    two main approaches here are: lossless quantization CITE and contrary to that we have lossy quantization.
+    two main approaches here are: lossless quantization %CITE
+    and contrary to that we have lossy quantization.
 
-    Main difference between these is number of generated bits per original signal strength measurements, while lossless quantization produces bit value from every measurement of signal strength, which is usefull for high performance demands, but it requires guaranteed varinace in the radio channel (e.g. the nodes are constantly moving, or the nevironment is changing) during the key establishment phase. CITE Otherwise the resulting keys could possibly be wery weak. CITE
+    Main difference between these is number of generated bits per original signal strength measurements, while lossless quantization produces bit value from every measurement of signal strength, which is usefull for high performance demands, but it requires guaranteed varinace in the radio channel (e.g. the nodes are constantly moving, or the nevironment is changing) during the key establishment phase. %CITE
+    Otherwise the resulting keys could possibly be wery weak. %CITE
 
     Lossy quantization on the other hand does not have guaranteed output lenght per number of measured values, which can lead to very limited length of output. However this kind of quantization is expected to have better results in static enviroments %CITE if possible
     because its nature is to drop such bits, that fail to differ from others.
@@ -119,7 +121,8 @@
     , which shoved promissing results for the of the shelf wireless devices simmilar to ours, and also contained experimental results from several different scenarios, where some of these were comparable to our conditions.
 
     \subsection{RSSI version}
-    Quantization princeple designed by Mathur et.al. CITE works as follows:
+    Quantization princeple designed by Mathur et.al. %CITE
+     works as follows:
 
     \begin{enumerate}
       \item both nodes send $n$ messages to each other in alternating pattern, both nodes send counter value inside these messages, which is used to synchronize messages on individual nodes. For every one of these messages signal strength is measured upon repection.
@@ -130,7 +133,9 @@
       $$q^- = m - \alpha \cdot sd$$
       \item every signal strength measurement is then processed and it is rejected, if it lies within $q^+$ and $q^-$ boundaries, values above this range are assigned with bit value of one, values below are assigned with bit value of 0.
       \item nodes then synchronize their measurement by exchanging couner values asciated with those messages, where signal strength measurements were asigned either one or zero bit values.
-      \item those couner values that match on both nodes are expected to be excursions in the same direction and are used in the final outcome. 
+      \item those counter values that match on both nodes are expected to be excursions in the same direction and are used in the final outcome.
+
+      %TODO add some nice picture that would show this
     \end{enumerate}
     \subsection{CSI (channel state) version}
   \section{Cooperative jamming (can it improve our situation?)}
@@ -143,10 +148,9 @@
 
   \section{motivation for educational WSN network}
   The current state of the art WSN devices usually uses specialized hardware
-  and software in order to achieve the best performance available. This,
-  unfortunately, is not the ideal prerequisite for an easy to learn matter.
-  In fact, most of WSN devices have rather complicated setup and are
-  quite challenging for novices.
+  and software in order to achieve the best performance available. %\CITE
+  This, unfortunately, is not the ideal prerequisite for an easy to learn matter. In fact, most of WSN devices have rather complicated setup and are
+  quite challenging for novices. %\CITE
 
   Because of such discouragement, it is difficult to teach how to
   work with WSN’s; few hours (at least) are usually required
@@ -154,11 +158,17 @@
   something similar, but for class exercise, this would turn out to be
   not the most effective use of time, if it would be achievable at all. And
   we have not yet mentioned more advanced topics in this area, such as
-  common encryption or message authentication techniques.
+  common techniques for encryption or message authentication.
 
-  Issue of this nature can be solved in various ways, %\CITE
-  in case of Edu-hoc we decided to sacrifice performance \ref{sec:hw}; which is not that much important for network with educational purpose. On the other hand,
+  Issue of this nature can be solved in various ways,
+  in case of Edu-hoc we decided to sacrifice performance \ref{sec:hw}; which is not that much important for network with educational purpose. On the other hand, using hardware that is really easy to comprehend and use is of a great benefit here. Also having less powerfull, but realtively cheap devices (in range of \$30 rather than \$100 or more) gives the opportunity to lend each the students one of the devices, so that they can try the basics on their own, and also use this device for interactions with the network.
+
   \section{Scenario approach (attack and repair) + iterative higher difficulty}
+  In order to make learning more enjoyable experience and also to add some challenging part to the learning process, we decided to make Edu-hoc scenario based; each scenario being composed of two distinct parts: first part in the role of an attacker (both enjoyable and educational) and the second part as a code reviewer or developer (primarily educational).
+
+  \paragraph{attacker part of a scenario}
+    Students are presented with network application which has known, or easily detectable, vulnerability. Task is to take advantage of such vulnerability and exploit it using own nodes and carefully executed interactions with the network. How successful these effords were can be easily evaluated by percentage differece from the expected traffic of the network or by presenting learned secret in the submission of the solution. Exact methods of evaluation is described in /ref{eval} TODO
+
 
     \subsection{scenarios} - 5.2.5 individual scenarios
   \section{Evaluation principle}
