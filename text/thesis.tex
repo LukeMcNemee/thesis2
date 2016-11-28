@@ -17,6 +17,8 @@
            %% hide the List of Figures.
   nolot,     %% Prints the List of Tables. Replace with `nolot` to
            %% hide the List of Tables.
+           %draft, %TODO remove, place final instead
+           oneside
   %% More options are listed in the user guide at
   %% <http://mirrors.ctan.org/macros/latex/contrib/fithesis/guide/mu/fi.pdf>.
 ]{fithesis3}
@@ -132,7 +134,7 @@
       $$q^+ = m + \alpha \cdot sd$$
       $$q^- = m - \alpha \cdot sd$$
       \item every signal strength measurement is then processed and it is rejected, if it lies within $q^+$ and $q^-$ boundaries, values above this range are assigned with bit value of one, values below are assigned with bit value of 0.
-      \item nodes then synchronize their measurement by exchanging couner values asciated with those messages, where signal strength measurements were asigned either one or zero bit values.
+      \item nodes then synchronize their measurement by exchanging counter values asciated with those messages, where signal strength measurements were asigned either one or zero bit values.
       \item those counter values that match on both nodes are expected to be excursions in the same direction and are used in the final outcome.
 
       %TODO add some nice picture that would show this
@@ -166,12 +168,42 @@
   \section{Scenario approach (attack and repair) + iterative higher difficulty}
   In order to make learning more enjoyable experience and also to add some challenging part to the learning process, we decided to make Edu-hoc scenario based; each scenario being composed of two distinct parts: first part in the role of an attacker (both enjoyable and educational) and the second part as a code reviewer or developer (primarily educational).
 
-  \paragraph{attacker part of a scenario}
-    Students are presented with network application which has known, or easily detectable, vulnerability. Task is to take advantage of such vulnerability and exploit it using own nodes and carefully executed interactions with the network. How successful these effords were can be easily evaluated by percentage differece from the expected traffic of the network or by presenting learned secret in the submission of the solution. Exact methods of evaluation is described in /ref{eval} TODO
+  \paragraph{attacker part of a scenario}\label{par:att}
+    Students are presented with network application which has known, or easily detectable, vulnerability. Task is to take advantage of such vulnerability and exploit it using own nodes and carefully executed interactions with the network. How successful these effords were can be easily evaluated by percentage differece from the expected traffic of the network or by presenting learned secret in the submission of the solution. Exact methods of evaluation are described in \ref{sec:eval}.
+
+  \paragraph{reviewer part of a scenario}
+    Important part of the educational process is not only to find mistakes, but also to be able to correct them. The task in this part of scenario is then to take current source code of application, hich has been deployed on the network during the attacker part \ref{par:att}, correctly identify which mistakes were made and propose changes in the code, which would make the application secure against such kind of an attack. Exact evaluation methods are again described in \ref{sec:eval}.
 
 
-    \subsection{scenarios} - 5.2.5 individual scenarios
-  \section{Evaluation principle}
+    \subsection{1st scenario - Eavesdropping}
+    First scenario can be considered really simple and it is by design. Since this scenario is the first encouner with Edu-hoc, we opted for passive attacker approach, without any actual interaction with the network, just listening for any traffic.
+
+    Eavesdropping is also the first thing one would do, if one would be about to attack some network, because it does not compromise the presence of an attacker and intercepted messages may provide many usefull informations. This is another important reason why this task was selected as a first one, not only it is rather easy to do, but it provides vital information for the rest of the excercises (e.g. which nodes are present in the network, which frequency is used and what are the settings of the radio)
+
+    \paragraph{scenario setting}
+    Each node in the network sends messages, after each message there is a delay of 1000 ms, therefore any receiving node has time to process the transmitted messages. All messages are send as a broadcast and nodes within the network do not receive nor process them, since it is not needed for succesfull scenario run. If this would be the case, transmission rates would have been updated acordingly and scenario would be much more likely to fail on its own, because of single node malfunction, while with current settings, network can operate without any problems even is several of the nodes would fail.
+
+    \paragraph{attack principle}
+    Attack is very simple, attacker node only has to listen for any traffic present in the network. For best results application has to be able to process as many messages as possible, however any performance changes will affect the end result only slightly (final percentage will be better, but the bottle neck is in the processor of the radio module, so better optimalised application will increase the end result only by approximately 10-20\%)
+    \paragraph{application and securing it}
+    Main issue with the application is unencrypted broadcast. This can be fixed quite easily, just by addition of simple encryption and for simplicity using common shared key. We have to be avare of the fact, that attacker might be able to collect some of the nodes and thus learn such key and compromise it and there are techniques which deal with this problem %CITE
+    However, in our scenario this is sufficient solution, because it is adequate measure against eavesdropping.
+
+    \subsection{2nd scenario - Black hole attack}
+    This scenario presents more advanced concepts, dynamic routing in particular. The task is to attack the routing alghoritm and diverse all trafic, so that the central node does not receive any messages. This scenario requires active attacker, thus some basic interaction with the network.
+
+    \paragraph{scenario setting}
+    Scenario is divided into two parts, first parts is shorter and is used to establish routes for this particular run of scenario. Without any attack or interference outside from the network these routes should be always the same.
+
+    In the following part of scenario each node periodically sends messages to the parent node, therefore all messages are routed to the central node. This node then counts all received messages and final outcome is the number of expected messages compared to the number of actual messages received. 
+
+    \paragraph{attack principle}
+
+
+    \paragraph{application and securing it}
+
+
+  \section{Evaluation principle}\label{sec:eval}
   \section{Web interface and auto run}
   \section{PA197 use and results}
 \chapter{Summary}
