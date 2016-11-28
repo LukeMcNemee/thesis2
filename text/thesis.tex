@@ -189,7 +189,7 @@
     Main issue with the application is unencrypted broadcast. This can be fixed quite easily, just by addition of simple encryption and for simplicity using common shared key. We have to be avare of the fact, that attacker might be able to collect some of the nodes and thus learn such key and compromise it and there are techniques which deal with this problem %CITE
     However, in our scenario this is sufficient solution, because it is adequate measure against eavesdropping.
 
-    \subsection{2nd scenario - Black hole attack}
+    \subsection{2nd scenario - Black hole attack} \label{subsec:2nd}
     This scenario presents more advanced concepts, dynamic routing in particular. The task is to attack the routing alghoritm and diverse all trafic, so that the central node does not receive any messages. This scenario requires active attacker, thus some basic interaction with the network.
 
     \paragraph{scenario setting}
@@ -207,8 +207,18 @@
     \paragraph{application and securing it}
     In order to fix the application one has to fix two issues; check for negative counter values (which is the easy part and requires usually addition of one condition witin the code); and what is more important, implement some kind of authentication mechanism for messages from the central node, or othervise make sure that the attacker cannot diverse all the traffic only by being a bit faster than the central node.
 
-    Many options are available, the most easy one being preshared random authentication tag, which would be added to the messages. This is really simple countermeasure, but it guarantees that the attacker canot send valid message before the central node sends it. 
+    Many options are available, the most easy one being preshared random authentication tag, which would be added to the messages. This is really simple countermeasure, but it guarantees that the attacker canot send valid message before the central node sends it.
 
+    \subsection{3rd scenario - Sink hole attack}
+    Although very simmilar to the second scenario, this poses far greater   challenge than the previous one. The goal is not only to divert the traffic, but also modify it on the fly and send it to the original recipient. The greatest issue here is related to the performance, since all messages from the ontire network will be routed through single attacker node, therefore most of the messages are very likely to be dropped somewhere in the process, because single node is not capable of receiving and processing messages from every other node in the network, if they do not transmit on very slow rate.
+
+    Task for this scenario is to deliver a modified message to the cental node before the original message is delivered; messages with same identifier but different content are discarted and only the one which was recieved the earliest is kept at the central node.
+
+    \paragraph{scenario setting}
+    Runtime of this scenario is the same as for the previous one \ref{subsec:2nd}; initial phase of route establishment and after that messages are routed from nodes to the central node. The expected outcome is to divert ad modify as many messages as possible.
+
+    \paragraph{attack principle}
+    
   \section{Evaluation principle}\label{sec:eval}
   \section{Web interface and auto run}
   \section{PA197 use and results}
