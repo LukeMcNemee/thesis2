@@ -195,13 +195,19 @@
     \paragraph{scenario setting}
     Scenario is divided into two parts, first parts is shorter and is used to establish routes for this particular run of scenario. Without any attack or interference outside from the network these routes should be always the same.
 
-    In the following part of scenario each node periodically sends messages to the parent node, therefore all messages are routed to the central node. This node then counts all received messages and final outcome is the number of expected messages compared to the number of actual messages received. 
+    In the following part of scenario each node periodically sends messages to the parent node, therefore all messages are routed to the central node. This node then counts all received messages and final outcome is the number of expected messages compared to the number of actual messages received.
 
     \paragraph{attack principle}
+    This attack requires some prior knowledge before execution which can be obtained simply by using eavesdropping technique from previous excercise. This way an attacker can learn how the routing alghoritm works (nodes broadcast their current distance to the central node, where central node has distance of 0, all nodes that hear distance anouncement message then update their distance and broadcast this updated distance)
 
+    With this knowledge attacker than try to inject message with the same content as the central node does, but earlier than the central node is scheduled to do so. After this the message from central node will not improve position of other nodes and they will not update their distance. Other possible approach is to find intentional weakness in the alghoritm implementation (application allowes negative distance values).
+
+    Only thing that remains is to make sure to use nonexisting ID within the network and after the routing tree is established, attacker node can simply disapear, because it is no longer needed.
 
     \paragraph{application and securing it}
+    In order to fix the application one has to fix two issues; check for negative counter values (which is the easy part and requires usually addition of one condition witin the code); and what is more important, implement some kind of authentication mechanism for messages from the central node, or othervise make sure that the attacker cannot diverse all the traffic only by being a bit faster than the central node.
 
+    Many options are available, the most easy one being preshared random authentication tag, which would be added to the messages. This is really simple countermeasure, but it guarantees that the attacker canot send valid message before the central node sends it. 
 
   \section{Evaluation principle}\label{sec:eval}
   \section{Web interface and auto run}
