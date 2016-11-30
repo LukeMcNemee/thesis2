@@ -24,7 +24,7 @@
 ]{fithesis3}
 %% The following section sets up the locales used in the thesis.
 \usepackage[resetfonts]{cmap} %% We need to load the T2A font encoding
-%\usepackage[T1,T2A]{fontenc}  %% to use the Cyrillic fonts with Russian texts.
+\usepackage[T1,T2A]{fontenc}  %% to use the Cyrillic fonts with Russian texts.
 \usepackage[
   main=english, %% By using `czech` or `slovak` as the main locale
                 %% instead of `english`, you can typeset the thesis
@@ -175,7 +175,7 @@
     Important part of the educational process is not only to find mistakes, but also to be able to correct them. The task in this part of scenario is then to take current source code of application, hich has been deployed on the network during the attacker part \ref{par:att}, correctly identify which mistakes were made and propose changes in the code, which would make the application secure against such kind of an attack. Exact evaluation methods are again described in \ref{sec:eval}.
 
 
-    \subsection{1st scenario - Eavesdropping}
+    \subsection{1st scenario - Eavesdropping}\label{subsec:1st}
     First scenario can be considered really simple and it is by design. Since this scenario is the first encouner with Edu-hoc, we opted for passive attacker approach, without any actual interaction with the network, just listening for any traffic.
 
     Eavesdropping is also the first thing one would do, if one would be about to attack some network, because it does not compromise the presence of an attacker and intercepted messages may provide many usefull informations. This is another important reason why this task was selected as a first one, not only it is rather easy to do, but it provides vital information for the rest of the excercises (e.g. which nodes are present in the network, which frequency is used and what are the settings of the radio)
@@ -209,16 +209,29 @@
 
     Many options are available, the most easy one being preshared random authentication tag, which would be added to the messages. This is really simple countermeasure, but it guarantees that the attacker canot send valid message before the central node sends it.
 
-    \subsection{3rd scenario - Sink hole attack}
-    Although very simmilar to the second scenario, this poses far greater   challenge than the previous one. The goal is not only to divert the traffic, but also modify it on the fly and send it to the original recipient. The greatest issue here is related to the performance, since all messages from the ontire network will be routed through single attacker node, therefore most of the messages are very likely to be dropped somewhere in the process, because single node is not capable of receiving and processing messages from every other node in the network, if they do not transmit on very slow rate.
+    \subsection{3rd scenario - Sink hole attack}\label{subsec:3rd}
+    Although very simmilar to the second scenario, this poses far greater   challenge than the previous one. The goal is not only to divert the traffic, but also modify it on the fly and send it to the original recipient.
+
+    The greatest issue here is related to the performance, since all messages from the ontire network will be routed through single attacker node, therefore most of the messages are very likely to be dropped somewhere in the process, because single node is not capable of receiving and processing messages from every other node in the network, if they do not transmit on very slow rate.
 
     Task for this scenario is to deliver a modified message to the cental node before the original message is delivered; messages with same identifier but different content are discarted and only the one which was recieved the earliest is kept at the central node.
+
+    The reason why two very simmilar scenarios exist, while it could have been only this one, is to present scenarios in manner of slowly increasing difficulty. If we were to skip the second scenario \ref{subsec:2nd}, the task might be too complicated to some, while this way, required task in the third scenario \ref{subsec:3rd} is only a minor extension to the second one, however the achieved result is is of far greater impact.
 
     \paragraph{scenario setting}
     Runtime of this scenario is the same as for the previous one \ref{subsec:2nd}; initial phase of route establishment and after that messages are routed from nodes to the central node. The expected outcome is to divert ad modify as many messages as possible.
 
     \paragraph{attack principle}
-    
+    First part of the attack can be executed in the same fashion as the previous one \ref{subsec:2nd} although it is not the ideal way. As the goal is not to prevent all messages from reaching its destination, but to deliver as many modified messages as possible. Therefore it is not a good idea to modify all of the routes in the network, but only as much as the attacker node is capable of handling (i.e. only third of the nodes in the network). This can be done by sending the distance message only to selected nodes instead of broadcasting it.
+
+    other part of the attack is rather simple, attacker node has to receive all messages which are adressed to it, modify these messages as it is required and send these messages to the central node. Modification usualy requires simple text substitution inside the body of the message or task very simmilar to this one.
+
+    \paragraph{application and securing it}
+    Again as many times with this scenario, fix is partly the same as per second scenario \ref{subsec:2nd}, which deals with the attack on the routing; either preventing it or detecting it.
+
+    The other part of this fix is primarily a authentication problem, therefore any kind of MAC will be able to secure this application. Therefore the problem of shared key arises again, but as before in first scenario \ref{subsec:1st} one master key will be able to do the job, if we assume, that the attacker does not have access to individual devices, only to radio communication between them.
+
+    The point of the excercise is to deal the probem at hand without complicating it with anything else. Of course we could add any advanced key distribution schemes to the application in order to add countermeasures against master key compromise, but that would make completly different application without any real added value to the original educational purpose. 
   \section{Evaluation principle}\label{sec:eval}
   \section{Web interface and auto run}
   \section{PA197 use and results}
