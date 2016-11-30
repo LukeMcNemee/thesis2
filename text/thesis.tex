@@ -231,10 +231,30 @@
 
     The other part of this fix is primarily a authentication problem, therefore any kind of MAC will be able to secure this application. Therefore the problem of shared key arises again, but as before in first scenario \ref{subsec:1st} one master key will be able to do the job, if we assume, that the attacker does not have access to individual devices, only to radio communication between them.
 
-    The point of the excercise is to deal the probem at hand without complicating it with anything else. Of course we could add any advanced key distribution schemes to the application in order to add countermeasures against master key compromise, but that would make completly different application without any real added value to the original educational purpose. 
+    The point of the excercise is to deal the probem at hand without complicating it with anything else. Of course we could add any advanced key distribution schemes  %CITE
+    to the application in order to add countermeasures against master key compromise, but that would make completly different application without any real added value to the original educational purpose.
+
+    \subsection{4th scenario - Jamming}
+    Evey once a while attacker comes around a network, application or protocol which is designed with security in mind, meaning there are no backdoors or weak spots in the design or implementation (really idealistic scenario, however it is very likely that the attacker does not resources to find or use existing vulnerabilities, thus for such attacker there is no real way how to exploit such application).
+
+    Nevertheless, it is very likely that such attacker would like to cause any kind of damage he is capable of doing. Most likely to make the application, protocol, or netwok unavailable; most likely by DoS attack %CITE
+    or something simmilar. For wireless comunication it is quite easy to do, since the wireless medium, air to be specific, can be used by only one device at time. If an attacker is able to utilize all ate available slot for transmissions, then the legitimate user would not be able to transmit anything. Suc techniqe is called jamming and it is quite easy to deploy.
+
+    \paragraph{scenario setting}
+    Setting of this scenario s really simple, all nodes send message via the fixed routing tree to the central node, who the counts the number of delivered messages. There is no phase of route establishment, only the message delivery phase. The asignment is to prevent delivery of as many messages as possible. Since there is no option to modify the routes etc. the only reasonable way is jamming.
+
+    \paragraph{attack principle}
+    As has been stated before, jamming is the expected way of solving this scenario, although there might be many crative solutions created. With jamming one can either bypass the meadiu access protocol and send data continually, thus preventing everyone else from sending any messages, or the other viable option is to send many valid messages to the central node, thus overloading it and forcing this node to drop many incoming messages, including the valid ones.
+
+    \paragraph{application and securing it}
+    Since this attack does not exploit any weakness, only the actual propety of wireless comunication and network design, there is not much one can do to prevent such attack, while only modifying the application source code. However there are ways of dealing with such kind of an attack. Countermeasures are usually based on multiplication of the devices and decentralization of the whole network. Therfore give two or even more nodes the ability to become the central node, use multiple frequencies etc. %CITE
+
   \section{Evaluation principle}\label{sec:eval}
   \section{Web interface and auto run}
   \section{PA197 use and results}
+\chapter{Future and related work}\
+  \section{RSSI}
+  \section{Edu-hoc}
 \chapter{Summary}
 
 
