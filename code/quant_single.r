@@ -154,7 +154,7 @@ hS <- c(NA)
 
 alpha <- 0.5
  
-  i<-1
+  i<-3
   values1 <- as.numeric(dat1[i,1:1000]) -256
   values2 <- as.numeric(dat2[i,1:1000]) -256
   values3 <- as.numeric(dat3[i,1:1000]) -256

@@ -100,13 +100,40 @@
 
 \chapter{Introduction}
 \chapter{ Problem analysis (testbed, not general WSN)}
+
   \section{Creating WSN network}
   \section{Possible challenges}
 \chapter{TESTBED deployment}
   \section{Network design}
-  \section{JeeTool (mass managment and communication)}
+  \section{JeeTool} %CITE jeeTool repo and inpired by motetool repo by dusan
+\paragraph{Motivation}
+  Few nodes can be managed manually without any major problems, most frequently using directly Arduino IDE %CITE.
+  This approach is works flawlesly for up to three devices and it is possible to manage up to 10 devices this way, but with great effort and sacrificing the usability.
+
+  Either intentionaly or nor, there is no doubt that the official Arduino IDE is designed with simplcicity in mind, therefore it is usable for person without solid background in IT. %CITE if possible
+  On the other hand, this simplicity comes at the cost of many features, that might have been usefull for more advanced use (e.g. managment of multiple devices).
+
+\paragraph{MoteTool inspiration}
+  To remedy this problem, jeeTool %CITE repo
+  was created, deployment tool that uses Arduino Makefile project %CITE mk repo
+  to manage the network of 25 Arduino devices. This tool was inpired by motetool project %CITE
+  which was developed by Dusan Klinec in order to manage simmilar task, only for different type of devices. The basic functionality is the same, it allows users to detect all connected devices and upload applications to the selected ones. In additon jeeTool also supports bidirectional communication with individual devices via serial port.
+
+\paragraph{Implementation details}
+  As has been stated, Arduino makefile is used for the actual application upload. In order to make Makefile call for each of the connected devices, jeeTool creates temporary bash script file, which is used to set the enviroment for the specific node and execute the upload via Makefile. Temporary script itself is then executed with system call directly from jeeTool. If multiple nodes are selected for upload, jeeTool enables either serial deployment (mostly for debugging purposes) and parallel deployment, where all Makefile calls are made within dictrete threads, thus all of them are executed simultaneously.
+
+\paragraph{Communication over serial port}
+  In addition to the upload features, jeeTool also enables communication with devices over serial port. This is done via jSerialComm library %CITE
+  at the moment, in the past RxTx library %CITE
+  was used, unfortunately this library is currently not being developed\footnote{last update is from 2011} and decision was made to change library to more up to date one, instead of using problematic old code.
+
+  Individual nodes are matched with files, whicha are named after the nodes (name of the device in the linux file system) and jeeTool is capable of writing all inboud communication in such file or read such file and write it over to the serial port. For the inbound communication there is an option of delayed termination of the program, thus jeeTool can be left runnning for specified amount of time before the ports to devices are closed (e.g. collect results after the experiment). For the outbound communication jeeTool can either send whole content of file at once or there is an option of delay between individual lines of the file (can be used for periodical sending of messages etc.).
+
   \section{HW (Arduino, JeeNodes, RF12B radio ...)}\label{sec:hw}
-\chapter{Research use}
+  New network was designed with both the research \ref{ch:research} and educational \ref{ch:edu} use in mind. Therefore the selection of hardware for individual nodes was limited by these intended usecases. 
+
+
+  \chapter{Research use}\label{ch:research}
   \section{Keys from radio signal}
     \subsection{Quantization principle (bits from signal strength)}
     Quantization enables to extract bits from individual values of signal strength. There are many different approaches to this problem %\CITE
@@ -146,7 +173,7 @@
     \subsection{Speed (bits of key per time)}
     \subsection{Possible errors}
   \section{Discussion, is it achievable and under what conditions?}
-\chapter{Education use}
+\chapter{Education use}\label{ch:edu}
 
   \section{motivation for educational WSN network}
   The current state of the art WSN devices usually uses specialised hardware
