@@ -130,7 +130,16 @@
   Individual nodes are matched with files, whicha are named after the nodes (name of the device in the linux file system) and jeeTool is capable of writing all inboud communication in such file or read such file and write it over to the serial port. For the inbound communication there is an option of delayed termination of the program, thus jeeTool can be left runnning for specified amount of time before the ports to devices are closed (e.g. collect results after the experiment). For the outbound communication jeeTool can either send whole content of file at once or there is an option of delay between individual lines of the file (can be used for periodical sending of messages etc.).
 
   \section{HW (Arduino, JeeNodes, RF12B radio ...)}\label{sec:hw}
-  New network was designed with both the research \ref{ch:research} and educational \ref{ch:edu} use in mind. Therefore the selection of hardware for individual nodes was limited by these intended usecases. 
+  New network was designed with both the research \ref{ch:research} and educational \ref{ch:edu} use in mind. Therefore the selection of hardware for individual nodes was limited by these intended usecases. Since there already was experience with the research type network %CITE wsnprotectlayer
+  and its pitfalls related to the complicated use of specialised hardware, we opted for the developer friendly approach; devices based on Arduino platform \ref{par:jeeLink}, which are designed with simplicity in mind, as Arduino focus group are not only programmers, but also artists and generally people without any advanced IT skills.
+
+  \paragraph{JeeNode USB and JeeLink}\label{par:jeeLink} %TODO image
+  Devices selected for the network are Arduino clones JeeLink nodes. In addition to that, also several JeeNode devices were obtained, these two are similar in many ways and can interact with each other, JeeNode USB is only a little bit mor versatile in its use options.
+
+  Both of these devices are based on Arduino Mini %CITE
+  with ATmega328P processor. Wireless communication is enabled by the RF12B chip \ref{par:radio} %CITE
+  which is permanently mounted to the device itself. Both devices can be connected directly to computer via USB\footnote{the USB port type is different}
+  \paragraph{radio}\label{par:radio} %TODO image
 
 
   \chapter{Research use}\label{ch:research}
