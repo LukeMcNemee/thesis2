@@ -138,9 +138,16 @@
 
   Both of these devices are based on Arduino Mini %CITE
   with ATmega328P processor. Wireless communication is enabled by the RF12B chip \ref{par:radio} %CITE
-  which is permanently mounted to the device itself. Both devices can be connected directly to computer via USB\footnote{the USB port type is different}
-  \paragraph{radio}\label{par:radio} %TODO image
+  which is permanently mounted to the device itself. Both devices can be connected directly to computer via USB\footnote{the USB port type is different}. The other most important difference between these two types is the fact that JeeLink has plastic cover, therefore there is no additional conectivity. On the other hand, JeeNode is not covered and there are pins available fo additional sensors or any other devices, that one might need to connect. Last, but certainly not least, JeeLink has additional 16 Mbit of flash memmory %CITE
+  available, therefore this can be used for convenient storage.
 
+  For both of these devices there is acompaniing library JeeLib %CITE
+  that contains all necessary functions for controlling the radio and any ther function that is different from standart Arduino Mini.
+  \paragraph{RF12B radio module}\label{par:radio} %TODO image
+  Simple and quite cheap radio module from HopeRF %CITE
+  is present on all JeeMote and JeeLink devices. Version sold in Europe is using 868 MHz frequency for the radio\footnote{other version can use 433 MHz or 915 MHz}. As many other common radio modules, this radio is half-duplex, therefore it is able either to receive or to transmit messages, but cannot do both at one time.
+
+  Radio module is equipped with omnidirectional whip antena ($\approx$ 8 cm long wire) by default. It is possible to modify the propperties of such antena by shaping it in various ways, e.g. straight wire compared to coiled one. There might also be many other versions and shapes of antenae, which might improve radio properties, but this would be subject to whole another research in quite a different field.
 
   \chapter{Research use}\label{ch:research}
   \section{Keys from radio signal}
