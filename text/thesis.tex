@@ -100,58 +100,68 @@
 
 \chapter{Introduction}
 \chapter{ Problem analysis (testbed, not general WSN)}
-
+% questions - power, programming, permanent vs temporal etc.
   \section{Creating WSN network}
   \section{Possible challenges}
 \chapter{TESTBED deployment}
   \section{Network design}
   \section{JeeTool} %CITE jeeTool repo and inpired by motetool repo by dusan
 \paragraph{Motivation}
-  Few nodes can be managed manually without any major problems, most frequently using directly Arduino IDE %CITE.
+  Few nodes can be managed manually without any major problems, most frequently using directly Arduino IDE \cite{Arduino}.
   This approach is works flawlesly for up to three devices and it is possible to manage up to 10 devices this way, but with great effort and sacrificing the usability.
 
-  Either intentionaly or nor, there is no doubt that the official Arduino IDE is designed with simplcicity in mind, therefore it is usable for person without solid background in IT. %CITE if possible
+  Either intentionaly or not, there is no doubt that the official Arduino IDE is designed with simplicity in mind, therefore it is usable for person without solid background in IT \cite{ArduinoIntro}.
   On the other hand, this simplicity comes at the cost of many features, that might have been usefull for more advanced use (e.g. managment of multiple devices).
 
 \paragraph{MoteTool inspiration}
-  To remedy this problem, jeeTool %CITE repo
-  was created, deployment tool that uses Arduino Makefile project %CITE mk repo
-  to manage the network of 25 Arduino devices. This tool was inpired by motetool project %CITE
+  To remedy this problem, jeeTool \cite{JeeTool}
+  was created, deployment tool that uses Arduino Makefile project \cite{ArduinoMK}
+  to manage the network of 25 Arduino devices. This tool was inpired by motetool project \cite{motetool}
   which was developed by Dusan Klinec in order to manage simmilar task, only for different type of devices. The basic functionality is the same, it allows users to detect all connected devices and upload applications to the selected ones. In additon jeeTool also supports bidirectional communication with individual devices via serial port.
 
 \paragraph{Implementation details}
   As has been stated, Arduino makefile is used for the actual application upload. In order to make Makefile call for each of the connected devices, jeeTool creates temporary bash script file, which is used to set the enviroment for the specific node and execute the upload via Makefile. Temporary script itself is then executed with system call directly from jeeTool. If multiple nodes are selected for upload, jeeTool enables either serial deployment (mostly for debugging purposes) and parallel deployment, where all Makefile calls are made within dictrete threads, thus all of them are executed simultaneously.
 
 \paragraph{Communication over serial port}
-  In addition to the upload features, jeeTool also enables communication with devices over serial port. This is done via jSerialComm library %CITE
-  at the moment, in the past RxTx library %CITE
+  In addition to the upload features, jeeTool also enables communication with devices over serial port. This is done via jSerialComm library \cite{jserial}
+  at the moment, in the past RxTx library \cite{rxtx}
   was used, unfortunately this library is currently not being developed\footnote{last update is from 2011} and decision was made to change library to more up to date one, instead of using problematic old code.
 
   Individual nodes are matched with files, whicha are named after the nodes (name of the device in the linux file system) and jeeTool is capable of writing all inboud communication in such file or read such file and write it over to the serial port. For the inbound communication there is an option of delayed termination of the program, thus jeeTool can be left runnning for specified amount of time before the ports to devices are closed (e.g. collect results after the experiment). For the outbound communication jeeTool can either send whole content of file at once or there is an option of delay between individual lines of the file (can be used for periodical sending of messages etc.).
 
-  \section{HW (Arduino, JeeNodes, RF12B radio ...)}\label{sec:hw}
-  New network was designed with both the research \ref{ch:research} and educational \ref{ch:edu} use in mind. Therefore the selection of hardware for individual nodes was limited by these intended usecases. Since there already was experience with the research type network %CITE wsnprotectlayer
+  \section{Hardware selection}\label{sec:hw}
+  New network was designed with both the research \ref{ch:research} and educational \ref{ch:edu} use in mind. Therefore the selection of hardware for individual nodes was limited by these intended usecases. Since there already was experience with the research type network \cite{Matyas2015}
   and its pitfalls related to the complicated use of specialised hardware, we opted for the developer friendly approach; devices based on Arduino platform \ref{par:jeeLink}, which are designed with simplicity in mind, as Arduino focus group are not only programmers, but also artists and generally people without any advanced IT skills.
 
   \paragraph{JeeNode USB and JeeLink}\label{par:jeeLink} %TODO image
-  Devices selected for the network are Arduino clones JeeLink nodes. In addition to that, also several JeeNode devices were obtained, these two are similar in many ways and can interact with each other, JeeNode USB is only a little bit mor versatile in its use options.
+  Devices selected for the network are Arduino clones JeeLink nodes \cite{JeeLink}. In addition to that, also several JeeNode devices \cite{JeeNode} were obtained, these two are similar in many ways and can interact with each other, JeeNode USB is only a little bit more versatile in its use options.
 
-  Both of these devices are based on Arduino Mini %CITE
-  with ATmega328P processor. Wireless communication is enabled by the RF12B chip \ref{par:radio} %CITE
-  which is permanently mounted to the device itself. Both devices can be connected directly to computer via USB\footnote{the USB port type is different}. The other most important difference between these two types is the fact that JeeLink has plastic cover, therefore there is no additional conectivity. On the other hand, JeeNode is not covered and there are pins available fo additional sensors or any other devices, that one might need to connect. Last, but certainly not least, JeeLink has additional 16 Mbit of flash memmory %CITE
+  Both of these devices are based on Arduino Mini \cite{ArduinoMini}
+  with ATmega328P processor. Wireless communication is enabled by the RF12B chip \ref{par:radio} \cite{RF12B}
+  which is permanently mounted to the device itself. Both devices can be connected directly to computer via USB\footnote{the USB port type is different}. The other most important difference between these two types is the fact that JeeLink has plastic cover, therefore there is no additional conectivity. On the other hand, JeeNode is not covered and there are pins available fo additional sensors or any other devices, that one might need to connect. Last, but certainly not least, JeeLink has additional 16 Mbit of flash memmory \cite{JeeLink}
   available, therefore this can be used for convenient storage.
 
-  For both of these devices there is acompaniing library JeeLib %CITE
+  For both of these devices there is acompaniing library JeeLib \cite{JeeLib}
   that contains all necessary functions for controlling the radio and any ther function that is different from standart Arduino Mini.
   \paragraph{RF12B radio module}\label{par:radio} %TODO image
-  Simple and quite cheap radio module from HopeRF %CITE
+  Simple and quite cheap radio module from HopeRF \cite{RF12B}
   is present on all JeeMote and JeeLink devices. Version sold in Europe is using 868 MHz frequency for the radio\footnote{other version can use 433 MHz or 915 MHz}. As many other common radio modules, this radio is half-duplex, therefore it is able either to receive or to transmit messages, but cannot do both at one time.
 
   Radio module is equipped with omnidirectional whip antena ($\approx$ 8 cm long wire) by default. It is possible to modify the propperties of such antena by shaping it in various ways, e.g. straight wire compared to coiled one. There might also be many other versions and shapes of antenae, which might improve radio properties, but this would be subject to whole another research in quite a different field.
 
   \chapter{Research use}\label{ch:research}
+  One of the intentended uses for the created testbed was its use in research which can be of various nature. In this particular case, we would like to make a case study for key generation mechanism without any pre-shared information between individual nodes.
+
+  In todays apliccation this would be quite common problem, since the amount of devices equiped with some kind of radio module is constantly groving, let it be wifi, bluetooth, or any other frequency and specification. However, we cannot expect for these devices to have any shared data nor capability to exchange them over already secure channel, since the secure channel is what we are trying to acomplish.
+
+  What we would like to show, is sheme for key derivation without any shared secret, only using properties of radio channel shared between these two devices and the nature of radio wave propagation through such shared channel.
+
   \section{Keys from radio signal}
-    \subsection{Quantization principle (bits from signal strength)}
+  Due to a nature of an wireless channel whcih is not perfect, we can observe fluctuations and disturbances in the wave propagation. It might seem difficult at first to measure these, since by no means we are able to observe all such events. Despite that there is a way, almost every radio module is able to measure RSSI\footnote{received signal strength indication}, which can be described as a amount of power in the received signal. There are many arbitrary scales and absolute values do not match on devices from different manufacturers %CITE.
+
+  However, our alghoritm can work regardless to the differences in devices, even two devices with same configuration can produce different absolute values due to antena position and overall device manufacturing differences, since some of these devices are partially assembled by hand \footnote{e.g. JeeNode motes come as a ready to assemble kit}.
+
+  \subsection{Quantization principle (bits from signal strength)}
     Quantization enables to extract bits from individual values of signal strength. There are many different approaches to this problem %\CITE
     two main approaches here are: lossless quantization %CITE
     and contrary to that we have lossy quantization.
@@ -162,10 +172,14 @@
     Lossy quantization, on the other hand, does not have guaranteed output length per number of measured values, which can lead to a very limited length of output. However, this kind of quantization is expected to have better results in static environments %CITE if possible
     because its nature is to drop such bits, that fail to differ from others.
 
+    Also there are few different measurements of the channel one can use to produce bits. One would be RSSI measurements on received messages, other measure %\TODO %from paper and CITE
+
     Since our network is static and without any moving nodes, we implemented lossy quantizer algorithm designed by Mathur et.al.%/TODO verify name
     , which showed promising results for the of the shelf wireless devices similar to ours, and also contained experimental results from several different scenarios, where some of these were comparable to our conditions.
 
-    \subsection{RSSI version}
+
+
+    \subsection{RSSI Quantization}
     Quantization princeple designed by Mathur et.al. %CITE
      works as follows:
 
@@ -182,13 +196,15 @@
 
       %TODO add some nice picture that would show this
     \end{enumerate}
-    \subsection{CSI (channel state) version}
   \section{Cooperative jamming (can it improve our situation?)}
+
+
   \section{Performance Evaluation (results from experiments)}
     \subsection{Enthropy of data}
     \subsection{Speed (bits of key per time)}
     \subsection{Possible errors}
   \section{Discussion, is it achievable and under what conditions?}
+
 \chapter{Education use}\label{ch:edu}
 
   \section{motivation for educational WSN network}
@@ -307,6 +323,13 @@
 
   The last option which can be utilised in evaluation is a submission of secret, which was received from interaction with the network, node either responds to received message with such secret or the secret has to be extracted from the communication in the network. Such secret can be a short word, number or something of similar nature and again such secret can be unique for each participant, which makes te evaluation an easy task.
   \section{Web interface and auto run}
+  Edu-hoc was designed as a long term excercise, thus single scenarios are expected to run for days, possibly week or longer. However, for some it would be extremly impractical to repeat only once during the whole time, because we would like to present fresh scenario to everyone involved,  and also we would like to reset the scenario once a while. This will ensure correct initial settings and if we set the intervals right, then everyone will be able to test out several solutions within reasonably short timeframe.
+
+  To achieve such kind of behaviour, we can utilise various approaches, the most easy one being set of bash scripts and setting the cron service %CITE
+  acordingly. The other option might be modified JeeTool, which would be running continuisly and in set intervals would trigger corresponding action.
+
+  The last option is the most complicated one, but offers the most
+
   \section{PA197 use and results} \label{sec:PA197}
 \chapter{Future and related work}\
   \section{RSSI}

@@ -103,16 +103,19 @@ plotValues <- function(top, down, line){
   points(diff, y=rep_len(line, length.out = length(diff)), col = "red", pch=20, cex=0.1)
   text(-10, line, "AB", cex = 0.5)
   
-  same <- getSamePoints(x_locations, bits1, bits3)
-  diff <- getDiffPoints(x_locations, bits1, bits3)
+  
+  
+  same <- getSamePoints(s_locations, bits1, bits3)
+  diff <- getDiffPoints(s_locations, bits1, bits3)
   other <- setdiff(setdiff(c(1:1000), same), diff)
   points(other, y=rep_len(line-0.2, length.out = length(other)), col = "black", pch=20, cex=0.1)
   points(na.omit(same), y=rep_len(line-0.2, length.out = length(na.omit(same))), col = "green", pch=20, cex=0.1)
   points(diff, y=rep_len(line-0.2, length.out = length(diff)), col = "red", pch=20, cex=0.1)
   text(-10, line-0.2, "AS", cex = 0.5)
   
-  same <- getSamePoints(x_locations, bits3, bits2)
-  diff <- getDiffPoints(x_locations, bits3, bits2)
+  
+  same <- getSamePoints(s_locations, bits3, bits2)
+  diff <- getDiffPoints(s_locations, bits3, bits2)
   other <- setdiff(setdiff(c(1:1000), same), diff)
   points(other, y=rep_len(line - 0.4, length.out = length(other)), col = "black", pch=20, cex=0.1)
   points(na.omit(same), y=rep_len(line - 0.4, length.out = length(na.omit(same))), col = "green", pch=20, cex=0.1)
@@ -154,7 +157,7 @@ hS <- c(NA)
 
 alpha <- 0.5
  
-  i<-3
+  i<-25
   values1 <- as.numeric(dat1[i,1:1000]) -256
   values2 <- as.numeric(dat2[i,1:1000]) -256
   values3 <- as.numeric(dat3[i,1:1000]) -256
@@ -172,7 +175,7 @@ alpha <- 0.5
   
   
   x_locations = intersect(r1$x,r2$x)
-  s_locations = intersect(x_locations,r1$x)
+  s_locations = intersect(x_locations,r3$x)
   
   bits1 <- mapLocations(x_locations, r1)
   bits2 <- mapLocations(x_locations, r2)
