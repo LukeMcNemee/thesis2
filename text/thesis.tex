@@ -156,6 +156,14 @@
   Alternative options for outdoor networks usually include some forms of energy harwesting, this might include solar power, geothermal energy or any other form of power harwesting. This option is usually asociated with presence of battery, that will supply power continually and energy harwesting will be used to recharge this battery. This is the usual case, because meany of these power options are not continous and gained amount of power might vary through the day.
 
   \subsection{Code and data upload and download (\ref{enu:upload}) and (\ref{enu:data})}
+  Code upload and download is usually only a problem for long term network, usually for developement of research purposes, because these goald usually require frequent changes of source code, thus convenient way of doing so. In any other king of network software is usually uploaded only once and prior to the network deployment, therefore there is no need for long term solution for code update.
+
+  When solution for code upload is required for already placed devices, there are two main options, either updated over the connected cable, or some FOTA\footnote{firmware over the air} solution, which would generally be prefered for battery powered networks, since it does not require any additional cables.
+
+  In case of power privided through low power cable it is usually the best option to use this cable to provide software uploads and updates, since the cable is already present and it is the most reliable way to do so.
+
+  The same applies to data transfers, cable connection is the most reliable and straightforward solution, when the cable is not present, such functions has to be provided via the radio.
+
   \section{Testbed design}
   \subsection{Possible challenges}
 
