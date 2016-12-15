@@ -99,7 +99,7 @@
 %\newtheorem*{remark}{Remark}
 
 \chapter{Introduction}
-\chapter{ Problem analysis (testbed, not general WSN)}
+\chapter{Problem analysis}
 
 % questions - power, programming, permanent vs temporal etc.
   \section{Creating WSN network}
@@ -110,6 +110,7 @@
     \item \label{enu:purpose}What is the purpose of this network?
     \item \label{enu:devices}Which devices will be used?
     \item \label{enu:type}Will the network be homogenous or heterogenous (only one device type or multiple ones)?
+    \item \label{enu:place}Where will the network be placed?
     \item \label{enu:life}What is the expected lifetime for network?
     \item \label{enu:power}What will be the power source for devices?
     \item \label{enu:upload}How shall we upload new code to devices?
@@ -117,16 +118,47 @@
 
   \end{enumerate}
 
-  Some of these are independent decisions, some are quite closely related to another. Now we can elaborate on these questions a bit more and provide possible reasoning for each one.
-  \subsection{Network purpose (\ref{enu:purpose})}
-  \subsection{Device selection (\ref{enu:devices}) and (\ref{enu:type})}
-  \subsection{Network lifespan (\ref{enu:life})}
-  \subsection{Power source (\ref{enu:power})}
-  \subsection{Code and data upload and download (\ref{enu:upload}) and (\ref{enu:data})}
+  Some of these are independent decisions, some are quite closely related to another. Now we can elaborate on these questions a bit more and provide possible reasoning for each one. Numbers in parentheses refer to the point in the previous enumeration.
 
-  \section{Possible challenges}
+  \subsection{Network purpose (\ref{enu:purpose})}
+  The biggest decision and it basicaly dictates the options for all the others. General purpose or educational network will be completly different than production network with just one goal only. Basically there is either one sole purpose that is given from the beginning, because the network is designed with this goal in mind; let it be forrest fire monitoring, air polution measurements, whales migration monitoring, or reporting free parking places; and it is perfectly fit for such goal and not so much fo the others.
+
+  On the other hand, network for developement purposes or one with education as one of its purposes cannot be aplication specific and has to be general as much as it can be. Because there might be many different requirements for the network through its lifetime and is should satisfy all of them. Single purpose network will have devices for the specific job only (maybe even manufactured by required specifications), however multipurpose network might require different resources for different applications, because one does not know what the requirements might be in the future.
+
+  \subsection{Device selection (\ref{enu:devices}) and (\ref{enu:type})}
+  Device selection is very much dependent on the network purpose, but there are some general options and directions one can prefer in certain situations.
+
+  First and foremost, is there going to be just one type of device or are we going to use multiple types of devices. Homogenous network will definitely be much easier to create and develop applications for, because all devices share the same properties, all devices behave basically the same, we can use same set of libraries and radio drivers, everything is almost guaranteed to be compatible.
+
+  Heterogenous network on the other hand will be muc more complex from the beggining, just because the selection of devices that are capable of communication with each other is an issue of its own. The best option might be using some well known protocol (e.g. Xbee CITE) which is widely supported across many platforms. The most basic requirement is the same radio frequency, but sometimes one might be forced to write everything from scratch, just because the supported libraries might not be cross platform compatible.
+
+  The other aspect to the device selection is its price, therefore for single purpose network we are going to select the cheapest device that fulfills our needs without much of redundancy, because there is no need for it. However is we do not know the purpose in advance, or whether ith mightchange over time, then we would like devices withc are reasonable mixture of resources compared to its price (there is no point in device that has maximum amount of memmory, but lacks in computational power). Or we might even comsider devices which are a bit expensive right now, but we expect them to be widely used within few years time, because it will be interesting to have applications ready for such devices, when they come down to the reasonable price.
+
+  \subsection{Network placement and lifespan (\ref{enu:place}) (\ref{enu:life})}
+  Epected life of the nework is closely related to the next issue regarding the power supply to the devices. However we are also interested in the durability of such devices and possibly resistability to the weather conditions, water, possibly low or high temperatures or even high pressure. There are definetely going to be exreme differences in devices selected for long term outdoor usage and ones placed inside.
+
+  Placement of these devices can even give us more options regarding the power supply, because in certain conditions acn be used for power hardwesting either from solar sources or geothermal ones, the options very much depend on expected surraundings of these devices.
+
+  On of the factors that would determine the nature of our network is allowing movement of certain nodes. Devices and options for them are inherently going to be different in case of static network compared to moving one. Dynamic network will have much greater needs on redundancy and durability of each individual device and also the design of applications and protocols will have to be much more resilient to the possible events which might occur during the movement (neighbour devices will change, the mortality rate will be naturally much larger, environment around the network will change).
+
+  In the static topology we can predict and assume many possible events, even prepare for them in advance. Therefore once node is not active for certain period of time, we assume it never will be active again (which in dynamic network could just be temporal change of topology and we might be able to communicate again after some time). Thus once the static network is deployed (deployment can be randomised) we can actually save the curent state and derive everything else from it, in dynamc network we cannot make any assumptions at all from the initial positions and we have to adapt to the current situation during the whole lifetime of such network.
+
+  \subsection{Power source (\ref{enu:power})}
+  Two options for the power supply are available, either supply from battery or by wire, let the wire be only power cable or cable combined with data (e.g. USB cable). Options are usualy determined by the device itself, because devices usually have some requirements regarding the power supply and not all devices can for example be powered from five volts which are supplied by USB cable.
+
+  The least convenient method is direct power from the outlet, which unfortunately might be sometimes the only option if the device demands extraordinary amount of power which cannot be supplied any other way or only for short time. Such way of power might for example be required for base station which provides connection to the network from internet, usually computer or simmilar device.
+
+  For short network with short life span (e.g. few hours to test some scenario in real conditions or throw off devices for short term use) %CITE construction
+  the ideal solution are battery powered devices, because it keeps the invested amount of resources low. Also battery power is ideal for out of the grid networks, where any other solution would not be applicable. Here the main goal is to optimalise the power usage to the absolute minimum, therefore maximalise the network lifetime.
+
+  
+
+  \subsection{Code and data upload and download (\ref{enu:upload}) and (\ref{enu:data})}
+  \section{Testbed design}
+  \subsection{Possible challenges}
+
 \chapter{TESTBED deployment}
-  \section{Network design}
+
   \section{JeeTool} %CITE jeeTool repo and inpired by motetool repo by dusan
 \paragraph{Motivation}
   Few nodes can be managed manually without any major problems, most frequently using directly Arduino IDE \cite{Arduino}.
@@ -246,7 +278,7 @@
   Issue of this nature can be solved in various ways,
   in the case of Edu-hoc, we decided to sacrifice performance \ref{sec:hw}; which is not that much important for a network with an educational purpose. On the other hand, using hardware that is really easy to comprehend and use is of a great benefit here. Also having less powerful, but relatively cheap devices (in the range of \$30 rather than \$100 or more) gives the opportunity to lend each the students one of the devices, so that they can try the basics on their own, and also use this device for interactions with the network.
 
-  \section{Scenario approach (attack and repair) + iterative higher difficulty}
+  \section{Scenario approach (attack and repair)}
   In order to make learning more enjoyable experience and also to add some challenging part to the learning process, we decided to make Edu-hoc scenario based; each scenario being composed of two distinct parts: first part in the role of an attacker (both enjoyable and educational) and the second part as a code reviewer or developer (primarily educational).
 
   \paragraph{attacker part of a scenario}\label{par:att}
