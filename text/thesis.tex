@@ -165,9 +165,25 @@
   The same applies to data transfers, cable connection is the most reliable and straightforward solution, when the cable is not present, such functions has to be provided via the radio.
 
   \section{Testbed design}
+  For construction of our own testbed, questions from the previous part have been answered respectively:
+  \begin{enumerate}
+
+    \item What is the purpose of this network? There is not one specific aplication, therefore it is generic type network with research and education purpose.
+    \item Which devices will be used? Arduino based devices with build in radio \ref{sec:hw}.
+    \item Will the network be homogenous or heterogenous (only one device type or multiple ones)? Only one type of device, with educational netwrok we have to keep thing simple.
+    \item Where will the network be placed? Network will be places inside building, across multiple rooms.
+    \item What is the expected lifetime for network? There is no set lifetime goal, only as long as it will be required or replaced by another type of network in the future.
+    \item What will be the power source for devices? All devices are going to be connected via USB cable, therefore this cable will provide the power.
+    \item How shall we upload new code to devices? Same as previous, through the USB cable.
+    \item How the results will be collected from the nodes? Either throught the USB cable or using rado communication.
+
+  \end{enumerate}
   \subsection{Possible challenges}
+  Since the network is going to be permanent and without battery power, there are not that many challenges to solve. 
+
 
 \chapter{TESTBED deployment}
+TODO nodes placement, central server
 
   \section{JeeTool} %CITE jeeTool repo and inpired by motetool repo by dusan
 \paragraph{Motivation}
