@@ -1,9 +1,9 @@
 require(matrixStats) #install.packages('matrixStats')
 setwd("~/Dokumenty/studijni_materialy/Edu-hoc/src")
 
-dat1 = read.delim("RssiApp/values.txt", header = FALSE, sep = ";", comment.char = "&")
-dat2 = read.delim("RssiApp2/values.txt", header = FALSE, sep = ";", comment.char = "&")
-dat3 = read.delim("RssiAppSniffer/values.txt", header = FALSE, sep = ";", comment.char = "&")
+dat1 = read.delim("RssiApp/values6.txt", header = FALSE, sep = ";", comment.char = "&")
+dat2 = read.delim("RssiApp2/values6.txt", header = FALSE, sep = ";", comment.char = "&")
+dat3 = read.delim("RssiAppSniffer/values6.txt", header = FALSE, sep = ";", comment.char = "&")
 
 basicStats <- function(x){
   m = mean(x)
@@ -72,7 +72,7 @@ h  <- c(NA)
 hS <- c(NA)
 
 alpha <- 0.5
-for (i in 1:20){ 
+for (i in 1:140){ 
 #i<-1
   values1 <- as.numeric(dat1[i,1:1000]) -256
   values2 <- as.numeric(dat2[i,1:1000]) -256
@@ -104,6 +104,16 @@ for (i in 1:20){
     h <- c(h, distance(bits1, bits2))
     hS <- c(hS, distance(bits1, bits3))
   }
+  
+  if(length(bits1) > 5){
+    sink("outfile.txt", append=TRUE)
+    for(i in 1:length(bits1)){
+      cat(bits1[i])
+    }
+    cat("\n")
+    sink()
+  }
+  
   #points(x_locations, bits1 -0.02, col = "red", pch=15)
   #points(x_locations, bits2 -0.04, col = "blue", pch=16)
   #points(s_locations, bits3 -0.06, col = "green", pch=17)

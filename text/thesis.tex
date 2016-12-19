@@ -99,11 +99,13 @@
 %\newtheorem*{remark}{Remark}
 
 \chapter{Introduction}
-\chapter{Problem analysis}
 
+TODO
+\chapter{Problem analysis}
+  TODO
 % questions - power, programming, permanent vs temporal etc.
   \section{Creating WSN network}
-  In order to create functioning WSN network, one must ask and aswer many questions which define the shape and parameters of such network, these quastions include following:
+  In order to create functioning WSN network, one must ask and answer many questions which define the shape and parameters of such network, these questions include following:
 
   \begin{enumerate}
 
@@ -111,7 +113,7 @@
     \item \label{enu:devices}Which devices will be used?
     \item \label{enu:type}Will the network be homogenous or heterogenous (only one device type or multiple ones)?
     \item \label{enu:place}Where will the network be placed?
-    \item \label{enu:life}What is the expected lifetime for network?
+    \item \label{enu:life}What is the expected lifetime of a network?
     \item \label{enu:power}What will be the power source for devices?
     \item \label{enu:upload}How shall we upload new code to devices?
     \item \label{enu:data}How the results will be collected from the nodes?
@@ -121,130 +123,134 @@
   Some of these are independent decisions, some are quite closely related to another. Now we can elaborate on these questions a bit more and provide possible reasoning for each one. Numbers in parentheses refer to the point in the previous enumeration.
 
   \subsection{Network purpose (\ref{enu:purpose})}
-  The biggest decision and it basicaly dictates the options for all the others. General purpose or educational network will be completly different than production network with just one goal only. Basically there is either one sole purpose that is given from the beginning, because the network is designed with this goal in mind; let it be forrest fire monitoring, air polution measurements, whales migration monitoring, or reporting free parking places; and it is perfectly fit for such goal and not so much fo the others.
+  The biggest decision and it basically dictates the options for all the others. General purpose or educational network will be completely different than production network with just one goal only. Basically there is either one sole purpose that is given from the beginning, because the network is designed with this goal in mind; let it be forest fire monitoring, air pollution measurements, whales migration monitoring, or reporting free parking places; and it is perfectly fit for such goal and not so much fo the others.
 
-  On the other hand, network for developement purposes or one with education as one of its purposes cannot be aplication specific and has to be general as much as it can be. Because there might be many different requirements for the network through its lifetime and is should satisfy all of them. Single purpose network will have devices for the specific job only (maybe even manufactured by required specifications), however multipurpose network might require different resources for different applications, because one does not know what the requirements might be in the future.
+  On the other hand, a network for development purposes or one with education as one of its purposes cannot be application specific and has to be general as much as it can be. Because there might be many different requirements for the network through its lifetime and is should satisfy all of them. Single purpose network will have devices for the specific job only (maybe even manufactured by required specifications), however, a multipurpose network might require different resources for different applications because one does not know what the requirements might be in the future.
 
   \subsection{Device selection (\ref{enu:devices}) and (\ref{enu:type})}
   Device selection is very much dependent on the network purpose, but there are some general options and directions one can prefer in certain situations.
 
-  First and foremost, is there going to be just one type of device or are we going to use multiple types of devices. Homogenous network will definitely be much easier to create and develop applications for, because all devices share the same properties, all devices behave basically the same, we can use same set of libraries and radio drivers, everything is almost guaranteed to be compatible.
+  First and foremost, is there going to be just one type of device or are we going to use multiple types of devices? The homogenous network will definitely be much easier to create and develop applications for, because all devices share the same properties, all devices behave basically the same, we can use the same set of libraries and radio drivers, everything is almost guaranteed to be compatible.
 
-  Heterogenous network on the other hand will be muc more complex from the beggining, just because the selection of devices that are capable of communication with each other is an issue of its own. The best option might be using some well known protocol (e.g. Xbee CITE) which is widely supported across many platforms. The most basic requirement is the same radio frequency, but sometimes one might be forced to write everything from scratch, just because the supported libraries might not be cross platform compatible.
+  Heterogeneous network, on the other hand, will be much more complex from the beginning, just because the selection of devices that are capable of communication with each other is an issue of its own. The best option might be using some well-known protocol (e.g. Xbee CITE) which is widely supported across many platforms. The most basic requirement is the same radio frequency, but sometimes one might be forced to write everything from scratch, just because the supported libraries might not be cross platform compatible.
 
-  The other aspect to the device selection is its price, therefore for single purpose network we are going to select the cheapest device that fulfills our needs without much of redundancy, because there is no need for it. However is we do not know the purpose in advance, or whether ith mightchange over time, then we would like devices withc are reasonable mixture of resources compared to its price (there is no point in device that has maximum amount of memmory, but lacks in computational power). Or we might even comsider devices which are a bit expensive right now, but we expect them to be widely used within few years time, because it will be interesting to have applications ready for such devices, when they come down to the reasonable price.
+  The other aspect to the device selection is its price, therefore for single purpose network, we are going to select the cheapest device that fulfils our needs without much of redundancy because there is no need for it. However is we do not know the purpose in advance, or whether ith might change over time, then we would like devices with are a reasonable mixture of resources compared to its price (there is no point in a device that has the maximum amount of memory, but lacks in computational power). Or we might even consider devices which are a bit expensive right now, but we expect them to be widely used within few years time because it will be interesting to have applications ready for such devices when they come down to the reasonable price.
 
   \subsection{Network placement and lifespan (\ref{enu:place}) (\ref{enu:life})}
-  Epected life of the nework is closely related to the next issue regarding the power supply to the devices. However we are also interested in the durability of such devices and possibly resistability to the weather conditions, water, possibly low or high temperatures or even high pressure. There are definetely going to be exreme differences in devices selected for long term outdoor usage and ones placed inside.
+  Expected life of the network is closely related to the next issue regarding the power supply to the devices. However, we are also interested in the durability of such devices and possibly resistibility to the weather conditions, water, possibly low or high temperatures or even high pressure. There are definitely going to be extreme differences in devices selected for long term outdoor usage and ones placed inside.
 
-  Placement of these devices can even give us more options regarding the power supply, because in certain conditions acn be used for power hardwesting either from solar sources or geothermal ones, the options very much depend on expected surraundings of these devices.
+  Placement of these devices can even give us more options regarding the power supply because in certain conditions can be used for power harvesting either from solar sources or geothermal ones, the options very much depend on expected surroundings of these devices.
 
-  On of the factors that would determine the nature of our network is allowing movement of certain nodes. Devices and options for them are inherently going to be different in case of static network compared to moving one. Dynamic network will have much greater needs on redundancy and durability of each individual device and also the design of applications and protocols will have to be much more resilient to the possible events which might occur during the movement (neighbour devices will change, the mortality rate will be naturally much larger, environment around the network will change).
+  On of the factors that would determine the nature of our network is allowing movement of certain nodes. Devices and options for them are inherently going to be different in the case of the static network compared to moving one. Dynamic network will have much greater needs on redundancy and durability of each individual device and also the design of applications and protocols will have to be much more resilient to the possible events which might occur during the movement (neighbour devices will change, the mortality rate will be naturally much larger, environment around the network will change).
 
-  In the static topology we can predict and assume many possible events, even prepare for them in advance. Therefore once node is not active for certain period of time, we assume it never will be active again (which in dynamic network could just be temporal change of topology and we might be able to communicate again after some time). Thus once the static network is deployed (deployment can be randomised) we can actually save the curent state and derive everything else from it, in dynamc network we cannot make any assumptions at all from the initial positions and we have to adapt to the current situation during the whole lifetime of such network.
+  In the static topology we can predict and assume many possible events, even prepare for them in advance. Therefore once a node is not active for certain period of time, we assume it never will be active again (which in a dynamic network could just be a temporal change of topology and we might be able to communicate again after some time). Thus once the static network is deployed (deployment can be randomised) we can actually save the current state and derive everything else from it, in the dynamc network we cannot make any assumptions at all from the initial positions and we have to adapt to the current situation during the whole lifetime of such network.
 
   \subsection{Power source (\ref{enu:power})}
-  Two options for the power supply are available, either supply from battery or by wire, let the wire be only power cable or cable combined with data (e.g. USB cable). Options are usualy determined by the device itself, because devices usually have some requirements regarding the power supply and not all devices can for example be powered from five volts which are supplied by USB cable.
+  Two options for the power supply are available, either supply from a battery or by wire, let the wire be only power cable or cable combined with data (e.g. USB cable). Options are usually determined by the device itself, because devices usually have some requirements regarding the power supply and not all devices can, for example, be powered from five volts which are supplied by USB cable.
 
-  The least convenient method is direct power from the outlet, which unfortunately might be sometimes the only option if the device demands extraordinary amount of power which cannot be supplied any other way or only for short time. Such way of power might for example be required for base station which provides connection to the network from internet, usually computer or simmilar device.
+  The least convenient method is direct power from the outlet, which unfortunately might be sometimes the only option if the device demands an extraordinary amount of power which cannot be supplied any other way or only for short time. Such way of power might, for example, be required for a base station which provides connection to the network from the internet, usually a computer or similar device.
 
   For short network with short life span (e.g. few hours to test some scenario in real conditions or throw off devices for short term use) %CITE construction
-  the ideal solution are battery powered devices, because it keeps the invested amount of resources low. Also battery power is ideal for out of the grid networks, where any other solution would not be applicable. Here the main goal is to optimalise the power usage to the absolute minimum, therefore maximalise the network lifetime.
+  the ideal solution are battery powered devices, because it keeps the invested amount of resources low. Also, battery power is ideal for out of the grid networks, where any other solution would not be applicable. Here the main goal is to optimise the power usage to the absolute minimum, therefore maximise the network lifetime.
 
-  For any other network the optimal solution usually is low power supply via cable, that usually also provides data connection.
+  For any other network the optimal solution usually is low power supply via cable, that usually also provides a data connection.
 
-  Alternative options for outdoor networks usually include some forms of energy harwesting, this might include solar power, geothermal energy or any other form of power harwesting. This option is usually asociated with presence of battery, that will supply power continually and energy harwesting will be used to recharge this battery. This is the usual case, because meany of these power options are not continous and gained amount of power might vary through the day.
+  Alternative options for outdoor networks usually include some forms of energy harvesting, this might include solar power, geothermal energy or any other form of power harvesting. This option is usually associated with a presence of battery, that will supply power continually and energy harvesting will be used to recharge this battery. This is the usual case because many of these power options are not continuous and gained an amount of power might vary through the day.
 
   \subsection{Code and data upload and download (\ref{enu:upload}) and (\ref{enu:data})}
-  Code upload and download is usually only a problem for long term network, usually for developement of research purposes, because these goald usually require frequent changes of source code, thus convenient way of doing so. In any other king of network software is usually uploaded only once and prior to the network deployment, therefore there is no need for long term solution for code update.
+  Code upload and download is usually only a problem for long term network, usually for the development of research purposes, because this goal usually requires frequent changes of source code, thus a convenient way of doing so. In any other kind of network software is usually uploaded only once and prior to the network deployment, therefore there is no need for a long-term solution for the code update.
 
-  When solution for code upload is required for already placed devices, there are two main options, either updated over the connected cable, or some FOTA\footnote{firmware over the air} solution, which would generally be prefered for battery powered networks, since it does not require any additional cables.
+  When the solution for code upload is required for already placed devices, there are two main options, either updated over the connected cable or some FOTA\footnote{firmware over the air} solution, which would generally be preferred for battery powered networks, since it does not require any additional cables.
 
-  In case of power privided through low power cable it is usually the best option to use this cable to provide software uploads and updates, since the cable is already present and it is the most reliable way to do so.
+  In a case of power provided through a low power cable, it is usually the best option to use this cable to provide software uploads and updates since the cable is already present and it is the most reliable way to do so.
 
-  The same applies to data transfers, cable connection is the most reliable and straightforward solution, when the cable is not present, such functions has to be provided via the radio.
+  The same applies to data transfers, cable connection is the most reliable and straightforward solution, when the cable is not present, such functions have to be provided via the radio.
 
   \section{Testbed design}
-  For construction of our own testbed, questions from the previous part have been answered respectively:
+  For the construction of our own testbed, questions from the previous part have been answered respectively:
   \begin{enumerate}
 
-    \item What is the purpose of this network? There is not one specific aplication, therefore it is generic type network with research and education purpose.
-    \item Which devices will be used? Arduino based devices with build in radio \ref{sec:hw}.
-    \item Will the network be homogenous or heterogenous (only one device type or multiple ones)? Only one type of device, with educational netwrok we have to keep thing simple.
-    \item Where will the network be placed? Network will be places inside building, across multiple rooms.
-    \item What is the expected lifetime for network? There is no set lifetime goal, only as long as it will be required or replaced by another type of network in the future.
+    \item What is the purpose of this network? There is not one specific application, therefore it is generic type network with research and education purpose.
+    \item Which devices will be used? Arduino based devices with built-in radio \ref{sec:hw}.
+    \item Will the network be homogenous or heterogenous (only one device type or multiple ones)? Only one type of device, with the educational network we have to keep thing simple.
+    \item Where will the network be placed? The network will be placed inside a building, across multiple rooms.
+    \item What is the expected lifetime of a network? There is no set lifetime goal, only as long as it will be required or replaced by another type of network in the future.
     \item What will be the power source for devices? All devices are going to be connected via USB cable, therefore this cable will provide the power.
     \item How shall we upload new code to devices? Same as previous, through the USB cable.
-    \item How the results will be collected from the nodes? Either throught the USB cable or using rado communication.
+    \item How the results will be collected from the nodes? Either through the USB cable or using radio communication.
 
   \end{enumerate}
   \subsection{Possible challenges}
-  Since the network is going to be permanent and without battery power, there are not that many challenges to solve. 
+  Since the network is going to be permanent and without battery power, there are not that many challenges to solve. The main issue is the placement of the individual nodes together with all the supporting infrastructure in such manner, that everything would work properly, while the nodes should be distributed evenly across all the covered area.
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{TESTBED deployment}
-TODO nodes placement, central server
+TODO nodes placement with map in appendix, central server placement
 
   \section{JeeTool} %CITE jeeTool repo and inpired by motetool repo by dusan
 \paragraph{Motivation}
   Few nodes can be managed manually without any major problems, most frequently using directly Arduino IDE \cite{Arduino}.
-  This approach is works flawlesly for up to three devices and it is possible to manage up to 10 devices this way, but with great effort and sacrificing the usability.
+  This approach is working flawlessly for up to three devices and it is possible to manage up to 10 devices this way, but with great effort and sacrificing the usability.
 
-  Either intentionaly or not, there is no doubt that the official Arduino IDE is designed with simplicity in mind, therefore it is usable for person without solid background in IT \cite{ArduinoIntro}.
-  On the other hand, this simplicity comes at the cost of many features, that might have been usefull for more advanced use (e.g. managment of multiple devices).
+  Either intentionally or not, there is no doubt that the official Arduino IDE is designed with simplicity in mind, therefore it is usable for a person without a solid background in IT \cite{ArduinoIntro}.
+  On the other hand, this simplicity comes at the cost of many features, that might have been useful for more advanced use (e.g. management of multiple devices).
 
 \paragraph{MoteTool inspiration}
   To remedy this problem, jeeTool \cite{JeeTool}
-  was created, deployment tool that uses Arduino Makefile project \cite{ArduinoMK}
-  to manage the network of 25 Arduino devices. This tool was inpired by motetool project \cite{motetool}
-  which was developed by Dusan Klinec in order to manage simmilar task, only for different type of devices. The basic functionality is the same, it allows users to detect all connected devices and upload applications to the selected ones. In additon jeeTool also supports bidirectional communication with individual devices via serial port.
+  was created, a deployment tool that uses Arduino Makefile project \cite{ArduinoMK}
+  to manage the network of 25 Arduino devices. This tool was inspired by motetool project \cite{motetool}
+  which was developed by Dusan Klinec in order to manage the simmilar task, only for the different type of devices? The basic functionality is the same, it allows users to detect all connected devices and upload applications to the selected ones. In addition, jeeTool also supports bidirectional communication with individual devices via a serial port.
 
 \paragraph{Implementation details}
-  As has been stated, Arduino makefile is used for the actual application upload. In order to make Makefile call for each of the connected devices, jeeTool creates temporary bash script file, which is used to set the enviroment for the specific node and execute the upload via Makefile. Temporary script itself is then executed with system call directly from jeeTool. If multiple nodes are selected for upload, jeeTool enables either serial deployment (mostly for debugging purposes) and parallel deployment, where all Makefile calls are made within dictrete threads, thus all of them are executed simultaneously.
+  As has been stated, Arduino makefile is used for the actual application upload. In order to make Makefile call for each of the connected devices, jeeTool creates temporary bash script file, which is used to set the environment for the specific node and execute the upload via Makefile. The temporary script itself is then executed with system call directly from jeeTool. If multiple nodes are selected for upload, jeeTool enables either serial deployment (mostly for debugging purposes) and parallel deployment, where all Makefile calls are made within discrete threads, thus all of them are executed simultaneously.
 
 \paragraph{Communication over serial port}
-  In addition to the upload features, jeeTool also enables communication with devices over serial port. This is done via jSerialComm library \cite{jserial}
+  In addition to the upload features, jeeTool also enables communication with devices over a serial port. This is done via jSerialComm library \cite{jserial}
   at the moment, in the past RxTx library \cite{rxtx}
-  was used, unfortunately this library is currently not being developed\footnote{last update is from 2011} and decision was made to change library to more up to date one, instead of using problematic old code.
+  was used, unfortunately, this library is currently not being developed\footnote{last update is from 2011} and decision was made to change the library to more up to date one, instead of using problematic old code.
 
-  Individual nodes are matched with files, whicha are named after the nodes (name of the device in the linux file system) and jeeTool is capable of writing all inboud communication in such file or read such file and write it over to the serial port. For the inbound communication there is an option of delayed termination of the program, thus jeeTool can be left runnning for specified amount of time before the ports to devices are closed (e.g. collect results after the experiment). For the outbound communication jeeTool can either send whole content of file at once or there is an option of delay between individual lines of the file (can be used for periodical sending of messages etc.).
+  Individual nodes are matched with files, which are named after the nodes (name of the device in the Linux file system) and jeeTool is capable of writing all inbound communication in such file or read such file and write it over to the serial port. For the inbound communication there is an option of delayed termination of the program, thus jeeTool can be left running for specified amount of time before the ports to devices are closed (e.g. collect results after the experiment). For the outbound communication, jeeTool can either send the whole content of the file at once or there is an option of delay between individual lines of the file (can be used for periodical sending of messages etc.).
 
   \section{Hardware selection}\label{sec:hw}
-  New network was designed with both the research \ref{ch:research} and educational \ref{ch:edu} use in mind. Therefore the selection of hardware for individual nodes was limited by these intended usecases. Since there already was experience with the research type network \cite{Matyas2015}
-  and its pitfalls related to the complicated use of specialised hardware, we opted for the developer friendly approach; devices based on Arduino platform \ref{par:jeeLink}, which are designed with simplicity in mind, as Arduino focus group are not only programmers, but also artists and generally people without any advanced IT skills.
+  New network was designed with both the research \ref{ch:research} and educational \ref{ch:edu} use in mind. Therefore the selection of hardware for individual nodes was limited by these intended use cases. Since there already was experience with the research type network \cite{Matyas2015}
+  and its pitfalls related to the complicated use of specialised hardware, we opted for the developer-friendly approach; devices based on Arduino platform \ref{par:jeeLink}, which are designed with simplicity in mind, as Arduino focus group are not only programmers but also artists and generally people without any advanced IT skills.
 
   \paragraph{JeeNode USB and JeeLink}\label{par:jeeLink} %TODO image
   Devices selected for the network are Arduino clones JeeLink nodes \cite{JeeLink}. In addition to that, also several JeeNode devices \cite{JeeNode} were obtained, these two are similar in many ways and can interact with each other, JeeNode USB is only a little bit more versatile in its use options.
 
   Both of these devices are based on Arduino Mini \cite{ArduinoMini}
   with ATmega328P processor. Wireless communication is enabled by the RF12B chip \ref{par:radio} \cite{RF12B}
-  which is permanently mounted to the device itself. Both devices can be connected directly to computer via USB\footnote{the USB port type is different}. The other most important difference between these two types is the fact that JeeLink has plastic cover, therefore there is no additional conectivity. On the other hand, JeeNode is not covered and there are pins available fo additional sensors or any other devices, that one might need to connect. Last, but certainly not least, JeeLink has additional 16 Mbit of flash memmory \cite{JeeLink}
+  which is permanently mounted to the device itself? Both devices can be connected directly to a computer via USB\footnote{the USB port type is different}. The other most important difference between these two types is the fact that JeeLink has a plastic cover, therefore there is no additional connectivity. On the other hand, JeeNode is not covered and there are pins available fo additional sensors or any other devices, that one might need to connect. Last, but certainly not least, JeeLink has additional 16 Mbit of flash memory \cite{JeeLink}
   available, therefore this can be used for convenient storage.
 
-  For both of these devices there is acompaniing library JeeLib \cite{JeeLib}
-  that contains all necessary functions for controlling the radio and any ther function that is different from standart Arduino Mini.
+  For both of these devices, there is accompanying library JeeLib \cite{JeeLib}
+  that contains all necessary functions for controlling the radio and any other function that is different from standard Arduino Mini.
   \paragraph{RF12B radio module}\label{par:radio} %TODO image
   Simple and quite cheap radio module from HopeRF \cite{RF12B}
-  is present on all JeeMote and JeeLink devices. Version sold in Europe is using 868 MHz frequency for the radio\footnote{other version can use 433 MHz or 915 MHz}. As many other common radio modules, this radio is half-duplex, therefore it is able either to receive or to transmit messages, but cannot do both at one time.
+  is present on all JeeMote and JeeLink devices. The version sold in Europe is using 868 MHz frequency for the radio\footnote{other version can use 433 MHz or 915 MHz}. As many other common radio modules, this radio is half-duplex, therefore it is able either to receive or to transmit messages, but cannot do both at one time.
 
-  Radio module is equipped with omnidirectional whip antena ($\approx$ 8 cm long wire) by default. It is possible to modify the propperties of such antena by shaping it in various ways, e.g. straight wire compared to coiled one. There might also be many other versions and shapes of antenae, which might improve radio properties, but this would be subject to whole another research in quite a different field.
+  The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm long wire) by default. It is possible to modify the properties of such antenna by shaping it in various ways, e.g. straight wire compared to coiled one. There might also be many other versions and shapes of antennae, which might improve radio properties, but this would be subject to whole another research in quite a different field.
 
-  \chapter{Research use}\label{ch:research}
-  One of the intentended uses for the created testbed was its use in research which can be of various nature. In this particular case, we would like to make a case study for key generation mechanism without any pre-shared information between individual nodes.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Research use}\label{ch:research}
+  One of the intended uses for the created testbed was its use in research which can be of various nature. In this particular case, we would like to make a case study for key generation mechanism without any pre-shared information between individual nodes.
 
-  In todays apliccation this would be quite common problem, since the amount of devices equiped with some kind of radio module is constantly groving, let it be wifi, bluetooth, or any other frequency and specification. However, we cannot expect for these devices to have any shared data nor capability to exchange them over already secure channel, since the secure channel is what we are trying to acomplish.
+  In today's application this would be quite a common problem since a number of devices equipped with some kind of radio module are constantly growing, let it be wifi, Bluetooth, or any other frequency and specification. However, we cannot expect for these devices to have any shared data nor capability to exchange them over an already secure channel since the secure channel is what we are trying to accomplish.
 
-  What we would like to show, is sheme for key derivation without any shared secret, only using properties of radio channel shared between these two devices and the nature of radio wave propagation through such shared channel.
+  What we would like to show, is a scheme for key derivation without any shared secret, only using properties of radio channel shared between these two devices and the nature of radio wave propagation through such shared channel.
 
   \section{Keys from radio signal}
-  Due to a nature of an wireless channel whcih is not perfect, we can observe fluctuations and disturbances in the wave propagation. It might seem difficult at first to measure these, since by no means we are able to observe all such events. Despite that there is a way, almost every radio module is able to measure RSSI\footnote{received signal strength indication}, which can be described as a amount of power in the received signal. There are many arbitrary scales and absolute values do not match on devices from different manufacturers %CITE.
+  Due to a nature of a wireless channel which is not perfect, we can observe fluctuations and disturbances in the wave propagation. It might seem difficult at first to measure these since by no means we are able to observe all such events. Despite that there is a way, almost every radio module is able to measure RSSI\footnote{received signal strength indication}, which can be described as an amount of power in the received signal. There are many arbitrary scales and absolute values do not match on devices from different manufacturers since RSSI is relative index \cite{RSSIMeaning}.
 
-  However, our alghoritm can work regardless to the differences in devices, even two devices with same configuration can produce different absolute values due to antena position and overall device manufacturing differences, since some of these devices are partially assembled by hand \footnote{e.g. JeeNode motes come as a ready to assemble kit}.
+  However, our algorithm can work regardless of the differences in devices, even two devices with the same configuration can produce different absolute values due to antenna position and overall device manufacturing differences, since some of these devices are partially assembled by hand \footnote{e.g. JeeNode motes come as a ready to assemble kit}.
 
   \subsection{Quantization principle (bits from signal strength)}
-    Quantization enables to extract bits from individual values of signal strength. There are many different approaches to this problem %\CITE
-    two main approaches here are: lossless quantization %CITE
-    and contrary to that we have lossy quantization.
+    Quantization enables to extract bits from individual values of signal strength. There are many different approaches to this problem \cite{Jana2009Rssi}
+    two main approaches here are: lossless quantization \cite{Azimi-Sadjadi2010Fading}
+    and contrary to that we have lossy quantization \cite{Mathur2008Rssi}. %TODO quant. is inherently lossy
+
 
     Main difference between these is number of generated bits per original signal strength measurements, while lossless quantization produces bit value from every measurement of signal strength, which is useful for high-performance demands, but it requires guaranteed variance in the radio channel (e.g. the nodes are constantly moving, or the environment is changing) during the key establishment phase. %CITE
     Otherwise, the resulting keys could possibly be very weak. %CITE
@@ -252,15 +258,14 @@ TODO nodes placement, central server
     Lossy quantization, on the other hand, does not have guaranteed output length per number of measured values, which can lead to a very limited length of output. However, this kind of quantization is expected to have better results in static environments %CITE if possible
     because its nature is to drop such bits, that fail to differ from others.
 
-    Also there are few different measurements of the channel one can use to produce bits. One would be RSSI measurements on received messages, other measure %\TODO %from paper and CITE
+    Also, there are few different measurements of the channel one can use to produce bits. One would be RSSI measurements on received messages, another measure %\TODO %from paper and CITE
 
-    Since our network is static and without any moving nodes, we implemented lossy quantizer algorithm designed by Mathur et.al.%/TODO verify name
-    , which showed promising results for the of the shelf wireless devices similar to ours, and also contained experimental results from several different scenarios, where some of these were comparable to our conditions.
+    Since our network is static and without any moving nodes, we implemented lossy quantizer algorithm designed by Mathur et.al. \cite{Mathur2008Rssi}, which showed promising results for the of the shelf wireless devices similar to ours, and also contained experimental results from several different scenarios, where some of these were comparable to our conditions.
 
 
 
     \subsection{RSSI Quantization}
-    Quantization princeple designed by Mathur et.al. %CITE
+    Quantization princeple designed by Mathur et.al. \cite{Mathur2008Rssi}
      works as follows:
 
     \begin{enumerate}
@@ -274,24 +279,24 @@ TODO nodes placement, central server
       \item nodes then synchronise their measurement by exchanging counter values associated with those messages, where signal strength measurements were assigned either one or zero bit values.
       \item those counter values that match on both nodes are expected to be excursions in the same direction and are used in the final outcome.
 
-      %TODO add some nice picture that would show this
+      TODO add some nice picture that would show this
     \end{enumerate}
+
+
   \section{Cooperative jamming (can it improve our situation?)}
-
-
   \section{Performance Evaluation (results from experiments)}
     \subsection{Enthropy of data}
     \subsection{Speed (bits of key per time)}
     \subsection{Possible errors}
   \section{Discussion, is it achievable and under what conditions?}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Education use}\label{ch:edu}
 
   \section{motivation for educational WSN network}
-  The current state of the art WSN devices usually uses specialised hardware
-  and software in order to achieve the best performance available. %\CITE
-  This, unfortunately, is not the ideal prerequisite for an easy to learn matter. In fact, most of WSN devices have rather complicated setup and are
-  quite challenging for novices. %\CITE
+  The current state of the art WSN devices usually uses specialised hardware and software in order to achieve the best performance available. %\CITE
+  This, unfortunately, is not the ideal prerequisite for an easy to learn matter. In fact, most of WSN devices have rather complicated setup and are quite challenging for novices \cite{hu2010wireless}.
 
   Because of such discouragement, it is difficult to teach how to
   work with WSN’s; few hours (at least) are usually required
@@ -349,13 +354,13 @@ TODO nodes placement, central server
     Many options are available, the easiest one being preshared random authentication tag, which would be added to the messages. This is really simple countermeasure, but it guarantees that the attacker can't send a valid message before the central node sends it.
 
     \subsection{3rd scenario - Sinkhole attack}\label{subsec:3rd}
-    Although very similar to the second scenario, this poses far greater   challenge than the previous one. The goal is not only to divert the traffic but also modify it on the fly and send it to the original recipient.
+    Although very similar to the second scenario, this poses far greater challenge than the previous one. The goal is not only to divert the traffic but also modify it on the fly and send it to the original recipient.
 
     The greatest issue here is related to the performance, since all messages from the entire network will be routed through single attacker node, therefore most of the messages are very likely to be dropped somewhere in the process, because single node is not capable of receiving and processing messages from every other node in the network, if they do not transmit on very slow rate.
 
     Task for this scenario is to deliver a modified message to the central node before the original message is delivered; messages with the same identifier but different content are discarded and only the one which was received the earliest is kept at the central node.
 
-    The reason why two very similar scenarios exist, while it could have been only this one, is to present scenarios in a manner of slowly increasing difficulty. If we were to skip the second scenario \ref{subsec:2nd}, the task might be too complicated to some, while this way, required task in the third scenario \ref{subsec:3rd} is only a minor extension to the second one, however, the achieved result is far greater impact.
+    The reason why two very similar scenarios exist, while it could have been only this one, is to present scenarios in a manner of slowly increasing difficulty. If we were to skip the second scenario \ref{subsec:2nd}, the task might be too complicated to some, while this way, required task in the third scenario \ref{subsec:3rd} is only a minor extension to the second one, however, the achieved result is a far greater impact.
 
     \paragraph{scenario setting}
     Runtime of this scenario is the same as for the previous one \ref{subsec:2nd}; initial phase of route establishment and after that messages are routed from nodes to the central node. The expected outcome is to divert ad modify as many messages as possible.
@@ -403,14 +408,16 @@ TODO nodes placement, central server
 
   The last option which can be utilised in evaluation is a submission of secret, which was received from interaction with the network, node either responds to received message with such secret or the secret has to be extracted from the communication in the network. Such secret can be a short word, number or something of similar nature and again such secret can be unique for each participant, which makes te evaluation an easy task.
   \section{Web interface and auto run}
-  Edu-hoc was designed as a long term excercise, thus single scenarios are expected to run for days, possibly week or longer. However, for some it would be extremly impractical to repeat only once during the whole time, because we would like to present fresh scenario to everyone involved,  and also we would like to reset the scenario once a while. This will ensure correct initial settings and if we set the intervals right, then everyone will be able to test out several solutions within reasonably short timeframe.
+  Edu-hoc was designed as a long-term exercise, thus single scenarios are expected to run for days, possibly week or longer. However, for some it would be extremely impractical to repeat only once during the whole time because we would like to present fresh scenario to everyone involved,  and also we would like to reset the scenario once a while. This will ensure correct initial settings and if we set the intervals right, then everyone will be able to test out several solutions within a reasonably short timeframe.
 
-  To achieve such kind of behaviour, we can utilise various approaches, the most easy one being set of bash scripts and setting the cron service %CITE
-  acordingly. The other option might be modified JeeTool, which would be running continuisly and in set intervals would trigger corresponding action.
+  To achieve such kind of behaviour, we can utilise various approaches, the easiest one being set of bash scripts and setting the cron service %CITE
+  accordingly. The other option might be modified JeeTool, which would be running continuously and in set intervals would trigger the corresponding action.
 
-  The last option is the most complicated one, but offers the most
+  The last option is the most complicated one but offers the most
 
   \section{PA197 use and results} \label{sec:PA197}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Future and related work}\
   \section{RSSI}
   \section{Edu-hoc}
