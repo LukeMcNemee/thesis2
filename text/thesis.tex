@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[
-  digital, %% This option enables the default options for the
+  print, %% This option enables the default options for the
            %% digital version of a document. Replace with `printed`
            %% to enable the default options for the printed version
            %% of a document.
@@ -285,6 +285,35 @@ TODO nodes placement with map in appendix, central server placement
 
   \section{Cooperative jamming (can it improve our situation?)}
   \section{Performance Evaluation (results from experiments)}
+xxx
+  \begin{table}[h!]
+    \begin{tabularx}{\textwidth}{llllX}
+      \hline
+      Sources: & Plain & Jammer & \begin{tabular}{@{}l@{}}  Moving \\ people\end{tabular} & \begin{tabular}{@{}l@{}}  Moving \\ shielding\end{tabular} \\
+      \hline
+
+      Total runs: & 40 & 10 & 424 & 26 \\
+      \begin{tabular}{@{}l@{}}  Usable runs I.\\ ($sd \neq 0$)\end{tabular}&  0 & 0 & 256 & 25 \\
+      \begin{tabular}{@{}l@{}}  Avg. bits \\ produced I.\end{tabular}&  0 & 0 & 189.41 & 238.48 \\
+\hline
+      \begin{tabular}{@{}l@{}}  Avg. errors \\ produced\end{tabular}&  - & - & 0.41 & 0.00 \\
+      \begin{tabular}{@{}l@{}}  Avg. errors \\ on sniffer\end{tabular}&  - & - & 51.00 & 59.88 \\
+\hline
+      \begin{tabular}{@{}l@{}}  Usable runs II.\\ (Both 1s and 0s in output) \end{tabular}&  - & - & 97 & 10 \\
+      \begin{tabular}{@{}l@{}}  Avg. bits \\ produced II.\end{tabular}&  - & - & 409.06 & 470.00 \\
+\hline
+      \begin{tabular}{@{}l@{}}  Min entropy\\ (8bit chunks)\end{tabular}&  - & - & 25.96 & 34.21 \\
+      \begin{tabular}{@{}l@{}}  Min entropy\\ (4bit chunks)\end{tabular}&  - & - & 50.64 & 68.39 \\
+      \begin{tabular}{@{}l@{}}  Frequency test\\ (8bit chunks)\end{tabular}&  - & - & 42.45 & 52.62 \\
+      \begin{tabular}{@{}l@{}}  Frequency test\\ (4bit chunks)\end{tabular}&  - & - & 72.40 & 96.01 \\
+
+      \hline
+
+    \end{tabularx}
+    \caption{table of sources evaluation}
+    \label{tab:sources}
+  \end{table}
+
     \subsection{Enthropy of data}
     \subsection{Speed (bits of key per time)}
     \subsection{Possible errors}

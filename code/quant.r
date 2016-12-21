@@ -1,9 +1,9 @@
 require(matrixStats) #install.packages('matrixStats')
 setwd("~/Dokumenty/studijni_materialy/Edu-hoc/src")
 
-dat1 = read.delim("RssiApp/values6.txt", header = FALSE, sep = ";", comment.char = "&")
-dat2 = read.delim("RssiApp2/values6.txt", header = FALSE, sep = ";", comment.char = "&")
-dat3 = read.delim("RssiAppSniffer/values6.txt", header = FALSE, sep = ";", comment.char = "&")
+dat1 = read.delim("RssiApp/values4.txt", header = FALSE, sep = ";", comment.char = "&")
+dat2 = read.delim("RssiApp2/values4.txt", header = FALSE, sep = ";", comment.char = "&")
+dat3 = read.delim("RssiAppSniffer/values4.txt", header = FALSE, sep = ";", comment.char = "&")
 
 basicStats <- function(x){
   m = mean(x)
