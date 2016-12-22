@@ -264,7 +264,7 @@ TODO nodes placement with map in appendix, central server placement
 
 
 
-    \subsection{RSSI Quantization}
+    \subsection{RSSI Quantization}\label{subsec:quant}
     Quantization princeple designed by Mathur et.al. \cite{Mathur2008Rssi}
      works as follows:
 
@@ -282,10 +282,28 @@ TODO nodes placement with map in appendix, central server placement
       TODO add some nice picture that would show this
     \end{enumerate}
 
+  \section{Improvement strategies}
+  \subsection{Cooperative jamming (can it improve our situation?)}
+  \subsection{Other means of disturbances}
 
-  \section{Cooperative jamming (can it improve our situation?)}
-  \section{Performance Evaluation (results from experiments)}
-xxx
+  \section{Experiment setting}
+  An application was created, ir order to collect data from real world network. Such data then would be processed by quantization algorithm \ref{subsec:quant} and produced bit sequences were analysed regarding the entropy and usability for cryptographic keys \ref{sec:results}.
+
+  This application uses speacially modified JeeNode motes \ref{sec:hw}, because analog RSSI values are not available through provided connections to radio module. Fortunately, analog RSSI can be obtained through short jumper wire from radio module to the Arduino analog pin %CITE.
+
+  In the experiment itself, two motes exchange messages with counter value (counter is updated only on one of these motes) and both motes save measured RSSI values for each message. The counter value is used to guarantee delivery of these messages, mote A sends message with value $n$ and mote B upon reception responds with the same value $n$. Mote A can increment counter value only when respond message with current counter value is received. Othervise the same counter value $n$ has to be send again and both motes will keep the RSSI measurement only from the most recent message with counter $n$.
+
+  Application is programmed in such way, that 1000 counter values are exchanged, then they are send out via the serial port and application is terminated. Intervals between individual messages should be as short as possible, so that the random disturbances in the radio channel would be captured on both nodes. Even though RSSI measurement are definitely not symetrical, using this approach we can expect them to be highly correlated %CITE.
+
+  
+
+  %TODO plan of mote placement
+
+
+  \section{Performance Evaluation (results from experiments)}\label{sec:results}
+
+
+
   \begin{table}[h!]
     \begin{tabularx}{\textwidth}{llllX}
       \hline
