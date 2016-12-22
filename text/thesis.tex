@@ -283,8 +283,8 @@ TODO nodes placement with map in appendix, central server placement
     \end{enumerate}
 
   \section{Improvement strategies}
-  \subsection{Cooperative jamming (can it improve our situation?)}
-  \subsection{Other means of disturbances}
+  \subsection{Cooperative jamming (can it improve our situation?)}\label{subsec:jammer}
+  \subsection{Other means of disturbances}\label{subsec:people}
 
   \section{Experiment setting}
   An application was created, ir order to collect data from real world network. Such data then would be processed by quantization algorithm \ref{subsec:quant} and produced bit sequences were analysed regarding the entropy and usability for cryptographic keys \ref{sec:results}.
@@ -295,16 +295,19 @@ TODO nodes placement with map in appendix, central server placement
 
   Application is programmed in such way, that 1000 counter values are exchanged, then they are send out via the serial port and application is terminated. Intervals between individual messages should be as short as possible, so that the random disturbances in the radio channel would be captured on both nodes. Even though RSSI measurement are definitely not symetrical, using this approach we can expect them to be highly correlated %CITE.
 
-  
+  The limit of 1000 messages was set due to the memmory constrains of individual devices. Since the bottleneck of our experiment was in the communication via the serial port, we opted to exchange all messages and gather data first and only after that to transfer them out to the server. The application was then uploaded to the nodes again and run from fresh state several times as the experiment settings required. In the optimal conditions, the expected time for single run of application is about 30 seconds; runtime over two minutes is usually a result of some kind of error, either in application itself, placement of devices, or disturbances in the radio channel.
+
+  In addition to regular nodes, up to two sniffer motes were active at the time of application runtime. These were uploaded with modified version of application, so that they would only receive messages, but would not send any messages to other devices. We have done several trials on placement of these sniffer motes, in order to see any impact of position in the network on the results.
 
   %TODO plan of mote placement
 
 
   \section{Performance Evaluation (results from experiments)}\label{sec:results}
+  We have made several runs of our application with different settings. Nodes A and B were always on the same places (sniffer possitions were altered), but the conditions of radio channel itself were different. First, as a base level, we had run the experiment in conditions without any disturbances. After we realised, that the plain static network does not produce any usable data, we tryed to introduce other techniques \ref{subsec:jammer} \ref{subsec:people} that would add disturbances to the radio channel, therefore changes in the measured RSSI values.
 
+  Results from all experiments are sumarised in the table \ref{tab:sources} and then results for each individual source are discussed in following subsections.
 
-
-  \begin{table}[h!]
+  \begin{table}[h!!!]
     \begin{tabularx}{\textwidth}{llllX}
       \hline
       Sources: & Plain & Jammer & \begin{tabular}{@{}l@{}}  Moving \\ people\end{tabular} & \begin{tabular}{@{}l@{}}  Moving \\ shielding\end{tabular} \\
@@ -331,8 +334,31 @@ TODO nodes placement with map in appendix, central server placement
     \caption{table of sources evaluation}
     \label{tab:sources}
   \end{table}
+  \subsection{Plain source}\label{src:plain}
+  As we can see from the table \ref{tab:sources}, there were no bits produced from this experiment. The reason behind is really simple, there were no disturbances in the %FORCE
+  radio channel, therefore all measurements of RSSI resulted in the same value. Therefore the quantization algorithm \ref{subsec:quant} computes $sd$ equal to 0, thus fails to establish bounds $q^+$ and $q^-$ and there are no bits produced on the output.
 
-    \subsection{Enthropy of data}
+  Since there are no bits produced, there is no point in measuring the enthropy of the output. This result can be considered as the pitfall of static networks, without any moving parts or changes in the environment, there is not enough entropy in the radio channel as such, that could be used to extract entropy, because there is none. Of course, the greater the area such network covers, disturbances are more probable, but we have to be avare of this problem and be prepared to indentify such enviroment. The main reason being any bits generated in such environment should not be used \cite{Jana2009Rssi}.
+
+  \subsection{Jammer}\label{src:jammer}
+  Friendly jamming can be used as a possible remedy to the problem of static network \ref{subsec:jammer}, creating artificial noise in the network and thus possibly adding some entropy (given that the jamming is not predictable).
+
+  As the results in the table \ref{tab:sources} show, this approach was not succesfull, mostly because of limitations of used radio modules \ref{par:radio}. While this approach would work with more advanced radios that are capable of substractions on the signal level and allow for more devices to broadcast at one time. RF12 radio module and its acompaniing library however does not allow this, mostly because of really simple collision avoidance alghorith. The approach is based on simple principle, not to send messages when there is any other signal present in the wireless medium.
+
+  Therefore our primitive jammer, although jammer itself was able to broadcast anytime, failed. The legitimate nodes A and B could not receive nor broadcast their own messages, because of the collision avoidance. Thus the only effect of jammer was prolonget time needed to exchange 1000 messages between devices.
+
+  To counter this behaviour, we tried to limit the transmission power used by sniffer, even using it without antena. Once the signal was limited to the required level, that nodes A and B would not be interupted by it, then we observed same results as if the jammer was not present at all.
+
+  Although there might be other option how to make this approach work, because we limited ourselves to using stock radio modules and available software for radio management, we were not able to produce any bits using this method.
+  Thus we leave out this option for either more advanced users (who might be albe to control the radio on the most elemental level, therefore defining own collision avoidance rules etc.) or users with more specialised hardware (e.g. software defined radio modules) %CITE
+
+  \subsection{Moving people}\label{src:people}
+
+  asd
+  \subsection{Moving shielding}\label{src:shield}
+asdasd
+
+
     \subsection{Speed (bits of key per time)}
     \subsection{Possible errors}
   \section{Discussion, is it achievable and under what conditions?}
