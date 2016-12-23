@@ -285,6 +285,7 @@ TODO nodes placement with map in appendix, central server placement
   \section{Improvement strategies}
   \subsection{Cooperative jamming (can it improve our situation?)}\label{subsec:jammer}
   \subsection{Other means of disturbances}\label{subsec:people}
+  \subsection{other (shield)}\label{subsec:shield}
 
   \section{Experiment setting}
   An application was created, ir order to collect data from real world network. Such data then would be processed by quantization algorithm \ref{subsec:quant} and produced bit sequences were analysed regarding the entropy and usability for cryptographic keys \ref{sec:results}.
@@ -304,6 +305,16 @@ TODO nodes placement with map in appendix, central server placement
 
   \section{Performance Evaluation (results from experiments)}\label{sec:results}
   We have made several runs of our application with different settings. Nodes A and B were always on the same places (sniffer possitions were altered), but the conditions of radio channel itself were different. First, as a base level, we had run the experiment in conditions without any disturbances. After we realised, that the plain static network does not produce any usable data, we tryed to introduce other techniques \ref{subsec:jammer} \ref{subsec:people} that would add disturbances to the radio channel, therefore changes in the measured RSSI values.
+
+  To analyse the gathered data we used set of R scripts %CITE R
+  and all data postprocessing was done outside of the motes, while in the real settings, motes would have to do all of the computations on their own. In orde to evaluate produced bit sequences, we used min entropy \ref{par:min} and frequency test \ref{par:freq}, both on eight and four bit chunks of data. The goal was to obtain several measurements of entropy in the data and then use the most conservative of them to estimate contained randomness. Since we had collected only small amounts of data for individual sources, we decided not to use any of statistical test batteries %CITE
+  , because our data either did not match the required amount for input or the results would not be statistically signifcant for such small sample.
+
+  \paragraph{Min entropy}\label{par:min}
+
+  \paragraph{Frequency test}\label{par:freq} ss
+xx
+
 
   Results from all experiments are sumarised in the table \ref{tab:sources} and then results for each individual source are discussed in following subsections.
 
@@ -350,17 +361,23 @@ TODO nodes placement with map in appendix, central server placement
   To counter this behaviour, we tried to limit the transmission power used by sniffer, even using it without antena. Once the signal was limited to the required level, that nodes A and B would not be interupted by it, then we observed same results as if the jammer was not present at all.
 
   Although there might be other option how to make this approach work, because we limited ourselves to using stock radio modules and available software for radio management, we were not able to produce any bits using this method.
-  Thus we leave out this option for either more advanced users (who might be albe to control the radio on the most elemental level, therefore defining own collision avoidance rules etc.) or users with more specialised hardware (e.g. software defined radio modules) %CITE
+  Thus we leave out this option for either more advanced users (who might be albe to control the radio on the most elemental level, therefore defining own collision avoidance rules etc.) or users with more specialised hardware (e.g. software defined radio modules). %CITE
 
   \subsection{Moving people}\label{src:people}
+  This option was not one of the original intended sources, but during the experiment with plain source we discovered, that people walking through the monitored area caused much wanted iregularities in radio signal. This option would be a viable for busy places, like already tried cafeteria \cite{Mathur2008Rssi} or town square. Thans to the netwrok placement we utilised our clasroom and made these measurements during one of the lectures. The data clearly show some patterns, mostly we can observe timeframes which produce bit sequencies with high enthropy and also timeframes where no bits were generated.
 
-  asd
+  These differences can by explained by a simple fact, people do not move in a random fashion. And that is exactly what we can observe in our data, during runs, that produced data people were moving, but most of the time they remained stationary, therefore with amost no effect on the network. Although movement of people is not random, it is can be considered not predictable, therefore it might be sufficient source of randomness for our purposes.
+
+  The results show promising values and show us, that there is an potential and more research should be done in this direction. We can see clear trend in data, once we filter out unusable runs (either because no bits were produced, or because produced bit sequence contained only zeroes), we can see, that about one quarter of runs is suitable for bit extraction. Of course these runs are not evenly distributed in our sample, they are rather clustered. On average we can generate about 400 bits from one succesfull run. As we can see from the results of min entropy \ref{par:min} and frequency test \ref{par:freq}, the most conservative estimate is about 26 bits of entropy contained within these data. Thus on average we would like to utilise five consecutive runs, in order to generate usable key.
+
   \subsection{Moving shielding}\label{src:shield}
-asdasd
+  In last experiment, motivated by the promissing data from previous one, we tryed to introduce disturbances in the radio channel without the presence of any persons \ref{subsec:shield}. In the table we can see, that this approach achieved almost the same results as the previous one \ref{src:people}.
 
+  Unfortunatelly, due to an error, we did not manage to collect any larger amount of data, therefore there is not much we can conclude from these results. However, the current results are promising, averages of generated bits and entrophy estimates are slighly better than in other experiments.  These values might decrease with more experiments, but given the fact, that these results were produced on network without any interference from outside, this area is definitely worth looking into.
 
-    \subsection{Speed (bits of key per time)}
-    \subsection{Possible errors}
+  \subsection{Speed (bits of key per time)}
+  
+  \subsection{Possible errors}
   \section{Discussion, is it achievable and under what conditions?}
 
 
