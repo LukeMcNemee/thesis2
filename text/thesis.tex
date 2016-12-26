@@ -311,9 +311,24 @@ TODO nodes placement with map in appendix, central server placement
   , because our data either did not match the required amount for input or the results would not be statistically signifcant for such small sample.
 
   \paragraph{Min entropy}\label{par:min}
+Min entropy \cite{barker2012recommendation} is considered the most conservative estimate of unpredictability in information theory. To make an min entropy estimate of IID\footnote{Independend and identically distributed} source we can use simple calculation as follows, given the dataset with N samples:
 
-  \paragraph{Frequency test}\label{par:freq} ss
-xx
+
+\begin{enumerate}
+  \item Find the most frequent value and let $C_{MAX}$ equal number of occurences of this value in dataset.
+  \item $pmax = \frac{C_{MAX}}{N}$
+  \item $C_{BOUND}=C_{MAX} + 2.3 \cdot \sqrt{N \cdot pmax \cdot ( 1- pmax)}$
+  \item $H = - \log_2 (\frac{C_{BOUND}}{N}) $
+  \item $W$ is the number of bits in each sample of dataset.
+  \item Min entropy is then equal to $\min(W, H)$
+
+\end{enumerate}
+
+It is important to note, that this calculation of min entropy estimate is only meaningful for IID sources \cite{barker2012recommendation}, for non-IID sources we have to use other means. Testing sources with dependencies with this min entropy calculation may result in overestimates and generally output without any meanigful use.
+
+There are many test for estimating min entropy contained within output of non IID sources, most notably collision test, partial collection test or the compression test \cite{barker2012recommendation}. To us the most meaningfull one was the frequency test\cite{barker2012recommendation}, because of its ability to work on small amounts of data, larger amount of data only increase the accuracy, but the test can provide meaningful estimate on any amount of data provided. 
+
+\paragraph{Frequency test}\label{par:freq}
 
 
   Results from all experiments are sumarised in the table \ref{tab:sources} and then results for each individual source are discussed in following subsections.
@@ -376,7 +391,7 @@ xx
   Unfortunatelly, due to an error, we did not manage to collect any larger amount of data, therefore there is not much we can conclude from these results. However, the current results are promising, averages of generated bits and entrophy estimates are slighly better than in other experiments.  These values might decrease with more experiments, but given the fact, that these results were produced on network without any interference from outside, this area is definitely worth looking into.
 
   \subsection{Speed (bits of key per time)}
-  
+
   \subsection{Possible errors}
   \section{Discussion, is it achievable and under what conditions?}
 
