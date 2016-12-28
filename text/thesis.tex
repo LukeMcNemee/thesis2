@@ -286,6 +286,7 @@ TODO nodes placement with map in appendix, central server placement
   \subsection{Cooperative jamming (can it improve our situation?)}\label{subsec:jammer}
   \subsection{Other means of disturbances}\label{subsec:people}
   \subsection{other (shield)}\label{subsec:shield}
+  TODO add shielding description with drawing
 
   \section{Experiment setting}
   An application was created, ir order to collect data from real world network. Such data then would be processed by quantization algorithm \ref{subsec:quant} and produced bit sequences were analysed regarding the entropy and usability for cryptographic keys \ref{sec:results}.
@@ -326,10 +327,23 @@ Min entropy \cite{barker2012recommendation} is considered the most conservative 
 
 It is important to note, that this calculation of min entropy estimate is only meaningful for IID sources \cite{barker2012recommendation}, for non-IID sources we have to use other means. Testing sources with dependencies with this min entropy calculation may result in overestimates and generally output without any meanigful use.
 
-There are many test for estimating min entropy contained within output of non IID sources, most notably collision test, partial collection test or the compression test \cite{barker2012recommendation}. To us the most meaningfull one was the frequency test\cite{barker2012recommendation}, because of its ability to work on small amounts of data, larger amount of data only increase the accuracy, but the test can provide meaningful estimate on any amount of data provided. 
+There are many test for estimating min entropy contained within output of non IID sources, most notably collision test, partial collection test or the compression test \cite{barker2012recommendation}. To us the most meaningfull one was the frequency test\cite{barker2012recommendation}, because of its ability to work on small amounts of data, larger amount of data only increase the accuracy, but the test can provide meaningful estimate on any amount of data provided.
 
 \paragraph{Frequency test}\label{par:freq}
+  On first sight, the calculation is simmilar to the original min entropy \ref{par:min}. The calculation is following, using $0.005$ as confidence level $\alpha$:
 
+  \begin{enumerate}
+    \item Count occurences of each value in the dataset as $count_i$ for all $i=1 \dots n$ where $n$ means all possible outputs.
+    \item Calculate $\epsilon$ from confidence level $\alpha$ and number of observations in dataset.
+    $$\epsilon = \sqrt{\frac{\log(\frac{1}{1-\alpha})}{2\cdot N}}$$
+    \item $pmax$ is the probability of most likely observation value.
+    $$pmax = max_{i=1..n}(\frac{count_i}{N})$$
+    \item Resulting estimate of min entropy is
+    $$min-entropy =  -\log_2 (pmax + \epsilon)$$
+
+  \end{enumerate}
+
+  Using these two approaches we can get the most conservative estimate of entropy contained within our gathered data.
 
   Results from all experiments are sumarised in the table \ref{tab:sources} and then results for each individual source are discussed in following subsections.
 
@@ -390,10 +404,40 @@ There are many test for estimating min entropy contained within output of non II
 
   Unfortunatelly, due to an error, we did not manage to collect any larger amount of data, therefore there is not much we can conclude from these results. However, the current results are promising, averages of generated bits and entrophy estimates are slighly better than in other experiments.  These values might decrease with more experiments, but given the fact, that these results were produced on network without any interference from outside, this area is definitely worth looking into.
 
-  \subsection{Speed (bits of key per time)}
+  The big question regarding this source is the predicatability of such data, because as we can see on graph of sample run %TODO add image
+  there are clearly visible excursions that do repeat in somewhat regular fashion.
 
+  \subsection{Speed (bits of key per time)}
+  One run (exchange of 1000 messages) takes approximately 30 seconds to complete. This is under condition, that these two nodes are only one to use the wireless medium, otherwise the required time would be different.
+
+  Anyway, approximately 30 seconds to exchange values and then some minor time for calculations and exchange of two messages with identified excursions (which are negligible regarding the time).  From these 1000 values we can obtain about 25 bits of enthropy on average \ref{src:people}, therefore we can gather about 50 bits per minute.
+
+  This is comparable to the original result 1 bit/sec of Mathur et.al. \cite{Mathur2008Rssi}, however we were capable of echanging way less messages per minute than the original proposal (our rate 1000 msgs/30 sec is not comparable to 4000 msgs/sec achieved by Mathur et.al.), probally due to the nature of used devices \ref{sec:hw}.
   \subsection{Possible errors}
-  \section{Discussion, is it achievable and under what conditions?}
+  Question about reliability surely comes to mind. We have no direct guarantee, values and measurement on individual nodes are clearly not symetrical, we only expect them to be highly correlated.
+
+  As we can see on the boxplots \ref{fig:errorsT} \ref{fig:errorsS}, the errors between nodes A and B are indeed scarce, therefore there is reasonable probbability, that the nodes A and B will be able to establish common key, using the obtained bit sequence from quantisation algorith \ref{subsec:quant}.
+
+  The other important part is how many bits were compromised to the sniffer node and potential attacker. As we can see, on average there is an hamming distance of 50 bits between output bit sequence for nodes A and B and bit sequence derived at sniffer node. Of course there are excursions in both directions, therefore we cannot entirely guarantee that the derived bit sequence is secret.
+
+
+  \begin{figure}
+    \includegraphics[width=\textwidth]{../images/boxplotDistancesTeaching.png}
+  \caption{Boxplot of Hamming distances between generated bit sequences from nodes A, B, and sniffer node during movement of people \ref{src:people}}
+  \label{fig:errorsT}
+  \end{figure}
+
+On the other hand, our bit sequence still needs some post processing in order to extract the randomness \ref{sec:use}, the most simple one would be hash function. Therefore, if we use correct function, we can expect, that one different bit would cause change in half of the  bits in the resulting key thanks to the avalanche effect \cite{Webster1986}.
+
+We can clearly see, that guessing is also not an option, although individual bit positions in sequence are known, there is no way to estimate whether the identified excursion is over or below the treshold. Guessing which bits are not correct is also not an option, while guessing just one bit change would mean $400$ trials on average, two bits would mean about $400^2$ trials. Complexity for this case grows exponentialy and the sniffer gets $50$ bits wrong on average without any reasonable clue which bits are correct and which are not.
+
+  \begin{figure}
+    \includegraphics[width=\textwidth]{../images/boxplotDistancesRottation.png}
+  \caption{Boxplot of Hamming distances between generated bit sequences from nodes A, B, and sniffer node during movement of shielding \ref{src:shield}}
+  \label{fig:errorsS}
+  \end{figure}
+
+  \section{Discussion and use cases}\label{sec:use}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -541,6 +585,30 @@ There are many test for estimating min entropy contained within output of non II
 %%==============================================================
 
 \appendix %% Start the appendices.
-\chapter{An appendix}
+\chapter{Testbed map}
+\begin{figure}
+  \includegraphics[width=\textwidth]{../images/testbed.png}
+\caption{Map of testbed with placement of individual nodes}
+\label{fig:map}
+\end{figure}
+
+\chapter{RSSI graphs}
+\begin{figure}
+  \includegraphics[height=\textwidth, angle = 90 ]{../images/graph_rssi_01.pdf}
+\caption{sd = 0}
+\label{fig:rssi_01}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[height=\textwidth, angle = 90 ]{../images/graph_rssi_02.pdf}
+\caption{spikes}
+\label{fig:rssi_02}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[height=\textwidth, angle = 90 ]{../images/graph_rssi_03.pdf}
+\caption{1000 bits output}
+\label{fig:rssi_03}
+\end{figure}
 
 \end{document}

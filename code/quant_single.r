@@ -1,9 +1,9 @@
 require(matrixStats)
 setwd("~/Dokumenty/studijni_materialy/Edu-hoc/src")
 
-dat1 = read.delim("RssiApp/values.txt", header = FALSE, sep = ";", comment.char = "&")
-dat2 = read.delim("RssiApp2/values.txt", header = FALSE, sep = ";", comment.char = "&")
-dat3 = read.delim("RssiAppSniffer/values.txt", header = FALSE, sep = ";", comment.char = "&")
+dat1 = read.delim("RssiApp/values4.txt", header = FALSE, sep = ";", comment.char = "&")
+dat2 = read.delim("RssiApp2/values4.txt", header = FALSE, sep = ";", comment.char = "&")
+dat3 = read.delim("RssiAppSniffer/values4.txt", header = FALSE, sep = ";", comment.char = "&")
 
 basicStats <- function(x){
   m = mean(x)
@@ -78,7 +78,7 @@ plotBits <- function(){
 
 plotValues <- function(top, down, line){
   plot(c(-10:1010), y=rep_len(s1$mean, length.out = 1021), type = 'l', col = 'blue',  ylim = c(max(values1)+top, min(values1)-down), 
-       xlab = "bits", ylab="dB")
+       xlab = "message counter value", ylab="dB")
   lines(c(-10:1010), y=rep_len(s2$mean, length.out = 1021), col = 'red')
   lines(c(-10:1010), y=rep_len(s3$mean, length.out = 1021), col = 'green' )
   
@@ -91,37 +91,58 @@ plotValues <- function(top, down, line){
   lines(c(-10:1010), y=rep_len(s3$qm, length.out = 1021), col = 'green' , lty = 3)
   
   
-  points(c(1:1000),type="b", y=values1, col = 'blue', lty = 2, pch=16 )
-  points(c(1:1000),type="b", y=values2, col = 'red' , lty = 2, pch=16)
-  points(c(1:1000),type="b", y=values3, col = 'green', lty = 2, pch=16)
+  points(c(1:1000),type="p", y=values1, col = 'blue', lty = 2, pch=16 )
+  points(c(1:1000),type="p", y=values2, col = 'red' , lty = 2, pch=16)
+  points(c(1:1000),type="p", y=values3, col = 'green', lty = 2, pch=20)
+  
+  #same <- getSamePoints(x_locations, bits1, bits2)
+  #diff <- getDiffPoints(x_locations, bits1, bits2)
+  #other <- setdiff(setdiff(c(1:1000), same), diff)
+  #points(other, y=rep_len(line, length.out = length(other)), col = "black", pch=20, cex=0.1)
+  #points(na.omit(same), y=rep_len(line, length.out = length(na.omit(same))), col = "green", pch=20, cex=0.1)
+  #points(diff, y=rep_len(line, length.out = length(diff)), col = "red", pch=20, cex=0.1)
+  #text(-10, line, "AB", cex = 0.5)
   
   same <- getSamePoints(x_locations, bits1, bits2)
   diff <- getDiffPoints(x_locations, bits1, bits2)
+  sniff <- getSamePoints(s_locations, bits1, bits3)
+  print(sniff)
   other <- setdiff(setdiff(c(1:1000), same), diff)
+  points(same, y=rep_len(line, length.out = length(same)), col = "green", pch=20, cex=0.1)
+  points(diff, y=rep_len(line, length.out = length(diff)), col = "orange", pch=20, cex=0.1)
   points(other, y=rep_len(line, length.out = length(other)), col = "black", pch=20, cex=0.1)
-  points(na.omit(same), y=rep_len(line, length.out = length(na.omit(same))), col = "green", pch=20, cex=0.1)
-  points(diff, y=rep_len(line, length.out = length(diff)), col = "red", pch=20, cex=0.1)
-  text(-10, line, "AB", cex = 0.5)
+  points(sniff, y=rep_len(line, length.out = length(sniff)), col = "red", pch=20, cex=0.1)
+  points(same, y=rep_len(line-0.025, length.out = length(same)), col = "green", pch=20, cex=0.1)
+  points(diff, y=rep_len(line-0.025, length.out = length(diff)), col = "orange", pch=20, cex=0.1)
+  points(other, y=rep_len(line-0.025, length.out = length(other)), col = "black", pch=20, cex=0.1)
+  points(sniff, y=rep_len(line-0.025, length.out = length(sniff)), col = "red", pch=20, cex=0.1)
+  points(same, y=rep_len(line-0.05, length.out = length(same)), col = "green", pch=20, cex=0.1)
+  points(diff, y=rep_len(line-0.05, length.out = length(diff)), col = "orange", pch=20, cex=0.1)
+  points(other, y=rep_len(line-0.05, length.out = length(other)), col = "black", pch=20, cex=0.1)
+  points(sniff, y=rep_len(line-0.05, length.out = length(sniff)), col = "red", pch=20, cex=0.1)
+  
+  #same <- getSamePoints(s_locations, bits1, bits3)
+  #diff <- getDiffPoints(s_locations, bits1, bits3)
+  #other <- setdiff(setdiff(c(1:1000), same), diff)
+  #points(other, y=rep_len(line-0.2, length.out = length(other)), col = "black", pch=20, cex=0.1)
+  #points(na.omit(same), y=rep_len(line-0.2, length.out = length(na.omit(same))), col = "green", pch=20, cex=0.1)
+  #points(diff, y=rep_len(line-0.2, length.out = length(diff)), col = "red", pch=20, cex=0.1)
+  #text(-10, line-0.2, "AS", cex = 0.5)
   
   
+  #same <- getSamePoints(s_locations, bits3, bits2)
+  #diff <- getDiffPoints(s_locations, bits3, bits2)
+  #other <- setdiff(setdiff(c(1:1000), same), diff)
+  #points(other, y=rep_len(line - 0.4, length.out = length(other)), col = "black", pch=20, cex=0.1)
+  #points(na.omit(same), y=rep_len(line - 0.4, length.out = length(na.omit(same))), col = "green", pch=20, cex=0.1)
+  #points(diff, y=rep_len(line - 0.4, length.out = length(diff)), col = "red", pch=20, cex=0.1)
+  #text(-10, line - 0.4, "BS", cex = 0.5)
   
-  same <- getSamePoints(s_locations, bits1, bits3)
-  diff <- getDiffPoints(s_locations, bits1, bits3)
-  other <- setdiff(setdiff(c(1:1000), same), diff)
-  points(other, y=rep_len(line-0.2, length.out = length(other)), col = "black", pch=20, cex=0.1)
-  points(na.omit(same), y=rep_len(line-0.2, length.out = length(na.omit(same))), col = "green", pch=20, cex=0.1)
-  points(diff, y=rep_len(line-0.2, length.out = length(diff)), col = "red", pch=20, cex=0.1)
-  text(-10, line-0.2, "AS", cex = 0.5)
   
-  
-  same <- getSamePoints(s_locations, bits3, bits2)
-  diff <- getDiffPoints(s_locations, bits3, bits2)
-  other <- setdiff(setdiff(c(1:1000), same), diff)
-  points(other, y=rep_len(line - 0.4, length.out = length(other)), col = "black", pch=20, cex=0.1)
-  points(na.omit(same), y=rep_len(line - 0.4, length.out = length(na.omit(same))), col = "green", pch=20, cex=0.1)
-  points(diff, y=rep_len(line - 0.4, length.out = length(diff)), col = "red", pch=20, cex=0.1)
-  text(-10, line - 0.4, "BS", cex = 0.5)
-  
+  legend("topleft",  legend = c("node A", "node B", "sniffer","mean", "q+ & q-"), 
+         col=c("red", "blue", "green","black","black"),pch=c(20,20,20,NA,NA), lty = c(NA,NA,NA,1,2), cex=0.8, title = "rssi values")
+  legend("topright", legend = c("no excursions", "AB bit match", "AB bit error", "compromised bit"), 
+         col=c("black", "green", "orange","red"),lty=1, cex=0.8, title = "bit sequences")
 }
 
 getSamePoints <- function(locations, bitsA, bitsB){
@@ -134,7 +155,7 @@ getSamePoints <- function(locations, bitsA, bitsB){
       result <- c(result, locations[i])
     }
   }
-  print(result)
+  #print(result)
   return(result)
 }
 
@@ -157,7 +178,7 @@ hS <- c(NA)
 
 alpha <- 0.5
  
-  i<-25
+  i<-256
   values1 <- as.numeric(dat1[i,1:1000]) -256
   values2 <- as.numeric(dat2[i,1:1000]) -256
   values3 <- as.numeric(dat3[i,1:1000]) -256
