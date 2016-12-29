@@ -99,14 +99,20 @@
 %\newtheorem*{remark}{Remark}
 
 \chapter{Introduction}
-general stuff (wide usecases, IoT) (footnote for WSN)
+TODO general WSN stuff (wide usecases, IoT) (footnote for WSN)
 
-One of the goals of this thesis was to create multi-purpose WSN platform. Intentionaly multipurpose, alhough we were avare of the fact that such network cannot outperform a dedicated one in one specific task. We had multiple tasks in mind even before the construction of this network and many other appeared later, therefore dedicate one network to each of these tasks would not be a cost effective solution. Moreover, it is possible to create general purpose network will be at least comparable to the dedicated one in most of the usecases.
+One of the goals of this thesis was to create multi-purpose WSN platform. Intentionaly multipurpose, alhough we were avare of the fact that such network cannot outperform a dedicated one in one specific task. We had multiple tasks in mind even before the construction of this network and many other appeared later, therefore dedicate one network to each of these tasks would not be a cost effective solution. Moreover, it is possible to create general purpose network will be at least comparable to the dedicated one in most of the usecases. The basic decision making and problem analysisn regarding building such network is described in chapter \ref{ch:analysis} and the actual construction of our testbed, together with description of developed management software  is in the chapter \ref{ch:testbed}.
 
-Once such network has been created, with all the required software and with all the required functionality, it was used for two very much different usecases. 
+Once such network has been created, with all the required software and  functionality, it was used for two very much different usecases. First usecase was research goal; we had promissing results from Mathur et.al. \cite{Mathur2008Rssi} but these were produced on devices capable of much more than our usual WSN node (Mathur et.al. used both FPGA-based developement platforms for 802.11 standart and laptops with Atheros WiFi cards). This is the reason why we decided to replicate these results using our WSN platform.
+
+Although this novel approach is without any doubt usefull for any kind of devices, it does not fully show its potentil on powerfull devices like laptops, because these devices are perfecty fine using asymetric cryptography. At the same time there are definetely better sources of randomness than the fading of radio chanel. However, we can see potential for this kind of approach in the area of ad-hoc networks and therefore we have to consider the most basic device we can imagine. These devices will most likely consist of microprocessor and simple radio, usually without any support for well known standarts (e.g. 802.11 \cite{crow1997ieee}) the most we can expect is support for ZigBee specification \cite{alliance2006zigbee}.
+
+Therefore we decided to run simmilar set of experiments, only using hardware comparable to a typical WSN node. The set of experiments was later expanded, because we realised, that our static network is not capable of producing any randomenss without additional disturbances; let it be jamming, movement of people or an other means. To this part of thesis is dedicated chapter \ref{ch:research}.
+
+The second usecase of our network is related to the usually complicated first experience with WSN. To remedy this problem, the second usecase is educational one. The goal is to create ad-hoc network, that would be easy to use and would help to introduce various concepts used in WSNs. This usecase was demonstrated during seminars of PA197 (Secure Network Design) course and slightly modified versions of individual scenarios were used as marked assigments. Basic principles of this usecase, detailed descriptions of individual scenarios and specifics of use during seminars are described in chapter \ref{ch:edu}.
 
 TODO
-\chapter{Problem analysis}
+\chapter{Problem analysis}\label{ch:analysis}
   TODO
 % questions - power, programming, permanent vs temporal etc.
   \section{Creating WSN network}
@@ -191,7 +197,7 @@ TODO
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{TESTBED deployment}
+\chapter{TESTBED deployment}\label{ch:testbed}
 TODO nodes placement with map in appendix, central server placement
 
   \section{JeeTool} %CITE jeeTool repo and inpired by motetool repo by dusan
