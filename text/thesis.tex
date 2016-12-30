@@ -99,24 +99,16 @@
 %\newtheorem*{remark}{Remark}
 
 \chapter{Introduction}
-TODO general WSN stuff (wide usecases, IoT) (footnote for WSN)
+Wireless sensor networks\footnote{WSN} are typically highly distributed networks with many individual devices. We consider networks with tens up to thousands of individual nodes\footnote{from high-level view each device can be considered a vertex or node in a network graph} that communicate with each other over radio. The most common use case for these devices is monitoring near environment around them. Thus they are equipped with various sensors. Applications of these networks are very broad; they are being used to control forest fires \cite{li2006wireless}, research whale migration patterns \cite{haas2006new}, or monitoring of the structural health of bridges and tunnels \cite{stajano2008steel}.
 
-One of the goals of this thesis was to create multi-purpose WSN platform. Intentionaly multipurpose, alhough we were avare of the fact that such network cannot outperform a dedicated one in one specific task. We had multiple tasks in mind even before the construction of this network and many other appeared later, therefore dedicate one network to each of these tasks would not be a cost effective solution. Moreover, it is possible to create general purpose network will be at least comparable to the dedicated one in most of the usecases. The basic decision making and problem analysisn regarding building such network is described in chapter \ref{ch:analysis} and the actual construction of our testbed, together with description of developed management software  is in the chapter \ref{ch:testbed}.
+One of the goals of this thesis was to create multi-purpose WSN platform for Arduino devices \cite{Arduino}. That includes an initial design of such platform, implementation of all the required software and the actual build of the network itself. As it is today, in WSN world does not exist one unifying platform, that everyone would agree upon. Therefore we opted to create our solution, that would be the best fit for our use cases. Decisions related to design choices are discussed in chapter \ref{ch:analysis}. Details about the build itself as well as a description of created software are included in chapter \ref{ch:testbed}.
 
-Once such network has been created, with all the required software and  functionality, it was used for two very much different usecases. First usecase was research goal; we had promissing results from Mathur et.al. \cite{Mathur2008Rssi} but these were produced on devices capable of much more than our usual WSN node (Mathur et.al. used both FPGA-based developement platforms for 802.11 standart and laptops with Atheros WiFi cards). This is the reason why we decided to replicate these results using our WSN platform.
+The other goal of this thesis was implementation and execution of two use cases for our newly created WSN platform. The first use case was a transformation of work done by Mathur et.al. \cite{Mathur2008Rssi} to the WSN environment. Their results show interesting potential in randomness extraction from radio fading channel. However, these were produced on devices capable of much more than what we used for the construction of our network (Mathur et.al. used both FPGA-based development platforms for 802.11 standard and laptops with Atheros WiFi cards compared to our Arduino devices). The principles of bit extraction from radio channel fading are described in chapter \ref{ch:research} and results are discussed in section \ref{sec:results}.
 
-Although this novel approach is without any doubt usefull for any kind of devices, it does not fully show its potentil on powerfull devices like laptops, because these devices are perfecty fine using asymetric cryptography. At the same time there are definetely better sources of randomness than the fading of radio chanel. However, we can see potential for this kind of approach in the area of ad-hoc networks and therefore we have to consider the most basic device we can imagine. These devices will most likely consist of microprocessor and simple radio, usually without any support for well known standarts (e.g. 802.11 \cite{crow1997ieee}) the most we can expect is support for ZigBee specification \cite{alliance2006zigbee}.
+The second use case of our network is related to the usually difficult first experience with WSN. As a remedy to this problem, the second use case is an educational one. The goal was to create an ad-hoc network, that would be easy to use and would help to introduce various concepts used in WSNs. This use case was demonstrated during seminars of PA197 course (Secure Network Design), and slightly modified versions of particular scenarios were used as marked assignments. Basic principles of this use case, detailed descriptions of  scenarios and specifics of use during seminars are described in chapter \ref{ch:edu}.
 
-Therefore we decided to run simmilar set of experiments, only using hardware comparable to a typical WSN node. The set of experiments was later expanded, because we realised, that our static network is not capable of producing any randomenss without additional disturbances; let it be jamming, movement of people or an other means. To this part of thesis is dedicated chapter \ref{ch:research}.
-
-The second usecase of our network is related to the usually complicated first experience with WSN. To remedy this problem, the second usecase is educational one. The goal is to create ad-hoc network, that would be easy to use and would help to introduce various concepts used in WSNs. This usecase was demonstrated during seminars of PA197 (Secure Network Design) course and slightly modified versions of individual scenarios were used as marked assigments. Basic principles of this usecase, detailed descriptions of individual scenarios and specifics of use during seminars are described in chapter \ref{ch:edu}.
-
-TODO
-\chapter{Problem analysis}\label{ch:analysis}
-  TODO
-% questions - power, programming, permanent vs temporal etc.
-  \section{Creating WSN network}
-  In order to create functioning WSN network, one must ask and answer many questions which define the shape and parameters of such network, these questions include following:
+\chapter{Creating WSN network - Problem analysis}\label{ch:analysis}
+  In order to create functioning WSN network, one must ask and answer many questions which define the shape and parameters of such network. These questions include following points:
 
   \begin{enumerate}
 
@@ -131,12 +123,12 @@ TODO
 
   \end{enumerate}
 
-  Some of these are independent decisions, some are quite closely related to another. Now we can elaborate on these questions a bit more and provide possible reasoning for each one. Numbers in parentheses refer to the point in the previous enumeration.
+  Some of these are independent decisions, some are quite closely related one to another. Now we can elaborate on these questions a bit more and provide possible reasoning for each one. Numbers in parentheses refer to the point in the previous enumeration.
 
   \subsection{Network purpose (\ref{enu:purpose})}
-  The biggest decision and it basically dictates the options for all the others. General purpose or educational network will be completely different than production network with just one goal only. Basically there is either one sole purpose that is given from the beginning, because the network is designed with this goal in mind; let it be forest fire monitoring, air pollution measurements, whales migration monitoring, or reporting free parking places; and it is perfectly fit for such goal and not so much fo the others.
+  The biggest decision and it basically dictates the options for all the others. General purpose or educational network will be completely different than production network with just one goal only. There is either one sole purpose that is given from the beginning. Thus the network is designed with this goal in mind; let it be forest fire control, air pollution measurements, whales migration monitoring, or reporting free parking places. Such network is perfectly fit for its goal and not so much fo the others.
 
-  On the other hand, a network for development purposes or one with education as one of its purposes cannot be application specific and has to be general as much as it can be. Because there might be many different requirements for the network through its lifetime and is should satisfy all of them. Single purpose network will have devices for the specific job only (maybe even manufactured by required specifications), however, a multipurpose network might require different resources for different applications because one does not know what the requirements might be in the future.
+  On the other hand, a network for development purposes or one with education as one of its purposes cannot be application specific. It has to be general as much as it can be. There might be many different requirements for the network through its lifetime and is should satisfy all of them. Single purpose network will have devices for the specific job only (maybe even manufactured by required specifications). However, a multipurpose network might require different resources for different applications because one does not know what the requirements might be in the future.
 
   \subsection{Device selection (\ref{enu:devices}) and (\ref{enu:type})}
   Device selection is very much dependent on the network purpose, but there are some general options and directions one can prefer in certain situations.
@@ -154,10 +146,10 @@ TODO
 
   On of the factors that would determine the nature of our network is allowing movement of certain nodes. Devices and options for them are inherently going to be different in the case of the static network compared to moving one. Dynamic network will have much greater needs on redundancy and durability of each individual device and also the design of applications and protocols will have to be much more resilient to the possible events which might occur during the movement (neighbour devices will change, the mortality rate will be naturally much larger, environment around the network will change).
 
-  In the static topology we can predict and assume many possible events, even prepare for them in advance. Therefore once a node is not active for certain period of time, we assume it never will be active again (which in a dynamic network could just be a temporal change of topology and we might be able to communicate again after some time). Thus once the static network is deployed (deployment can be randomised) we can actually save the current state and derive everything else from it, in the dynamc network we cannot make any assumptions at all from the initial positions and we have to adapt to the current situation during the whole lifetime of such network.
+  In the static topology we can predict and assume many possible events, even prepare for them in advance. Therefore once a node is not active for certain period of time, we assume it never will be active again (which in a dynamic network could just be a temporal change of topology and we might be able to communicate again after some time). Thus once the static network is deployed (deployment can be randomised) we can actually save the current state and derive everything else from it, in the dynamic network we cannot make any assumptions at all from the initial positions and we have to adapt to the current situation during the whole lifetime of such network.
 
   \subsection{Power source (\ref{enu:power})}
-  Two options for the power supply are available, either supply from a battery or by wire, let the wire be only power cable or cable combined with data (e.g. USB cable). Options are usually determined by the device itself, because devices usually have some requirements regarding the power supply and not all devices can, for example, be powered from five volts which are supplied by USB cable.
+  Two options for the power supply are available, either supply from a battery or by wire, let the wire be only power cable or cable combined with data (e.g. USB cable). Options are usually determined by the device itself because devices usually have some requirements regarding the power supply and not all devices can, for example, be powered from five volts which are supplied by USB cable.
 
   The least convenient method is direct power from the outlet, which unfortunately might be sometimes the only option if the device demands an extraordinary amount of power which cannot be supplied any other way or only for short time. Such way of power might, for example, be required for a base station which provides connection to the network from the internet, usually a computer or similar device.
 
@@ -166,7 +158,7 @@ TODO
 
   For any other network the optimal solution usually is low power supply via cable, that usually also provides a data connection.
 
-  Alternative options for outdoor networks usually include some forms of energy harvesting, this might include solar power, geothermal energy or any other form of power harvesting. This option is usually associated with a presence of battery, that will supply power continually and energy harvesting will be used to recharge this battery. This is the usual case because many of these power options are not continuous and gained an amount of power might vary through the day.
+  Alternative options for outdoor networks usually include some forms of energy harvesting, this might include solar power, geothermal energy or any other form of power harvesting. This option is usually associated with a presence of a battery, that will supply power continually and energy harvesting will be used to recharge this battery. This is the usual case because many of these power options are not continuous and gained an amount of power might vary through the day.
 
   \subsection{Code and data upload and download (\ref{enu:upload}) and (\ref{enu:data})}
   Code upload and download is usually only a problem for long term network, usually for the development of research purposes, because this goal usually requires frequent changes of source code, thus a convenient way of doing so. In any other kind of network software is usually uploaded only once and prior to the network deployment, therefore there is no need for a long-term solution for the code update.
@@ -212,7 +204,7 @@ TODO nodes placement with map in appendix, central server placement
   To remedy this problem, jeeTool \cite{JeeTool}
   was created, a deployment tool that uses Arduino Makefile project \cite{ArduinoMK}
   to manage the network of 25 Arduino devices. This tool was inspired by motetool project \cite{motetool}
-  which was developed by Dusan Klinec in order to manage the simmilar task, only for the different type of devices? The basic functionality is the same, it allows users to detect all connected devices and upload applications to the selected ones. In addition, jeeTool also supports bidirectional communication with individual devices via a serial port.
+  which was developed by Dusan Klinec in order to manage the similar task, only for the different type of devices? The basic functionality is the same, it allows users to detect all connected devices and upload applications to the selected ones. In addition, jeeTool also supports bidirectional communication with individual devices via a serial port.
 
 \paragraph{Implementation details}
   As has been stated, Arduino makefile is used for the actual application upload. In order to make Makefile call for each of the connected devices, jeeTool creates temporary bash script file, which is used to set the environment for the specific node and execute the upload via Makefile. The temporary script itself is then executed with system call directly from jeeTool. If multiple nodes are selected for upload, jeeTool enables either serial deployment (mostly for debugging purposes) and parallel deployment, where all Makefile calls are made within discrete threads, thus all of them are executed simultaneously.
@@ -290,40 +282,48 @@ TODO nodes placement with map in appendix, central server placement
       \item nodes then synchronise their measurement by exchanging counter values associated with those messages, where signal strength measurements were assigned either one or zero bit values.
       \item those counter values that match on both nodes are expected to be excursions in the same direction and are used in the final outcome.
 
-      TODO add some nice picture that would show this
+
     \end{enumerate}
+    TODO add some nice picture that would show this from mathur paper
 
   \section{Improvement strategies}
-  \subsection{Cooperative jamming (can it improve our situation?)}\label{subsec:jammer}
+  As we can clearly see from data collected in experiments during undisturbed network \ref{src:plain}, there no bits generated and that is the case for most of the time. To deal with this problem we have to introduce some form of artifical noise or disturbances.
+  \subsection{Cooperative jamming}\label{subsec:jammer}
+  The solution that offers itself is the help of other nodes within the network, because all of them are equiped with radio and we only have to work around the media access control mechanism in order to make two or more of them broadcast at the same time. Such idea has aready been researched, e.g. in work of Goel et.al. \cite{Goel2008Noise} or by He et.al. \cite{He2010Jamming}.
+
+
+
   \subsection{Other means of disturbances}\label{subsec:people}
-  \subsection{other (shield)}\label{subsec:shield}
+  \subsubsection{People}\label{subsubsec:people}
+  At first we tried to avoid this kind of disturbance as much as was possible, because movement of people is unpredictable (to certain extend) and such experiments are very hard (nearly impossible) to replicate.
+  \subsubsection{Mechanical obstructions}\label{subsec:shield}
   TODO add shielding description with drawing
 
   \section{Experiment setting}
-  An application was created, ir order to collect data from real world network. Such data then would be processed by quantization algorithm \ref{subsec:quant} and produced bit sequences were analysed regarding the entropy and usability for cryptographic keys \ref{sec:results}.
+  An application was created, in order to collect data from a real-world network. Such data then would be processed by quantization algorithm \ref{subsec:quant} and produced bit sequences were analysed regarding the entropy and usability for cryptographic keys \ref{sec:results}.
 
-  This application uses speacially modified JeeNode motes \ref{sec:hw}, because analog RSSI values are not available through provided connections to radio module. Fortunately, analog RSSI can be obtained through short jumper wire from radio module to the Arduino analog pin %CITE.
+  This application uses specially modified JeeNode motes \ref{sec:hw}, because analog RSSI values are not available through provided connections to radio module. Fortunately, analogue RSSI can be obtained through short jumper wire from radio module to the Arduino analog pin %CITE.
 
-  In the experiment itself, two motes exchange messages with counter value (counter is updated only on one of these motes) and both motes save measured RSSI values for each message. The counter value is used to guarantee delivery of these messages, mote A sends message with value $n$ and mote B upon reception responds with the same value $n$. Mote A can increment counter value only when respond message with current counter value is received. Othervise the same counter value $n$ has to be send again and both motes will keep the RSSI measurement only from the most recent message with counter $n$.
+  In the experiment itself, two motes exchange messages with a counter value (counter is updated only on one of these motes) and both motes save measured RSSI values for each message. The counter value is used to guarantee delivery of these messages, mote A sends a message with value $n$ and mote B upon reception responds with the same value $n$. Mote A can increment counter value only when respond message with current counter value is received. Otherwise the same counter value $n$ has to be sent again and both motes will keep the RSSI measurement only from the most recent message with counter $n$.
 
-  Application is programmed in such way, that 1000 counter values are exchanged, then they are send out via the serial port and application is terminated. Intervals between individual messages should be as short as possible, so that the random disturbances in the radio channel would be captured on both nodes. Even though RSSI measurement are definitely not symetrical, using this approach we can expect them to be highly correlated %CITE.
+  The application is programmed in such way, that 1000 counter values are exchanged, then they are sending out via the serial port and application is terminated. Intervals between individual messages should be as short as possible so that the random disturbances in the radio channel would be captured on both nodes. Even though RSSI measurement is definitely not symmetrical, using this approach we can expect them to be highly correlated %CITE.
 
-  The limit of 1000 messages was set due to the memmory constrains of individual devices. Since the bottleneck of our experiment was in the communication via the serial port, we opted to exchange all messages and gather data first and only after that to transfer them out to the server. The application was then uploaded to the nodes again and run from fresh state several times as the experiment settings required. In the optimal conditions, the expected time for single run of application is about 30 seconds; runtime over two minutes is usually a result of some kind of error, either in application itself, placement of devices, or disturbances in the radio channel.
+  The limit of 1000 messages was set due to the memory constraints of individual devices. Since the bottleneck of our experiment was in the communication via the serial port, we opted to exchange all messages and gather data first and only after that to transfer them out to the server. The application was then uploaded to the nodes again and run from fresh state several times as the experiment settings required. In the optimal conditions, the expected time for a single run of application is about 30 seconds; runtime over two minutes is usually a result of some kind of error, either in the application itself, placement of devices, or disturbances in the radio channel.
 
-  In addition to regular nodes, up to two sniffer motes were active at the time of application runtime. These were uploaded with modified version of application, so that they would only receive messages, but would not send any messages to other devices. We have done several trials on placement of these sniffer motes, in order to see any impact of position in the network on the results.
+  In addition to regular nodes, up to two sniffer motes were active at the time of application runtime. These were uploaded with modified version of an application, so that they would only receive messages, but would not send any messages to other devices. We have done several trials on a placement of these sniffer motes, in order to see any impact of position in the network on the results.
 
   %TODO plan of mote placement
 
 
   \section{Performance Evaluation (results from experiments)}\label{sec:results}
-  We have made several runs of our application with different settings. Nodes A and B were always on the same places (sniffer possitions were altered), but the conditions of radio channel itself were different. First, as a base level, we had run the experiment in conditions without any disturbances. After we realised, that the plain static network does not produce any usable data, we tryed to introduce other techniques \ref{subsec:jammer} \ref{subsec:people} that would add disturbances to the radio channel, therefore changes in the measured RSSI values.
+  We have made several runs of our application with different settings. Nodes A and B were always on the same places (sniffer positions were altered), but the conditions of radio channel itself were different. First, as a base level, we had run the experiment in conditions without any disturbances. After we realised, that the plain static network does not produce any usable data, we tried to introduce other techniques \ref{subsec:jammer} \ref{subsec:people} that would add disturbances to the radio channel, therefore changes in the measured RSSI values.
 
   To analyse the gathered data we used set of R scripts %CITE R
-  and all data postprocessing was done outside of the motes, while in the real settings, motes would have to do all of the computations on their own. In orde to evaluate produced bit sequences, we used min entropy \ref{par:min} and frequency test \ref{par:freq}, both on eight and four bit chunks of data. The goal was to obtain several measurements of entropy in the data and then use the most conservative of them to estimate contained randomness. Since we had collected only small amounts of data for individual sources, we decided not to use any of statistical test batteries %CITE
-  , because our data either did not match the required amount for input or the results would not be statistically signifcant for such small sample.
+  and all data postprocessing was done outside of the motes, while in the real settings, motes would have to do all of the computations on their own. In orde to evaluate produced bit sequences, we used min-entropy \ref{par:min} and frequency test \ref{par:freq}, both on eight and four-bit chunks of data. The goal was to obtain several measurements of entropy in the data and then use the most conservative of them to estimate contained randomness. Since we had collected only small amounts of data for individual sources, we decided not to use any of statistical test batteries %CITE
+  , because our data either did not match the required amount of input or the results would not be statistically significant for such small sample.
 
   \paragraph{Min entropy}\label{par:min}
-Min entropy \cite{barker2012recommendation} is considered the most conservative estimate of unpredictability in information theory. To make an min entropy estimate of IID\footnote{Independend and identically distributed} source we can use simple calculation as follows, given the dataset with N samples:
+Min-entropy \cite{barker2012recommendation} is considered the most conservative estimate of unpredictability in information theory. To make a min-entropy estimate of IID\footnote{Independend and identically distributed} source we can use simple calculation as follows, given the dataset with N samples:
 
 
 \begin{enumerate}
@@ -336,12 +336,12 @@ Min entropy \cite{barker2012recommendation} is considered the most conservative 
 
 \end{enumerate}
 
-It is important to note, that this calculation of min entropy estimate is only meaningful for IID sources \cite{barker2012recommendation}, for non-IID sources we have to use other means. Testing sources with dependencies with this min entropy calculation may result in overestimates and generally output without any meanigful use.
+It is important to note, that this calculation of min-entropy estimate is only meaningful for IID sources \cite{barker2012recommendation}, for non-IID sources we have to use other means. Testing sources with dependencies with this min-entropy calculation may result in overestimates and generally output without any meaningful use.
 
-There are many test for estimating min entropy contained within output of non IID sources, most notably collision test, partial collection test or the compression test \cite{barker2012recommendation}. To us the most meaningfull one was the frequency test\cite{barker2012recommendation}, because of its ability to work on small amounts of data, larger amount of data only increase the accuracy, but the test can provide meaningful estimate on any amount of data provided.
+There are many tests for estimating min-entropy contained within the output of non-IID sources, most notably collision test, partial collection test or the compression test \cite{barker2012recommendation}. To us the most meaningful one was the frequency test\cite{barker2012recommendation}, because of its ability to work on small amounts of data, a larger amount of data only increase the accuracy, but the test can provide a meaningful estimate on any amount of data provided.
 
 \paragraph{Frequency test}\label{par:freq}
-  On first sight, the calculation is simmilar to the original min entropy \ref{par:min}. The calculation is following, using $0.005$ as confidence level $\alpha$:
+  On first sight, the calculation is similar to the original min-entropy \ref{par:min}. The calculation is following, using $0.005$ as confidence level $\alpha$:
 
   \begin{enumerate}
     \item Count occurences of each value in the dataset as $count_i$ for all $i=1 \dots n$ where $n$ means all possible outputs.
@@ -356,7 +356,7 @@ There are many test for estimating min entropy contained within output of non II
 
   Using these two approaches we can get the most conservative estimate of entropy contained within our gathered data.
 
-  Results from all experiments are sumarised in the table \ref{tab:sources} and then results for each individual source are discussed in following subsections.
+  Results from all experiments are summarised in the table \ref{tab:sources} and then results for each individual source are discussed in following subsections.
 
   \begin{table}[h!!!]
     \begin{tabularx}{\textwidth}{llllX}
@@ -387,49 +387,60 @@ There are many test for estimating min entropy contained within output of non II
   \end{table}
   \subsection{Plain source}\label{src:plain}
   As we can see from the table \ref{tab:sources}, there were no bits produced from this experiment. The reason behind is really simple, there were no disturbances in the %FORCE
-  radio channel, therefore all measurements of RSSI resulted in the same value. Therefore the quantization algorithm \ref{subsec:quant} computes $sd$ equal to 0, thus fails to establish bounds $q^+$ and $q^-$ and there are no bits produced on the output.
+  radio channel, therefore all measurements of RSSI resulted in the same value. Therefore the quantization algorithm \ref{subsec:quant} computes $sd$ equal to 0, thus fails to establish bounds $q^+$ and $q^-$ and there are no bits produced on the output. Sample visualisation can be seen in figure \ref{fig:rssi_01}.
 
-  Since there are no bits produced, there is no point in measuring the enthropy of the output. This result can be considered as the pitfall of static networks, without any moving parts or changes in the environment, there is not enough entropy in the radio channel as such, that could be used to extract entropy, because there is none. Of course, the greater the area such network covers, disturbances are more probable, but we have to be avare of this problem and be prepared to indentify such enviroment. The main reason being any bits generated in such environment should not be used \cite{Jana2009Rssi}.
+  Since there are no bits produced, there is no point in measuring the entropy of the output. This result can be considered as the pitfall of static networks, without any moving parts or changes in the environment, there is not enough entropy in the radio channel as such, that could be used to extract entropy because there is none. Of course, the greater the area such network covers, disturbances are more probable, but we have to be aware of this problem and be prepared to identify such environment. The main reason being any bits generated in such environment should not be used \cite{Jana2009Rssi}.
 
   \subsection{Jammer}\label{src:jammer}
   Friendly jamming can be used as a possible remedy to the problem of static network \ref{subsec:jammer}, creating artificial noise in the network and thus possibly adding some entropy (given that the jamming is not predictable).
 
-  As the results in the table \ref{tab:sources} show, this approach was not succesfull, mostly because of limitations of used radio modules \ref{par:radio}. While this approach would work with more advanced radios that are capable of substractions on the signal level and allow for more devices to broadcast at one time. RF12 radio module and its acompaniing library however does not allow this, mostly because of really simple collision avoidance alghorith. The approach is based on simple principle, not to send messages when there is any other signal present in the wireless medium.
+  As the results in the table \ref{tab:sources} show, this approach was not successful, mostly because of limitations of used radio modules \ref{par:radio}. While this approach would work with more advanced radios that are capable of subtractions on the signal level and allow for more devices to broadcast at one time. RF12 radio module and its accompanying library, however, does not allow this, mostly because of really simple collision avoidance algorithm. The approach is based on simple principle, not to send messages when there is any other signal present in the wireless medium.
 
-  Therefore our primitive jammer, although jammer itself was able to broadcast anytime, failed. The legitimate nodes A and B could not receive nor broadcast their own messages, because of the collision avoidance. Thus the only effect of jammer was prolonget time needed to exchange 1000 messages between devices.
+  Therefore our primitive jammer, although jammer itself was able to broadcast anytime, failed. The legitimate nodes A and B could not receive nor broadcast their own messages, because of the collision avoidance. Thus the only effect of jammer was prolonged time needed to exchange 1000 messages between devices.
 
-  To counter this behaviour, we tried to limit the transmission power used by sniffer, even using it without antena. Once the signal was limited to the required level, that nodes A and B would not be interupted by it, then we observed same results as if the jammer was not present at all.
+  To counter this behaviour, we tried to limit the transmission power used by sniffer, even using it without antenna. Once the signal was limited to the required level, that nodes A and B would not be interrupted by it, then we observed same results as if the jammer was not present at all.
 
   Although there might be other option how to make this approach work, because we limited ourselves to using stock radio modules and available software for radio management, we were not able to produce any bits using this method.
-  Thus we leave out this option for either more advanced users (who might be albe to control the radio on the most elemental level, therefore defining own collision avoidance rules etc.) or users with more specialised hardware (e.g. software defined radio modules). %CITE
+  Thus we leave out this option for either more advanced users (who might be able to control the radio on the most elemental level, therefore defining own collision avoidance rules etc.) or users with more specialised hardware (e.g. software defined radio modules). %CITE
 
   \subsection{Moving people}\label{src:people}
-  This option was not one of the original intended sources, but during the experiment with plain source we discovered, that people walking through the monitored area caused much wanted iregularities in radio signal. This option would be a viable for busy places, like already tried cafeteria \cite{Mathur2008Rssi} or town square. Thans to the netwrok placement we utilised our clasroom and made these measurements during one of the lectures. The data clearly show some patterns, mostly we can observe timeframes which produce bit sequencies with high enthropy and also timeframes where no bits were generated.
+  This option was not one of the originally intended sources, but during the experiment with plain source, we discovered, that people walking through the monitored area caused much-wanted irregularities in a radio signal. This option would be a viable for busy places like already tried cafeteria \cite{Mathur2008Rssi} or town square. Thanks to the network placement we utilised our classroom and made these measurements during one of the lectures. The data clearly show some patterns, mostly we can observe timeframes which produce bit sequences with high entropy and also timeframes where no bits were generated.
 
-  These differences can by explained by a simple fact, people do not move in a random fashion. And that is exactly what we can observe in our data, during runs, that produced data people were moving, but most of the time they remained stationary, therefore with amost no effect on the network. Although movement of people is not random, it is can be considered not predictable, therefore it might be sufficient source of randomness for our purposes.
+  \begin{figure}
+    \includegraphics[height=\textwidth, angle = 90]{../images/graph_rssi_04.pdf}
+  \caption{TODO add numbers to description}
+  \label{fig:rssi_04}
+  \end{figure}
 
-  The results show promising values and show us, that there is an potential and more research should be done in this direction. We can see clear trend in data, once we filter out unusable runs (either because no bits were produced, or because produced bit sequence contained only zeroes), we can see, that about one quarter of runs is suitable for bit extraction. Of course these runs are not evenly distributed in our sample, they are rather clustered. On average we can generate about 400 bits from one succesfull run. As we can see from the results of min entropy \ref{par:min} and frequency test \ref{par:freq}, the most conservative estimate is about 26 bits of entropy contained within these data. Thus on average we would like to utilise five consecutive runs, in order to generate usable key.
+
+  These differences can by explained by a simple fact, people do not move in a random fashion. And that is exactly what we can observe in our data, during runs, that produced data people were moving, but most of the time they remained stationary, therefore with almost no effect on the network. Although movement of people is not random, it is can be considered not predictable, therefore it might be sufficient source of randomness for our purposes.
+
+
+  One sample run from this experiment is shown as figure \ref{fig:rssi_04}. From this run, there were 161 bits generated, with zero errors between nodes A and B. And sniffer node made 90 errors, thus about half of the bit sequence was compromised.
+
+  The results show promising values and show us, that there is a potential and more research should be done in this direction. We can see a clear trend in data, once we filter out unusable runs (either because no bits were produced, or because produced bit sequence contained only zeroes), we can see, that about one-quarter of runs is suitable for bit extraction. Of course, these runs are not evenly distributed in our sample, they are rather clustered. On average, we can generate about 400 bits from one successful run. As we can see from the results of min-entropy \ref{par:min} and frequency test \ref{par:freq}, the most conservative estimate is about 26 bits of entropy contained within these data. Thus on average we would like to utilise five consecutive runs, in order to generate a usable key.
 
   \subsection{Moving shielding}\label{src:shield}
-  In last experiment, motivated by the promissing data from previous one, we tryed to introduce disturbances in the radio channel without the presence of any persons \ref{subsec:shield}. In the table we can see, that this approach achieved almost the same results as the previous one \ref{src:people}.
+  In the last experiment, motivated by the promising data from previous one, we tried to introduce disturbances in the radio channel without the presence of any person \ref{subsec:shield}. In the table we can see, that this approach achieved almost the same results as the previous one \ref{src:people}.
 
-  Unfortunatelly, due to an error, we did not manage to collect any larger amount of data, therefore there is not much we can conclude from these results. However, the current results are promising, averages of generated bits and entrophy estimates are slighly better than in other experiments.  These values might decrease with more experiments, but given the fact, that these results were produced on network without any interference from outside, this area is definitely worth looking into.
+  Unfortunately, due to an error, we did not manage to collect any larger amount of data, therefore there is not much we can conclude from these results. However, the current results are promising, averages of generated bits and entropy estimates are slightly better than in other experiments.  These values might decrease with more experiments, but given the fact, that these results were produced on a network without any interference from outside, this area is definitely worth looking into.
 
-  The big question regarding this source is the predicatability of such data, because as we can see on graph of sample run %TODO add image
+  The big question regarding this source is the predictability of such data, because as we can see on graph of sample run \ref{fig:rssi_02}
   there are clearly visible excursions that do repeat in somewhat regular fashion.
 
+
   \subsection{Speed (bits of key per time)}
-  One run (exchange of 1000 messages) takes approximately 30 seconds to complete. This is under condition, that these two nodes are only one to use the wireless medium, otherwise the required time would be different.
+  One run (exchange of 1000 messages) takes approximately 30 seconds to complete. This is under a condition, that these two nodes are only one to use the wireless medium, otherwise the required time would be different.
 
-  Anyway, approximately 30 seconds to exchange values and then some minor time for calculations and exchange of two messages with identified excursions (which are negligible regarding the time).  From these 1000 values we can obtain about 25 bits of enthropy on average \ref{src:people}, therefore we can gather about 50 bits per minute.
+  Anyway, approximately 30 seconds to exchange values and then some minor time for calculations and exchange of two messages with identified excursions (which are negligible regarding the time).  From these 1000 values we can obtain about 25 bits of entropy on average \ref{src:people}, therefore we can gather about 50 bits per minute.
 
-  This is comparable to the original result 1 bit/sec of Mathur et.al. \cite{Mathur2008Rssi}, however we were capable of echanging way less messages per minute than the original proposal (our rate 1000 msgs/30 sec is not comparable to 4000 msgs/sec achieved by Mathur et.al.), probally due to the nature of used devices \ref{sec:hw}.
+  This is comparable to the original result 1 bit/sec of Mathur et.al. \cite{Mathur2008Rssi}, however, we were capable of exchanging way fewer messages per minute than the original proposal (our rate 1000 msgs/30 sec is not comparable to 4000 msgs/sec achieved by Mathur et.al.), probably due to the nature of used devices \ref{sec:hw}.
   \subsection{Possible errors}
-  Question about reliability surely comes to mind. We have no direct guarantee, values and measurement on individual nodes are clearly not symetrical, we only expect them to be highly correlated.
+  Question about reliability surely comes to mind. We have no direct guarantee, values and measurement on individual nodes are clearly not symmetrical, we only expect them to be highly correlated.
 
-  As we can see on the boxplots \ref{fig:errorsT} \ref{fig:errorsS}, the errors between nodes A and B are indeed scarce, therefore there is reasonable probbability, that the nodes A and B will be able to establish common key, using the obtained bit sequence from quantisation algorith \ref{subsec:quant}.
+  As we can see on the boxplots \ref{fig:errorsT} \ref{fig:errorsS}, the errors between nodes A and B are indeed scarce, therefore there is reasonable probability, that the nodes A and B will be able to establish the common key, using the obtained bit sequence from quantization algorithm \ref{subsec:quant}.
 
-  The other important part is how many bits were compromised to the sniffer node and potential attacker. As we can see, on average there is an hamming distance of 50 bits between output bit sequence for nodes A and B and bit sequence derived at sniffer node. Of course there are excursions in both directions, therefore we cannot entirely guarantee that the derived bit sequence is secret.
+  The other important part is how many bits were compromised to the sniffer node and potential attacker. As we can see, on average there is an hamming distance of 50 bits between output bit sequence for nodes A and B and bit sequence derived at sniffer node. Of course, there are excursions in both directions, therefore we cannot entirely guarantee that the derived bit sequence is secret.
 
 
   \begin{figure}
@@ -438,9 +449,9 @@ There are many test for estimating min entropy contained within output of non II
   \label{fig:errorsT}
   \end{figure}
 
-On the other hand, our bit sequence still needs some post processing in order to extract the randomness \ref{sec:use}, the most simple one would be hash function. Therefore, if we use correct function, we can expect, that one different bit would cause change in half of the  bits in the resulting key thanks to the avalanche effect \cite{Webster1986}.
+On the other hand, our bit sequence still needs some post processing in order to extract the randomness \ref{sec:use}, the most simple one would be a hash function. Therefore, if we use a correct function, we can expect, that one different bit would cause a change in half of the bits in the resulting key thanks to the avalanche effect \cite{Webster1986}.
 
-We can clearly see, that guessing is also not an option, although individual bit positions in sequence are known, there is no way to estimate whether the identified excursion is over or below the treshold. Guessing which bits are not correct is also not an option, while guessing just one bit change would mean $400$ trials on average, two bits would mean about $400^2$ trials. Complexity for this case grows exponentialy and the sniffer gets $50$ bits wrong on average without any reasonable clue which bits are correct and which are not.
+We can clearly see, that guessing is also not an option, although individual bit positions in a sequence are known, there is no way to estimate whether the identified excursion is over or below the threshold. Guessing which bits are not correct is also not an option while guessing just one-bit change would mean $400$ trials on average, two bits would mean about $400^2$ trials. Complexity for this case grows exponentially and the sniffer gets $50$ bits wrong on average without any reasonable clue which bits are correct and which are not.
 
   \begin{figure}
     \includegraphics[width=\textwidth]{../images/boxplotDistancesRottation.png}
@@ -568,7 +579,7 @@ We can clearly see, that guessing is also not an option, although individual bit
 
   The last option which can be utilised in evaluation is a submission of secret, which was received from interaction with the network, node either responds to received message with such secret or the secret has to be extracted from the communication in the network. Such secret can be a short word, number or something of similar nature and again such secret can be unique for each participant, which makes te evaluation an easy task.
   \section{Web interface and auto run}
-  Edu-hoc was designed as a long-term exercise, thus single scenarios are expected to run for days, possibly week or longer. However, for some it would be extremely impractical to repeat only once during the whole time because we would like to present fresh scenario to everyone involved,  and also we would like to reset the scenario once a while. This will ensure correct initial settings and if we set the intervals right, then everyone will be able to test out several solutions within a reasonably short timeframe.
+  Edu-hoc was designed as a long-term exercise, thus single scenarios are expected to run for days, possibly week or longer. However, for some, it would be extremely impractical to repeat only once during the whole time because we would like to present fresh scenario to everyone involved,  and also we would like to reset the scenario once a while. This will ensure correct initial settings and if we set the intervals right, then everyone will be able to test out several solutions within a reasonably short timeframe.
 
   To achieve such kind of behaviour, we can utilise various approaches, the easiest one being set of bash scripts and setting the cron service %CITE
   accordingly. The other option might be modified JeeTool, which would be running continuously and in set intervals would trigger the corresponding action.
