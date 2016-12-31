@@ -281,36 +281,43 @@ The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm l
   \subsection{Quantization principle}
     Quantization enables extraction of bits from individual values of signal strength. There are many different solutions to this problem \cite{Jana2009Rssi}, two main approaches here are: lossless quantization \cite{Azimi-Sadjadi2010Fading} and contrary to that we have lossy quantization \cite{Mathur2008Rssi}. %TODO quant. is inherently lossy
 
+    Quantization is always lossy by design, we transform analog measurements of RSSI to single bits. However, the difference between two mentioned aproaches is number of generated bits per original RSSI measurements. Lossless quantization produces bit value from every measurement of signal strength, which is useful for high-performance demands, but it requires guaranteed variance in the radio channel (e.g. the nodes are constantly moving, or the environment is changing) Otherwise, the resulting keys could possibly be very weak.
 
-    Main difference between these is number of generated bits per original signal strength measurements. Lossless quantization produces bit value from every measurement of signal strength, which is useful for high-performance demands, but it requires guaranteed variance in the radio channel (e.g. the nodes are constantly moving, or the environment is changing) Otherwise, the resulting keys could possibly be very weak.
+    Lossy quantization, on the other hand, does not have guaranteed output length per number of measured values, which can lead to a very limited length of output sequences. However, this kind of quantization is expected to have better results in static environments \cite{Jana2009Rssi} because of its nature to drop such bits, that fail to differ from others.
 
-    Lossy quantization, on the other hand, does not have guaranteed output length per number of measured values, which can lead to a very limited length of output. However, this kind of quantization is expected to have better results in static environments \cite{Jana2009Rssi} because its nature is to drop such bits, that fail to differ from others.
-
-    Since our network is static and without any moving nodes, we implemented lossy quantizer algorithm designed by Mathur et.al. \cite{Mathur2008Rssi}, which showed promising results for the of the shelf wireless devices similar to ours, and also contained experimental results from several different scenarios, where some of these were comparable to our conditions.
-
-
+    Since our network is static and without any moving nodes, we implemented lossy quantizer algorithm designed by Mathur et.al. \cite{Mathur2008Rssi}, which showed promising results for the off-the-shelf wireless devices. Authors also provided experimental results from scenarios comparable to our conditions.
 
     \subsection{Quantization algorithm}\label{subsec:quant}
+
+    %general principle and image from suman jana
+    \begin{figure}[h!!]
+      \begin{center}
+        \includegraphics[width=\textwidth]{../images/quant_alg.png}
+      \end{center}
+      \caption{Sample quantizer. Values between tresholds are dropped. Values greater than the upper treshold are encoded as 1, values below lower treshold are encoded as 0. Therefore the output in this case will be 1010011 \cite{Jana2009Rssi}.}
+      \label{fig:quant_alg}
+    \end{figure}
+
+    Nodes A and B exchange messages between each other, preferably at high rate of exchanged messages. Each node records RSSI measurement for every received message, thus both nodes record time series of RSSI values.     These values are processed and treshold is computed. It depend on the alghorithm whether one or multiple tresholds are used. Finally we process RSSI measurement once again, all measurements above treshold are treated as bit value 1 and all measurements below treshold as bit value 0. In case of multiple tresholds we drop measurements in between. Example with two tresholds is shown on figure \ref{fig:quant_alg}.
+
     Quantization princeple designed by Mathur et.al. \cite{Mathur2008Rssi}
      works as follows:
 
     \begin{enumerate}
-      \item both nodes send $n$ messages to each other in alternating pattern, both nodes send counter value inside these messages, which is used to synchronise messages on individual nodes. For every one of these messages, signal strength is measured upon reception.
-      \item when $n$ messages have been successfully exchanged, both nodes can proceed to the computational part.
-      \item both nodes calculate mean $m$ and standard deviation $sd$ for signal strength values of all received messages.
-      \item both nodes calculate $q^+$ and $q^-$ values, which are upper and lower quantizer bin boundaries, as follows:
+      \item Both nodes send $n$ messages to each other in alternating pattern. Counter value is placed inside these messages, which is used to synchronise messages on nodes. For every one of these messages, signal strength is measured upon reception.
+      \item When $n$ messages have been successfully exchanged, both nodes can proceed to the computational part.
+      \item Both nodes calculate mean $m$ and standard deviation $sd$ for signal strength values of all received messages.
+      \item Both nodes calculate $q^+$ and $q^-$ values, which are upper and lower quantizer bin boundaries, as follows:
       $$q^+ = m + \alpha \cdot sd$$
       $$q^- = m - \alpha \cdot sd$$
-      \item every signal strength measurement is then processed and it is rejected, if it lies within $q^+$ and $q^-$ boundaries, values above this range are assigned a bit value of one, values below are assigned a bit value of 0.
-      \item nodes then synchronise their measurement by exchanging counter values associated with those messages, where signal strength measurements were assigned either one or zero bit values.
-      \item those counter values that match on both nodes are expected to be excursions in the same direction and are used in the final outcome.
-
-
+      \item Every signal strength measurement is then processed and it is rejected, if it lies within $q^+$ and $q^-$ boundaries, values above this range are assigned a bit value of one, values below are assigned a bit value of zero.
+      \item Nodes then synchronise their measurement by exchanging list of counter values, where signal strength measurements were assigned either one or zero bit values.
+      \item Counter values that match on both nodes are expected to be excursions in the same direction and are used to produce the resulting bit sequence.
+      \item Final bit sequence can be also created in different way. Consecutive measurements on one side of treshold can be treated as one outcome instead of multiple ones.
     \end{enumerate}
-    TODO add some nice picture that would show this from mathur paper
 
   \section{Improvement strategies}
-  As we can clearly see from data collected in experiments during undisturbed network \ref{src:plain}, there no bits generated and that is the case for most of the time. To deal with this problem we have to introduce some form of artifical noise or disturbances.
+  As we can see from data collected in experiments during undisturbed network \ref{src:plain}, there no bits generated and that is the case for most of the time. To deal with this problem we have to introduce some form of artifical noise or disturbances.
   \subsection{Cooperative jamming}\label{subsec:jammer}
   The solution that offers itself is the help of other nodes within the network, because all of them are equiped with radio and we only have to work around the media access control mechanism in order to make two or more of them broadcast at the same time. Such idea has aready been researched, e.g. in work of Goel et.al. \cite{Goel2008Noise} or by He et.al. \cite{He2010Jamming}.
 
