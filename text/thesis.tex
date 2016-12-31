@@ -105,7 +105,7 @@
 \chapter{Introduction}
 Wireless sensor networks\footnote{WSN} are typically highly distributed networks with many individual devices. We consider networks with tens up to thousands of individual nodes\footnote{from high-level view each device can be considered a vertex or node in a network graph} that communicate with each other over radio. The most common use case for these devices is monitoring near environment around them. Thus they are equipped with various sensors. Applications of these networks are very broad; they are being used to control forest fires \cite{li2006wireless}, research whale migration patterns \cite{haas2006new}, or monitoring of the structural health of bridges and tunnels \cite{stajano2008steel}.
 
-One of the goals of this thesis was to create multi-purpose WSN platform for Arduino devices \cite{Arduino}. That includes an initial design of such platform, implementation of all the required software and the actual build of the network itself. As it is today, in WSN world does not exist one unifying platform, that everyone would  a . Therefore we opted to create our solution that would be the best fit for our use cases. Decisions related to design choices are discussed in chapter \ref{ch:analysis}. Details about the build itself as well as a description of created software are included in chapter \ref{ch:testbed}.
+One of the goals of this thesis was to create multi-purpose WSN platform for Arduino devices \cite{Arduino}. That includes an initial design of such platform, implementation of all the required software and the actual build of the network itself. As it is today, in WSN world does not exist one unifying platform, that everyone would  use. Therefore we opted to create our solution that would be the best fit for our use cases. Decisions related to design choices are discussed in chapter \ref{ch:analysis}. Details about the build itself as well as a description of created software are included in chapter \ref{ch:testbed}.
 
 The other goal of this thesis was implementation and execution of two use cases for our newly created WSN platform. The first use case was a transformation of work done by Mathur et.al. \cite{Mathur2008Rssi} to the WSN environment. Their results show interesting potential in randomness extraction from radio fading channel. However, these were produced on devices capable of much more than what we used for the construction of our network (Mathur et.al. used both FPGA-based development platforms for 802.11 standard and laptops with Atheros WiFi cards compared to our Arduino devices). The principles of bit extraction from radio channel fading are described in chapter \ref{ch:research} and results are discussed in section \ref{sec:results}.
 
@@ -120,7 +120,7 @@ The second use case of our network is related to the usually difficult first exp
     \item \label{enu:devices}Which devices will be used?
     \item \label{enu:type}Will the network be homogenous or heterogenous (only one device type or multiple ones)?
     \item \label{enu:place}Where will the network be placed?
-    \item \label{enu:life}What is the expected lifetime of a network?
+    \item \label{enu:life}What, is the expected lifetime of a network?
     \item \label{enu:power}What will be the power source for devices?
     \item \label{enu:upload}How shall we upload new code to devices?
     \item \label{enu:data}How the results will be collected from the nodes?
@@ -166,7 +166,7 @@ The second use case of our network is related to the usually difficult first exp
   \subsection{Code and data upload and download (\ref{enu:upload}) and (\ref{enu:data})}
   Code upload and download is usually only a problem for a long-term network. Primarily for the network with development or research purposes, because this goal usually requires frequent changes of source code, thus a convenient way of doing so. In any other kind of network, software is typically uploaded only once and before the network deployment. However, we also should have a solution for doing so (it does not have to be convenient), because a device that cannot be updated is dangerous.
 
-  When the solution for code upload is required for already placed devices, there are two main options, either updated over the connected cable or some FOTA\footnote{firmware over the air} solution. The latter one would be preferred for battery powered networks, since it does not require any additional cables.
+  When the solution for code upload is required for already placed devices, there are two main options, either updated over the connected cable or some FOTA\footnote{firmware over the air} solution. The latter one would be preferred for battery powered networks since it does not require any additional cables.
 
   In a case of power provided through a cable, it is usually the best option to use this cable to provide software uploads and updates as well. The cable is already present, and it is the most reliable way of doing so. The same applies to data transfers; cable connection is the most stable and straightforward solution, when the cable is not present, such functions have to be provided via the radio.
 
@@ -191,9 +191,9 @@ The second use case of our network is related to the usually difficult first exp
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{TESTBED deployment}\label{ch:testbed}
-The most important part of the deployment of our network and creation of testbed was a selection of devices \ref{sec:hw}. Once we decided which devices to use, next part was the placement of these devices \ref{sec:place}. Placement is quite important, because nodes should be distributed evenly across the whole are of a network.
+The most important part of the deployment of our network and creation of testbed was a selection of devices \ref{sec:hw}. Once we decided which devices to use, next part was the placement of these devices \ref{sec:place}. Placement is quite important because nodes should be distributed evenly across the whole are of a network.
 
-The last part connected with the deployment is the management of these devices. In our case, the whole network is managed by central server. All nodes are connected to this machine via USB cables, and the server is equipped with our custom software \ref{sec:jeetool}.
+The last part connected with the deployment is the management of these devices. In our case, the whole network is managed by a central server. All nodes are connected to this machine via USB cables, and the server is equipped with our custom software \ref{sec:jeetool}.
 
 \section{Hardware selection}\label{sec:hw}
 New network was designed with both research \ref{ch:research} and educational \ref{ch:edu} use in mind. Therefore the selection of hardware for individual nodes was limited by these intended use cases. Since we already had an experience with the research type network \cite{Matyas2015} and its pitfalls related to the complicated use of specialised hardware, we opted for devices based on Arduino platform \ref{par:jeeLink}. These are designed with simplicity in mind (Arduino focus group are not only programmers but also artists and people without any advanced IT skills).
@@ -222,13 +222,12 @@ Devices selected for the network are JeeLink nodes \cite{JeeLink} (figure \ref{f
 \end{wrapfigure}
 
 Both of these devices are based on Arduino Mini \cite{ArduinoMini}
-(version with ATmega328P processor). Wireless communication is enabled by the RF12B chip \cite{RF12B} (unmounted radio chip shown on figure \ref{fig:radio})
-which is permanently mounted to the device. Both devices can be connected directly to a computer via USB\footnote{the USB port type one of the few differences}. The visual difference between these two devices is caused by the fact that JeeLink has a plastic cover. Therefore there is no additional connectivity. JeeNode is not covered and there are pins available for additional sensors or any other devices. JeeLink has additional 16 Mbit of flash memory \cite{JeeLink} available, therefore this can be used for convenient storage.
+(version with ATmega328P processor). Wireless communication is enabled by the RF12B chip \cite{RF12B} (unmounted radio chip shown on figure \ref{fig:radio}) which is permanently mounted to the device. Both devices can be connected directly to a computer via USB\footnote{the USB port type one of the few differences}. The visual difference between these two devices is caused by the fact that JeeLink has a plastic cover. Therefore there is no additional connectivity. JeeNode is not covered, and there are pins available for additional sensors or any other devices. JeeLink has additional 16 Mbit of flash memory \cite{JeeLink} available. Therefore this can be used for convenient storage.
 
 For both of these devices, there is accompanying library JeeLib \cite{JeeLib} that contains all necessary functions for controlling the radio. It also deals with any other features that are different from standard Arduino Mini.
 
 \paragraph{RF12B radio module}\label{par:radio}
-Simple and cheap radio module RF12B from HopeRF \cite{RF12B} is present on all JeeMote and JeeLink devices. The version sold in Europe is using 868 MHz frequency for the radio\footnote{other version can use 433 MHz or 915 MHz}. Like many other common radio modules, this radio is half-duplex, therefore it is able either to receive or to transmit messages, but cannot do both at one time.
+Simple and cheap radio module RF12B from HopeRF \cite{RF12B} is present on all JeeMote and JeeLink devices. The version sold in Europe is using 868 MHz frequency for the radio\footnote{other version can use 433 MHz or 915 MHz}. Like many other common radio modules, this radio is half-duplex. Therefore it is able either to receive or to transmit messages, but cannot do both at one time.
 
 \begin{wrapfigure}{r}{0.5\textwidth}
   \vspace{-20pt}
@@ -242,67 +241,56 @@ Simple and cheap radio module RF12B from HopeRF \cite{RF12B} is present on all J
 The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm long wire) by default. It is possible to modify the properties of such antenna by shaping it in various ways, e.g. straight wire compared to coiled one. There might also be many other versions and shapes of antennae, which might have an effect on radio properties, but this would be subject to whole another research in a different field.
 
 \section{Node placement}\label{sec:place}
-TODO nodes placement with map in appendix, central server placement
+25 JeeLink nodes were deployed to achieve even coverage of the whole area. All devices are placed near the ceiling, where they are visible, but do not cause any obstructions. Due to a wire placement constraints, we decided to set these devices close to the walls. Plan with identified locations of each node can be seen in appendix \ref{fig:map} (each node is represented by a red triangle). The map shows only relative placement, exact coordinates together with IDs of each node can be found in the appendix in table \ref{tab:map}.
 
 \section{JeeTool}\label{sec:jeetool}
 
-\paragraph{Motivation}
-  Few nodes can be managed manually without any major problems, most frequently using  Arduino IDE \cite{Arduino} directly.
-  This approach is working flawlessly for up to three devices, and it is possible to manage up to 10 devices this way, but with great effort and sacrificing the usability.
+%TODO short intro?
 
-  Either intentionally or not, there is no doubt that the official Arduino IDE is designed with simplicity in mind, therefore it is usable for a person without a solid background in IT \cite{ArduinoIntro}.
-  On the other hand, this simplicity comes at the cost of many features, that might have been useful for more advanced use (e.g. management of multiple devices).
+\paragraph{Motivation}
+  Few nodes can be managed manually without any major problems, most frequently using  Arduino IDE \cite{Arduino} directly. This approach is working without problems for up to three devices, and it would be possible to manage more devices this way, but the usability is lowered with each addition.
+
+  Either intentionally or not, there is no doubt that the official Arduino IDE is designed with simplicity in mind. Therefore it is usable for a person without a solid background in IT \cite{ArduinoIntro}. On the other hand, this simplicity comes at the cost of many features; that might have been useful for more advanced use (e.g. already mentioned management of multiple devices).
 
 \paragraph{MoteTool inspiration}
-  To remedy this problem, jeeTool \cite{JeeTool}
-  was created, a deployment tool that uses Arduino Makefile project \cite{ArduinoMK}
-  to manage the network of 25 Arduino devices. This tool was inspired by motetool project \cite{motetool}
-  which was developed by Dusan Klinec in order to manage the similar task, only for the different type of devices? The basic functionality is the same, it allows users to detect all connected devices and upload applications to the selected ones. In addition, jeeTool also supports bidirectional communication with individual devices via a serial port.
+  JeeTool \cite{JeeTool} was created to remedy this problem. A deployment tool that uses Arduino Makefile project \cite{ArduinoMK} to manage our testbed. This tool was inspired by motetool project \cite{motetool} which was developed by Dusan Klinec to manage the similar task, only for the different type of devices. The basic functionality is the same; it allows users to detect all connected devices and upload applications to the selected ones. Also, jeeTool includes support for bidirectional communication with individual devices via a serial port.
 
 \paragraph{Implementation details}
-  As has been stated, Arduino makefile is used for the actual application upload. In order to make Makefile call for each of the connected devices, jeeTool creates temporary bash script file, which is used to set the environment for the specific node and execute the upload via Makefile. The temporary script itself is then executed with system call directly from jeeTool. If multiple nodes are selected for upload, jeeTool enables either serial deployment (mostly for debugging purposes) and parallel deployment, where all Makefile calls are made within discrete threads, thus all of them are executed simultaneously.
+  As has been stated, Arduino Makefile is used for the actual application upload. To make Makefile call for each of the connected devices, jeeTool creates temporary bash script file, which is used to set the environment for the specific node and execute the upload via Makefile. The temporary script itself is then executed with system call directly from jeeTool. If multiple nodes are selected for upload, jeeTool offers either serial deployment (mostly for debugging purposes) and parallel deployment, where all Makefile calls are made within discrete threads, thus all of them are executed simultaneously.
 
 \paragraph{Communication over serial port}
-  In addition to the upload features, jeeTool also enables communication with devices over a serial port. This is done via jSerialComm library \cite{jserial}
-  at the moment, in the past RxTx library \cite{rxtx}
-  was used, unfortunately, this library is currently not being developed\footnote{last update is from 2011} and decision was made to change the library to more up to date one, instead of using problematic old code.
+  In addition to the upload features, jeeTool also enables communication with devices over a serial port. This is done via jSerialComm library \cite{jserial} at the moment. In the past RxTx library \cite{rxtx} was used, unfortunately, this library is currently not being developed\footnote{last update is from 2011}. Therefore we decided to change the library to more up to date one, instead of using problematic old code.
 
-  Individual nodes are matched with files, which are named after the nodes (name of the device in the Linux file system) and jeeTool is capable of writing all inbound communication in such file or read such file and write it over to the serial port. For the inbound communication there is an option of delayed termination of the program, thus jeeTool can be left running for specified amount of time before the ports to devices are closed (e.g. collect results after the experiment). For the outbound communication, jeeTool can either send the whole content of the file at once or there is an option of delay between individual lines of the file (can be used for periodical sending of messages etc.).
+  Individual nodes are matched with files, which are named after the nodes (name of the device in the Linux file system). JeeTool is capable of writing all inbound communication in such file or read such file and write it over to the serial port. For the inbound communication, there is an option of delayed termination of the program. Thus jeeTool can be left running for specified amount of time before the ports to devices are closed (e.g. collect results after the experiment). For the outbound communication, jeeTool can send the whole content of the file at once, or there is an option of delay between individual lines of the file (can be used for periodic sending of messages, etc.).
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Research use}\label{ch:research}
-  One of the intended uses for the created testbed was its use in research which can be of various nature. In this particular case, we would like to make a case study for key generation mechanism without any pre-shared information between individual nodes.
+  This chapter describes our case study for key generation mechanism without any pre-shared information between individual nodes.
 
-  In today's application this would be quite a common problem since a number of devices equipped with some kind of radio module are constantly growing, let it be wifi, Bluetooth, or any other frequency and specification. However, we cannot expect for these devices to have any shared data nor capability to exchange them over an already secure channel since the secure channel is what we are trying to accomplish.
+  In today's application this would be quite a common problem since a number of devices equipped with some kind of radio module are constantly growing. Let it be Wi-Fi, Bluetooth, or any other frequency and specification. However, prolem for these devices is source of randomness. Many of these devices are too small or their price is too low, therefore they do not come with true random number generator. Thus key derivation is a bit challenge on these devices.
 
-  What we would like to show, is a scheme for key derivation without any shared secret, only using properties of radio channel shared between these two devices and the nature of radio wave propagation through such shared channel.
+  Results of Mathur et.al. \cite{Mathur2008Rssi} show scheme for key derivation without any shared secret, only using properties of radio channel shared between these two devices and the nature of radio wave propagation through such shared channel. We show that this algorithm can be used in WSN environment.
 
   \section{Keys from radio signal}
-  Due to a nature of a wireless channel which is not perfect, we can observe fluctuations and disturbances in the wave propagation. It might seem difficult at first to measure these since by no means we are able to observe all such events. Despite that there is a way, almost every radio module is able to measure RSSI\footnote{received signal strength indication}, which can be described as an amount of power in the received signal. There are many arbitrary scales and absolute values do not match on devices from different manufacturers since RSSI is relative index \cite{RSSIMeaning}.
+  Due to a nature of a wireless channel which is not perfect, we can observe fluctuations and disturbances in the wave propagation. It might seem difficult at first to measure these since by no means we are able to observe all such events. Almost every radio module is able to measure RSSI\footnote{received signal strength indication}, which can be described as an amount of power in the received signal. There are many arbitrary scales and absolute values do not match on devices from different manufacturers since RSSI is relative index \cite{RSSIMeaning}.
 
-  However, our algorithm can work regardless of the differences in devices, even two devices with the same configuration can produce different absolute values due to antenna position and overall device manufacturing differences, since some of these devices are partially assembled by hand \footnote{e.g. JeeNode motes come as a ready to assemble kit}.
+  However, our algorithm can work regardless of the differences in devices. Even two devices with the same configuration can produce different absolute values due to antenna position and overall device manufacturing differences. (many of these devices are partially assembled by hand \footnote{e.g. JeeNode motes come as a ready to assemble kit}.)
 
-  \subsection{Quantization principle (bits from signal strength)}
-    Quantization enables to extract bits from individual values of signal strength. There are many different approaches to this problem \cite{Jana2009Rssi}
-    two main approaches here are: lossless quantization \cite{Azimi-Sadjadi2010Fading}
-    and contrary to that we have lossy quantization \cite{Mathur2008Rssi}. %TODO quant. is inherently lossy
+  \subsection{Quantization principle}
+    Quantization enables extraction of bits from individual values of signal strength. There are many different solutions to this problem \cite{Jana2009Rssi}, two main approaches here are: lossless quantization \cite{Azimi-Sadjadi2010Fading} and contrary to that we have lossy quantization \cite{Mathur2008Rssi}. %TODO quant. is inherently lossy
 
 
-    Main difference between these is number of generated bits per original signal strength measurements, while lossless quantization produces bit value from every measurement of signal strength, which is useful for high-performance demands, but it requires guaranteed variance in the radio channel (e.g. the nodes are constantly moving, or the environment is changing) during the key establishment phase. %CITE
-    Otherwise, the resulting keys could possibly be very weak. %CITE
+    Main difference between these is number of generated bits per original signal strength measurements. Lossless quantization produces bit value from every measurement of signal strength, which is useful for high-performance demands, but it requires guaranteed variance in the radio channel (e.g. the nodes are constantly moving, or the environment is changing) Otherwise, the resulting keys could possibly be very weak.
 
-    Lossy quantization, on the other hand, does not have guaranteed output length per number of measured values, which can lead to a very limited length of output. However, this kind of quantization is expected to have better results in static environments %CITE if possible
-    because its nature is to drop such bits, that fail to differ from others.
-
-    Also, there are few different measurements of the channel one can use to produce bits. One would be RSSI measurements on received messages, another measure %\TODO %from paper and CITE
+    Lossy quantization, on the other hand, does not have guaranteed output length per number of measured values, which can lead to a very limited length of output. However, this kind of quantization is expected to have better results in static environments \cite{Jana2009Rssi} because its nature is to drop such bits, that fail to differ from others.
 
     Since our network is static and without any moving nodes, we implemented lossy quantizer algorithm designed by Mathur et.al. \cite{Mathur2008Rssi}, which showed promising results for the of the shelf wireless devices similar to ours, and also contained experimental results from several different scenarios, where some of these were comparable to our conditions.
 
 
 
-    \subsection{RSSI Quantization}\label{subsec:quant}
+    \subsection{Quantization algorithm}\label{subsec:quant}
     Quantization princeple designed by Mathur et.al. \cite{Mathur2008Rssi}
      works as follows:
 
@@ -646,16 +634,56 @@ We can clearly see, that guessing is also not an option, although individual bit
 %%==============================================================
 
 \appendix %% Start the appendices.
-\chapter{Testbed map}
-\begin{figure}
-  \includegraphics[width=\textwidth]{../images/testbed.png}
+\chapter{Testbed map and node placement}
+\begin{figure}[h!!!]
+  \includegraphics[width=0.9\textwidth]{../images/testbed.png}
 \caption{Map of testbed with placement of individual nodes}
 \label{fig:map}
 \end{figure}
 
+\begin{table}[h!!!]
+  \begin{tabularx}{120px}{c|cc}
+
+id &    x &    y\\
+\midrule
+1 &    1498 &    0\\
+2 &    1977 &    207\\
+3 &    1147 &    90\\
+4 &    1147 &    447\\
+5 &    1134 &    0\\
+6 &    1134 &    310\\
+7 &    949 &    0\\
+8 &    506 &    65\\
+9 &    506 &    475\\
+10 &    1718 &    0\\
+11 &    1964 &    242\\
+12 &    1616 &    462\\
+13 &    1603 &    490\\
+14 &    2434 &    0\\
+15 &    2434 &    500\\
+16 &    2214 &    0\\
+17 &    2447 &    295\\
+18 &    2753 &    70\\
+19 &    2753 &    320\\
+20 &    333 &    0\\
+21 &    493 &    390\\
+22 &    493 &    70\\
+23 &    155 &    0\\
+24 &    0 &    210\\
+
+
+\end{tabularx}
+\caption[Node IDs and placement coordinates]{Node IDs and placement coordinates\protect\footnotemark}
+
+\label{tab:map}
+\end{table}
+\footnotetext{Coordinates begin from top right corner of map}
+
+
+\newpage
 \chapter{RSSI graphs}
-\begin{figure}
-  \includegraphics[height=\textwidth, angle = 90 ]{../images/graph_rssi_01.pdf}
+\begin{figure}[h!!!]
+  \includegraphics[height=0.9\textwidth, angle = 90 ]{../images/graph_rssi_01.pdf}
 \caption{sd = 0}
 \label{fig:rssi_01}
 \end{figure}
