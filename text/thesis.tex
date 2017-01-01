@@ -11,7 +11,7 @@
            %% digital version of a document. Replace with `printed`
            %% to enable the default options for the printed version
            %% of a document.
-  table,   %% Causes the coloring of tables. Replace with `notable`
+  Table,   %% Causes the coloring of tables. Replace with `notable`
            %% to restore plain tables.
   nolof,     %% Prints the List of Figures. Replace with `nolof` to
            %% hide the List of Figures.
@@ -87,6 +87,7 @@
 
 
 \usepackage{wrapfig}
+\usepackage{subcaption}
 
 \begin{document}
 
@@ -323,38 +324,73 @@ The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm l
 
   \section{Improvement strategies}
   As we can see from data collected in experiments during undisturbed network \ref{src:plain}, there are no bits generated, and that is the case most of the time. To deal with this problem, we have to introduce some form of artificial noise or disturbances.
+
   \subsection{Cooperative jamming}\label{subsec:jammer}
   The solution that offers itself is the help of other nodes within the network. All of them are equipped with radio, and we only have to work around the media access control mechanism to make two or more of them broadcast at the same time. Such idea has already been researched, e.g. in work of Goel et.al. \cite{Goel2008Noise} or by He et.al. \cite{He2010Jamming}.
 
   This approach is primarily used to increase secrecy of a wiretap channel \cite{wyner1975wire} but can also be utilised in other ways. We presume one device with multiple antennas or two or more cooperating devices involved in this process. While one device is broadcasting the actual information, other device or antennae are used to create artificial noise in the radio channel.
 
-  This noise can be of various sources \cite{He2010Jamming}. We can use random noise, which has the same impact on every receiver in the network. Or we can use more advanced techniques, like using random codebook or structured codebook \cite{He2010Jamming}. With these techniques, the receiver is able to distinguish the jamming and extract it from received signal. Thus the receiving party, who has knowledge of used codebook, can decode the jamming signal and remove this interference.
+  This noise can be of various sources \cite{He2010Jamming}. We can use random noise, which has the same impact on every receiver in the network. Or we can use more advanced techniques, like using random codebook or structured codebook \cite{He2010Jamming}. With these techniques, the receiver can distinguish the jamming and extract it from received signal. Thus the receiving party, who has knowledge of used codebook, can decode the jamming signal and remove this interference.
 
-  In our situation, we are only interested in the addition of artificial noise to the radio channel. Such noise should preferably be unpredictable in signal strength and time.
+  In our situation, we are only interested in the addition of artificial noise to the radio channel. Such noise should preferably be unpredictable in transmission power and time.
 
   \subsection{Other means of disturbances}\label{subsec:people}
-  \subsubsection{People}\label{subsubsec:people}
-  At first we tried to avoid this kind of disturbance as much as was possible, because movement of people is unpredictable (to certain extend) and such experiments are very hard (nearly impossible) to replicate.
-  \subsubsection{Mechanical obstructions}\label{subsec:shield}
-  TODO add shielding description with drawing
+  Artificial noise is not the only source of disturbances we can utilise to our advantage. There are many different sources, some might be more suitable for our purposes than others. During our experiments we examined the following two:
+
+  \paragraph{Movement of people}\label{subsubsec:people}
+  Initially, we tried to avoid this kind of disturbance as much as was possible, because the movement of people is unpredictable (to certain extend) and such experiments are very hard (nearly impossible) to replicate.
+
+  After we acknowledged the need for artificial disturbances, movement of people was the most easy one to utilise. Unless we place our network in isolated environment, we can usually expect movement of people within the area of our network. Although this movement can be arranged, in most situations we can expect it to be somehow randomised. Therefore, the way it affects our RSSI measurements is also unpredictable to certain extend.
+
+  \paragraph{Mechanical obstructions}\label{subsec:shield}
+  Inspired by the results we obtained from experiments with movement of people, we tried to produce similar disturbances with a use of a mechanical device. This device was constructed from cardboard (structure itself) and aluminium foil (side shields), and its movement was enabled by a single stepper motor. Appearance of our device can be seen on figure \ref{fig:device}. %TODO dimensions
+
+
+\begin{figure}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../images/top.png}
+    \caption{Top view}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../images/front.png}
+    \caption{Front view}
+  \end{subfigure}
+
+  \begin{center}
+
+  \begin{subfigure}[b]{0.7\textwidth}
+    \includegraphics[width=\textwidth]{../images/3d.png}
+    \caption{3D view}
+  \end{subfigure}
+  \end{center}
+  \caption{Aperance of our device}
+  \label{fig:device}
+\end{figure}
+
+  Device rotates around the central axis and in 15 seconds accomplishes one complete turn. One of the nodes is placed inside of a perimeter of our device. Therefore, the transmitted radio signal is obstructed by the moving shielding from aluminium foil.
+
 
   \section{Experiment setting}
-  An application was created, in order to collect data from a real-world network. Such data then would be processed by quantization algorithm \ref{subsec:quant} and produced bit sequences were analysed regarding the entropy and usability for cryptographic keys \ref{sec:results}.
+   To collect data from a real-world network we created a custom application. Such data then were processed by quantization algorithm \ref{subsec:quant} and produced bit sequences were analysed regarding the entropy and usability for cryptographic keys \ref{sec:results}.
 
-  This application uses specially modified JeeNode motes \ref{sec:hw}, because analog RSSI values are not available through provided connections to radio module. Fortunately, analogue RSSI can be obtained through short jumper wire from radio module to the Arduino analog pin %CITE.
+   By default, JeeNode platform is not able to directly obtain analog value of RSSI from radio module. The addition of short jumper wire between corresponding radio module pin and Arduino analog input pin is required \cite{RSSI_RF12B_mod}.
 
-  In the experiment itself, two motes exchange messages with a counter value (counter is updated only on one of these motes) and both motes save measured RSSI values for each message. The counter value is used to guarantee delivery of these messages, mote A sends a message with value $n$ and mote B upon reception responds with the same value $n$. Mote A can increment counter value only when respond message with current counter value is received. Otherwise the same counter value $n$ has to be sent again and both motes will keep the RSSI measurement only from the most recent message with counter $n$.
+  In the experiment itself, two motes exchange messages with a counter value (counter is updated only on one of these motes). Both motes save measured RSSI values for each message. The counter value is used to guarantee delivery of these messages, as mote A sends a message with value $n$, mote B upon reception responds with the same value $n$. Mote A can increment counter value only when respond message with current counter value is received. Otherwise the same counter value $n$ has to be sent again and both motes will keep the RSSI measurement only from the most recent message with counter $n$.
 
-  The application is programmed in such way, that 1000 counter values are exchanged, then they are sending out via the serial port and application is terminated. Intervals between individual messages should be as short as possible so that the random disturbances in the radio channel would be captured on both nodes. Even though RSSI measurement is definitely not symmetrical, using this approach we can expect them to be highly correlated %CITE.
+  The application is programmed in such way, that 1000 counter values are exchanged (the number of messages is limited by the available memory of our devices). Subsequently, all RSSI measurements are sent out via the serial port and application is terminated. Intervals between individual messages should be as short as possible so that the disturbances in the radio channel can be captured on both nodes. Even though RSSI measurement is not symmetrical, using this approach we can expect them to be highly correlated \cite{Jana2009Rssi}.
 
-  The limit of 1000 messages was set due to the memory constraints of individual devices. Since the bottleneck of our experiment was in the communication via the serial port, we opted to exchange all messages and gather data first and only after that to transfer them out to the server. The application was then uploaded to the nodes again and run from fresh state several times as the experiment settings required. In the optimal conditions, the expected time for a single run of application is about 30 seconds; runtime over two minutes is usually a result of some kind of error, either in the application itself, placement of devices, or disturbances in the radio channel.
+Since the bottleneck of our experiment was in the communication via the serial port, we opted to exchange all messages and gather data first and only after that to transfer them out to the server. The application was then uploaded to the nodes again and run from original state several times as the experiment settings required.
+
+In the optimal conditions, the expected time for a single run is about 30 seconds; runtime over two minutes is usually a result of some error. Such error can be in the application itself, placement of devices, or disturbances in the radio channel.
 
 \subsection{Attacker model}
+  In our experiments we consider passive attacker, which can be present anywhere in the network, even at several places at once. This attacker is represented by sniffer node. We used up to two sniffer devices at the time of application runtime. These were uploaded with modified version of an application, so that they would only receive messages, but would not send any messages to other devices.
 
-  In addition to regular nodes, up to two sniffer motes were active at the time of application runtime. These were uploaded with modified version of an application, so that they would only receive messages, but would not send any messages to other devices. We have done several trials on a placement of these sniffer motes, in order to see any impact of position in the network on the results.
-TODO
+  We have done several trials with a placement of these sniffer motes, to see any impact of position in the network on the results. In a case of multiple sniffer nodes we expected them to share every piece of information. Therefore, we assumed the worst case scenario when we processed all gathered data from multiple sniffers.
 
 
+
+\section{Node placement}
   %TODO plan of mote placement
 
 
