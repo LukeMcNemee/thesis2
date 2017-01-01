@@ -261,7 +261,7 @@ The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm l
 \paragraph{Communication over serial port}
   In addition to the upload features, jeeTool also enables communication with devices over a serial port. This is done via jSerialComm library \cite{jserial} at the moment. In the past RxTx library \cite{rxtx} was used, unfortunately, this library is currently not being developed\footnote{last update is from 2011}. Therefore we decided to change the library to more up to date one, instead of using problematic old code.
 
-  Individual nodes are matched with files, which are named after the nodes (name of the device in the Linux file system). JeeTool is capable of writing all inbound communication in such file or read such file and write it over to the serial port. For the inbound communication, there is an option of delayed termination of the program. Thus jeeTool can be left running for specified amount of time before the ports to devices are closed (e.g. collect results after the experiment). For the outbound communication, jeeTool can send the whole content of the file at once, or there is an option of delay between individual lines of the file (can be used for periodic sending of messages, etc.).
+  Individual nodes are matched with files, which are named after the nodes (name of the device in the Linux file system). JeeTool is capable of writing all inbound communication in such file or read such file and write it over to the serial port. For the inbound communication, there is an option of delayed termination of the program. Thus jeeTool can be left running for specified amount of time before the ports to devices are closed (e.g. collect results after the experiment). For the outbound communication, jeeTool can send the whole content of the file at once, or there is an option of delay between individual lines of the file (can be used for periodic sending of messages).
 
 
 
@@ -269,21 +269,21 @@ The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm l
 \chapter{Research use}\label{ch:research}
   This chapter describes our case study for key generation mechanism without any pre-shared information between individual nodes.
 
-  In today's application this would be quite a common problem since a number of devices equipped with some kind of radio module are constantly growing. Let it be Wi-Fi, Bluetooth, or any other frequency and specification. However, prolem for these devices is source of randomness. Many of these devices are too small or their price is too low, therefore they do not come with true random number generator. Thus key derivation is a bit challenge on these devices.
+  In today's application, this would be quite a common problem since numbers of devices equipped with radio module are constantly growing. Let it be Wi-Fi, Bluetooth, or any other frequency and specification. However, a problem for these devices is a source of randomness. Many of these devices are too small, or their price is too low. Therefore they do not come with a true random number generator. Thus key derivation is a bit challenge on these devices.
 
-  Results of Mathur et.al. \cite{Mathur2008Rssi} show scheme for key derivation without any shared secret, only using properties of radio channel shared between these two devices and the nature of radio wave propagation through such shared channel. We show that this algorithm can be used in WSN environment.
+  Results of Mathur et.al. \cite{Mathur2008Rssi} show a scheme for key derivation without any shared secret, only using properties of radio channel shared between these two devices and the nature of radio wave propagation through such shared channel. We show that this algorithm can be adopted in WSN environment.
 
   \section{Keys from radio signal}
-  Due to a nature of a wireless channel which is not perfect, we can observe fluctuations and disturbances in the wave propagation. It might seem difficult at first to measure these since by no means we are able to observe all such events. Almost every radio module is able to measure RSSI\footnote{received signal strength indication}, which can be described as an amount of power in the received signal. There are many arbitrary scales and absolute values do not match on devices from different manufacturers since RSSI is relative index \cite{RSSIMeaning}.
+  Due to a nature of a wireless channel which is not perfect, we can observe fluctuations and disturbances in the wave propagation. It might seem difficult at first to measure these since we are not able to observe every such event. Almost every radio module can measure RSSI\footnote{received signal strength indication}, which can be described as an amount of power in the received signal. However, there are many arbitrary scales, and absolute values do not match on devices from different manufacturers since RSSI is relative index \cite{RSSIMeaning}.
 
-  However, our algorithm can work regardless of the differences in devices. Even two devices with the same configuration can produce different absolute values due to antenna position and overall device manufacturing differences. (many of these devices are partially assembled by hand \footnote{e.g. JeeNode motes come as a ready to assemble kit}.)
+  Still, our algorithm can work regardless of the differences in devices. Even two devices with the same configuration can produce different absolute values due to antenna position and overall device manufacturing differences. (many of these devices are partially assembled by hand \footnote{e.g. JeeNode motes come as a ready to assemble kit}.)
 
   \subsection{Quantization principle}
     Quantization enables extraction of bits from individual values of signal strength. There are many different solutions to this problem \cite{Jana2009Rssi}, two main approaches here are: lossless quantization \cite{Azimi-Sadjadi2010Fading} and contrary to that we have lossy quantization \cite{Mathur2008Rssi}. %TODO quant. is inherently lossy
 
-    Quantization is always lossy by design, we transform analog measurements of RSSI to single bits. However, the difference between two mentioned aproaches is number of generated bits per original RSSI measurements. Lossless quantization produces bit value from every measurement of signal strength, which is useful for high-performance demands, but it requires guaranteed variance in the radio channel (e.g. the nodes are constantly moving, or the environment is changing) Otherwise, the resulting keys could possibly be very weak.
+    Quantization is always lossy by design; we transform analog measurements of RSSI to single bits. However, the difference between two mentioned approaches is a number of generated bits per single RSSI measurement. Lossless quantization produces bit value from every measurement of signal strength, which is useful for high-performance demands, but it requires guaranteed variance in the radio channel (e.g. the nodes are constantly moving, or the environment is changing) Otherwise, the resulting keys could be weak.
 
-    Lossy quantization, on the other hand, does not have guaranteed output length per number of measured values, which can lead to a very limited length of output sequences. However, this kind of quantization is expected to have better results in static environments \cite{Jana2009Rssi} because of its nature to drop such bits, that fail to differ from others.
+    Lossy quantization, on the other hand, does not have guaranteed output length per number of measured values, which can lead to a very limited length of output sequences. However, this kind of quantization is expected to have better results in static environments \cite{Jana2009Rssi} because of its nature to drop bits which fail to differ from others.
 
     Since our network is static and without any moving nodes, we implemented lossy quantizer algorithm designed by Mathur et.al. \cite{Mathur2008Rssi}, which showed promising results for the off-the-shelf wireless devices. Authors also provided experimental results from scenarios comparable to our conditions.
 
@@ -298,26 +298,27 @@ The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm l
       \label{fig:quant_alg}
     \end{figure}
 
-    Nodes A and B exchange messages between each other, preferably at high rate of exchanged messages. Each node records RSSI measurement for every received message, thus both nodes record time series of RSSI values.     These values are processed and treshold is computed. It depend on the alghorithm whether one or multiple tresholds are used. Finally we process RSSI measurement once again, all measurements above treshold are treated as bit value 1 and all measurements below treshold as bit value 0. In case of multiple tresholds we drop measurements in between. Example with two tresholds is shown on figure \ref{fig:quant_alg}.
+    Nodes A and B exchange messages between each other, preferably at a high rate of exchanged messages. Each node records RSSI measurement for every received message. Thus both nodes record time series of RSSI values.     These values are processed, and a threshold is computed. It depends on the algorithm whether one or multiple thresholds are used. Finally, we process RSSI measurement once again, all measurements above the threshold are treated as bit value 1 and all measurements below the threshold as bit value 0. In a case of multiple thresholds, we drop measurements in between. Example with two thresholds is shown on figure \ref{fig:quant_alg}.
 
     Quantization princeple designed by Mathur et.al. \cite{Mathur2008Rssi}
      works as follows:
 
     \begin{enumerate}
-      \item Both nodes send $n$ messages to each other in alternating pattern. Counter value is placed inside these messages, which is used to synchronise messages on nodes. For every one of these messages, signal strength is measured upon reception.
+      \item Both nodes send $n$ messages to each other in alternating pattern. The counter value is placed inside these messages, which is used to synchronise messages on nodes. For every one of these messages, signal strength is measured upon reception.
       \item When $n$ messages have been successfully exchanged, both nodes can proceed to the computational part.
       \item Both nodes calculate mean $m$ and standard deviation $sd$ for signal strength values of all received messages.
+      \item We set $ 0 < \alpha < 1$ as a parameter to thresholds proportions. The larger value of $\alpha$, fewer bits will be produced.
       \item Both nodes calculate $q^+$ and $q^-$ values, which are upper and lower quantizer bin boundaries, as follows:
       $$q^+ = m + \alpha \cdot sd$$
       $$q^- = m - \alpha \cdot sd$$
-      \item Every signal strength measurement is then processed and it is rejected, if it lies within $q^+$ and $q^-$ boundaries, values above this range are assigned a bit value of one, values below are assigned a bit value of zero.
+      \item Every signal strength measurement is then processed, and it is rejected, if it lies within $q^+$ and $q^-$ boundaries, values above this range are assigned a bit value of one, values below are assigned a bit value of zero.
       \item Nodes then synchronise their measurement by exchanging list of counter values, where signal strength measurements were assigned either one or zero bit values.
       \item Counter values that match on both nodes are expected to be excursions in the same direction and are used to produce the resulting bit sequence.
-      \item Final bit sequence can be also created in different way. Consecutive measurements on one side of treshold can be treated as one outcome instead of multiple ones.
+      \item Final bit sequence can also be created in a different way. Consecutive measurements on one side of a threshold can be treated as one bit in the outcome instead of multiple ones.
     \end{enumerate}
 
   \section{Improvement strategies}
-  As we can see from data collected in experiments during undisturbed network \ref{src:plain}, there no bits generated and that is the case for most of the time. To deal with this problem we have to introduce some form of artifical noise or disturbances.
+  As we can see from data collected in experiments during undisturbed network \ref{src:plain}, there no bits generated and that is the case for most of the time. To deal with this problem, we have to introduce some form of artificial noise or disturbances.
   \subsection{Cooperative jamming}\label{subsec:jammer}
   The solution that offers itself is the help of other nodes within the network, because all of them are equiped with radio and we only have to work around the media access control mechanism in order to make two or more of them broadcast at the same time. Such idea has aready been researched, e.g. in work of Goel et.al. \cite{Goel2008Noise} or by He et.al. \cite{He2010Jamming}.
 
@@ -352,8 +353,8 @@ TODO
   \section{Performance Evaluation (results from experiments)}\label{sec:results}
   We have made several runs of our application with different settings. Nodes A and B were always on the same places (sniffer positions were altered), but the conditions of radio channel itself were different. First, as a base level, we had run the experiment in conditions without any disturbances. After we realised, that the plain static network does not produce any usable data, we tried to introduce other techniques \ref{subsec:jammer} \ref{subsec:people} that would add disturbances to the radio channel, therefore changes in the measured RSSI values.
 
-  To analyse the gathered data we used set of R scripts %CITE R
-  and all data postprocessing was done outside of the motes, while in the real settings, motes would have to do all of the computations on their own. In orde to evaluate produced bit sequences, we used min-entropy \ref{par:min} and frequency test \ref{par:freq}, both on eight and four-bit chunks of data. The goal was to obtain several measurements of entropy in the data and then use the most conservative of them to estimate contained randomness. Since we had collected only small amounts of data for individual sources, we decided not to use any of statistical test batteries %CITE
+  To analyse the gathered data we used set of R scripts %CITE R + explain alpha setting
+  and all data postprocessing was done outside of the motes, while in the real settings, devices would have to do all of the computations on their own. In order to evaluate produced bit sequences, we used min-entropy \ref{par:min} and frequency test \ref{par:freq}, both on eight and four-bit chunks of data. The goal was to obtain several measurements of entropy in the data and then use the most conservative of them to estimate contained randomness. Since we had collected only small amounts of data for individual sources, we decided not to use any of statistical test batteries %CITE
   , because our data either did not match the required amount of input or the results would not be statistically significant for such small sample.
 
   \paragraph{Min entropy}\label{par:min}
