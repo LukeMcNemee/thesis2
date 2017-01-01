@@ -227,7 +227,7 @@ Both of these devices are based on Arduino Mini \cite{ArduinoMini}
 For both of these devices, there is accompanying library JeeLib \cite{JeeLib} that contains all necessary functions for controlling the radio. It also deals with any other features that are different from standard Arduino Mini.
 
 \paragraph{RF12B radio module}\label{par:radio}
-Simple and cheap radio module RF12B from HopeRF \cite{RF12B} is present on all JeeMote and JeeLink devices. The version sold in Europe is using 868 MHz frequency for the radio\footnote{other version can use 433 MHz or 915 MHz}. Like many other common radio modules, this radio is half-duplex. Therefore it is able either to receive or to transmit messages, but cannot do both at one time.
+Simple and cheap radio module RF12B from HopeRF \cite{RF12B} is present on all JeeMote and JeeLink devices. The version sold in Europe is using 868 MHz frequency for the radio\footnote{other version can use 433 MHz or 915 MHz}. Like many other common radio modules, this radio is half-duplex. Therefore it is able either to receive or to transmit messages but cannot do both at one time.
 
 \begin{wrapfigure}{r}{0.5\textwidth}
   \vspace{-20pt}
@@ -241,7 +241,7 @@ Simple and cheap radio module RF12B from HopeRF \cite{RF12B} is present on all J
 The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm long wire) by default. It is possible to modify the properties of such antenna by shaping it in various ways, e.g. straight wire compared to coiled one. There might also be many other versions and shapes of antennae, which might have an effect on radio properties, but this would be subject to whole another research in a different field.
 
 \section{Node placement}\label{sec:place}
-25 JeeLink nodes were deployed to achieve even coverage of the whole area. All devices are placed near the ceiling, where they are visible, but do not cause any obstructions. Due to a wire placement constraints, we decided to set these devices close to the walls. Plan with identified locations of each node can be seen in appendix \ref{fig:map} (each node is represented by a red triangle). The map shows only relative placement, exact coordinates together with IDs of each node can be found in the appendix in table \ref{tab:map}.
+25 JeeLink nodes were deployed to achieve even coverage of the whole area. All devices are placed near the ceiling, where they are visible, but do not cause any obstructions. Due to a wire placement constraints, we decided to set these devices close to the walls. Plan with identified locations of each node can Alternatively, in appendix \ref{fig:map} (each node is represented by a red triangle). The map shows only relative placement, exact coordinates together with IDs of each node can can in the appendix in table \ref{tab:map}.
 
 \section{JeeTool}\label{sec:jeetool}
 
@@ -317,12 +317,20 @@ The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm l
       \item Final bit sequence can also be created in a different way. Consecutive measurements on one side of a threshold can be treated as one bit in the outcome instead of multiple ones.
     \end{enumerate}
 
+  As a result, we obtain bit sequence on both participating nodes. We can use the output directly as a key or process the bit sequence additionally. The preferred option would be entropy extraction, which can be done in many ways, most easily with cryptographic hash function.
+
+  We also have to be able to detect results with a little entropy. Moreover, since these occur rather frequently, we would like to create strategies to improve our situation.
+
   \section{Improvement strategies}
-  As we can see from data collected in experiments during undisturbed network \ref{src:plain}, there no bits generated and that is the case for most of the time. To deal with this problem, we have to introduce some form of artificial noise or disturbances.
+  As we can see from data collected in experiments during undisturbed network \ref{src:plain}, there are no bits generated, and that is the case most of the time. To deal with this problem, we have to introduce some form of artificial noise or disturbances.
   \subsection{Cooperative jamming}\label{subsec:jammer}
-  The solution that offers itself is the help of other nodes within the network, because all of them are equiped with radio and we only have to work around the media access control mechanism in order to make two or more of them broadcast at the same time. Such idea has aready been researched, e.g. in work of Goel et.al. \cite{Goel2008Noise} or by He et.al. \cite{He2010Jamming}.
+  The solution that offers itself is the help of other nodes within the network. All of them are equipped with radio, and we only have to work around the media access control mechanism to make two or more of them broadcast at the same time. Such idea has already been researched, e.g. in work of Goel et.al. \cite{Goel2008Noise} or by He et.al. \cite{He2010Jamming}.
 
+  This approach is primarily used to increase secrecy of a wiretap channel \cite{wyner1975wire} but can also be utilised in other ways. We presume one device with multiple antennas or two or more cooperating devices involved in this process. While one device is broadcasting the actual information, other device or antennae are used to create artificial noise in the radio channel.
 
+  This noise can be of various sources \cite{He2010Jamming}. We can use random noise, which has the same impact on every receiver in the network. Or we can use more advanced techniques, like using random codebook or structured codebook \cite{He2010Jamming}. With these techniques, the receiver is able to distinguish the jamming and extract it from received signal. Thus the receiving party, who has knowledge of used codebook, can decode the jamming signal and remove this interference.
+
+  In our situation, we are only interested in the addition of artificial noise to the radio channel. Such noise should preferably be unpredictable in signal strength and time.
 
   \subsection{Other means of disturbances}\label{subsec:people}
   \subsubsection{People}\label{subsubsec:people}
