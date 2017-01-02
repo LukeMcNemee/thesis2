@@ -534,8 +534,9 @@ There are many tests for conservative estimates of entropy contained within the 
   As we can see on the boxplots \ref{fig:errorsT} \ref{fig:errorsS}, the errors between nodes A and B are indeed scarce. Therefore there is a reasonable probability, that the nodes A and B will be able to establish the common key, using the obtained bit sequence from quantization algorithm \ref{subsec:quant}.
 
 
-  \begin{figure}[t]
-    \includegraphics[width=\textwidth]{../images/boxplotDistancesTeaching.png}
+  \begin{figure}
+
+    \includegraphics[width=0.8\textwidth]{../images/boxplotDistancesTeaching.png}
   \caption{Boxplot of Hamming distances between generated bit sequences from nodes A, B, and sniffer node during movement of people \ref{src:people}}
   \label{fig:errorsT}
   \end{figure}
@@ -550,14 +551,19 @@ One of the most important parts is how many bits were compromised to the sniffer
 
 On the attacker side, guessing is also not an option. Although individual bit positions in a sequence are known, there is no way to estimate whether the identified excursion is over or below the threshold. Guessing which bits are not correct would be very time-consuming. While the one-bit change would mean $400$ trials on average, two bits would mean about $400^2$ trials. Complexity grows exponentially and the sniffer gets $50$ bits wrong on average without any reasonable clue which bits are correct and which are not.
 
-If we use generated bit sequence directly as a key, then there might be a risk of such sequence being compromised. However, there are much more use cases \ref{sec:use} and for some of them we do not care if the sequence has been compromised or not, only the majority of sequences has to remain secret.
-
-
 \begin{figure}
+    \vspace{-10pt}
   \includegraphics[width=0.8\textwidth]{../images/boxplotDistancesRottation.png}
+  \vspace{-10pt}
 \caption{Boxplot of Hamming distances between generated bit sequences from nodes A, B, and sniffer node during movement of shielding \ref{src:shield}}
 \label{fig:errorsS}
 \end{figure}
+
+\clearpage
+If we use generated bit sequence directly as a key, then there might be a risk of such sequence being compromised. However, there are much more use cases \ref{sec:use} and for some of them we do not care if the sequence has been compromised or not, only the majority of sequences has to remain secret.
+
+
+
 
   \section{Discussion and use cases}\label{sec:use}
   Our bit sequence still needs some post-processing to extract the randomness; the most simple one would be a hash function. Therefore, if we use a correct function, we can expect, that one bit would change cause a change in half of the bits in the resulting key thanks to the avalanche effect \cite{Webster1986}.
@@ -637,24 +643,25 @@ If we use generated bit sequence directly as a key, then there might be a risk o
   \section{Evaluation principle}\label{sec:eval}
   Measuring the success can be done in various different ways, Edu-hoc utilises few different methods to decide, whether the attack was successful and how big was the impact of an attack.
 
-  Evaluation for each scenario is a little bit different because there are different objectives. The task of first scenario \ref{subsec:1st} is to capture as many messages as possible, therefore the evaluation is done as a simple comparison between the set of captured messages and set of pre-computed messages that are known to be transmitted in the time period of scenario run. Comparing these two inputs line by line we get intersect of these two sets, that contains all successfully captured messages and is stripped of all the duplicates and possible fraud messages. A number of messages in the resulting is then compared to the expected number of messages in order to receive the final percentage evaluation, the higher the number, the better the result.
+  Evaluation for each scenario is a little bit different because there are different objectives. The task of first scenario \ref{subsec:1st} is to capture as many messages as possible, therefore the evaluation is done as a simple comparison between the set of captured messages and set of pre-computed messages that are known to be transmitted in the time period of scenario run. Comparing these two inputs line by line we get intersection of these two sets, that contains all successfully captured messages and are stripped of all the duplicates and possible fraud messages. A number of messages in the resultin set is then compared to the expected number of messages. From this comparison we receive the final percentage evaluation, the higher the number, the better the result.
 
   The second and the fourth scenario \ref{subsec:2nd} \ref{subsec:4th} have the same goal, only differ in the scenario settings, which can be omitted for the evaluation purposes. The common goal is to prevent as many messages as possible from delivery to the central node. The way it is done is rather simple, the central node counts every delivered message and the resulting number is compared with the expected amount of messages.
 
-  Unfortunately, this design of scenario lacks in the evaluation one important thing, the credit for the attack cannot be given to any participant, because we have no identifier involved. Messages only vanish, but we do not know, whether it was by joint work of multiple attackers, one really successful one or by a fault in the network itself. Therefore there is not much of use for such scenario in the courses, and because of this, modified versions of scenarios have been used \ref{sec:PA197}.
+  Unfortunately, this design of scenario lacks in the evaluation one important thing, the credit for the attack cannot be given to any participant, because we have no identifier involved. Messages only vanish, but we do not know, whether it was by joint work of multiple attackers, one really successful one or by a fault in the network itself. Therefore there is not much of use for such scenario in the courses. Therefore, modified versions of scenarios have been used \ref{sec:PA197}.
 
-  The third scenario \ref{subsec:3rd} however utilises message modification, which can be used for identification purposes. Therefore messages on the central node are not only counted, but alco compared to the expected ones and differences are noted\footnote{the amount of computation on this level would limit the usability of the node, thus the node only sends received messages over the serial port to the server, where the actual evaluation is done}.
+  The third scenario \ref{subsec:3rd} utilises message modification, which can be used for identification purposes. Messages on the central node are not only counted, but also compared to the expected ones and differences are noted\footnote{the amount of computation on this level would limit the usability of the node. Node only sends received messages over the serial port to the server, where the actual evaluation is done}.
 
   Since students are assigned a unique identifier to modify the messages with, we can easily distinguish between participants and evaluate how successful they were in this task.
 
-  The last option which can be utilised in evaluation is a submission of secret, which was received from interaction with the network, node either responds to received message with such secret or the secret has to be extracted from the communication in the network. Such secret can be a short word, number or something of similar nature and again such secret can be unique for each participant, which makes te evaluation an easy task.
+  The last option which can be utilised in evaluation is a submission of secret, which was received from interaction with the network. Node either responds to received message with such secret or the secret has to be extracted from the communication in the network. Such secret can be a short word, number or something of similar nature. Such secret can be unique for each participant, which makes te evaluation an easy task.
+
   \section{Web interface and auto run}
-  Edu-hoc was designed as a long-term exercise, thus single scenarios are expected to run for days, possibly week or longer. However, for some, it would be extremely impractical to repeat only once during the whole time because we would like to present fresh scenario to everyone involved,  and also we would like to reset the scenario once a while. This will ensure correct initial settings and if we set the intervals right, then everyone will be able to test out several solutions within a reasonably short timeframe.
+  Edu-hoc was designed as a long-term exercise, thus single scenarios are expected to run for days, possibly week or longer. However, it would be extremely impractical to repeat single scenario only once during the whole time. We would like to present fresh scenario to everyone involved,  and also we would like to reset the scenario once a while. This will ensure correct initial settings. Moreover, if we set the intervals right, everyone will be able to test out several solutions within a reasonably short timeframe.
 
-  To achieve such kind of behaviour, we can utilise various approaches, the easiest one being set of bash scripts and setting the cron service %CITE
-  accordingly. The other option might be modified JeeTool, which would be running continuously and in set intervals would trigger the corresponding action.
+  To achieve such kind of behaviour, we can utilise various approaches, the easiest one being set of bash scripts and setting the automatic execution   accordingly. The other option might be modified JeeTool, which would be running continuously and in set intervals would trigger the corresponding actions.
 
-  The last option is the most complicated one but offers the most
+  The last option is the most complicated one but offers the most value.
+  TODO sever
 
   \section{PA197 use and results} \label{sec:PA197}
 
