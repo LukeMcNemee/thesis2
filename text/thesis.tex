@@ -390,10 +390,22 @@ In the optimal conditions, the expected time for a single run is about 30 second
   We have done several trials with a placement of these sniffer motes, to see any impact of position in the network on the results. In a case of multiple sniffer nodes we expected them to share every piece of information. Therefore, we assumed the worst case scenario when we processed all gathered data from multiple sniffers.
 
 
+  \begin{wrapfigure}{r}{0.5\textwidth}
+    \vspace{-50pt}
+    \begin{center}
+      \includegraphics[width=0.5\textwidth]{../images/placement.png}
+    \end{center}
+    \caption{Placement of nodes. \\ Red - node A, Blue - node B, \\ Green - sniffer, Purple - jammer}
+    \label{fig:placement}
+    \vspace{-20pt}
+
+  \end{wrapfigure}
 
 \section{Node placement}
-  %TODO plan of mote placement
-We have made several runs of our application with different settings. Nodes A and B were positioned always on the same places (sniffer positions were altered)
+
+We have made several runs of our application with different settings. Nodes A and B were positioned always on the same places (sniffer and jammer positions were altered). Positions can be seen on figure \ref{fig:placement}.
+
+
 
   \section{Performance Evaluation}\label{sec:results}
 
@@ -522,17 +534,13 @@ There are many tests for conservative estimates of entropy contained within the 
   As we can see on the boxplots \ref{fig:errorsT} \ref{fig:errorsS}, the errors between nodes A and B are indeed scarce. Therefore there is a reasonable probability, that the nodes A and B will be able to establish the common key, using the obtained bit sequence from quantization algorithm \ref{subsec:quant}.
 
 
-  \begin{figure}
+  \begin{figure}[t]
     \includegraphics[width=\textwidth]{../images/boxplotDistancesTeaching.png}
   \caption{Boxplot of Hamming distances between generated bit sequences from nodes A, B, and sniffer node during movement of people \ref{src:people}}
   \label{fig:errorsT}
   \end{figure}
 
-  \begin{figure}
-    \includegraphics[width=\textwidth]{../images/boxplotDistancesRottation.png}
-  \caption{Boxplot of Hamming distances between generated bit sequences from nodes A, B, and sniffer node during movement of shielding \ref{src:shield}}
-  \label{fig:errorsS}
-  \end{figure}
+
 
 
 
@@ -543,6 +551,13 @@ One of the most important parts is how many bits were compromised to the sniffer
 On the attacker side, guessing is also not an option. Although individual bit positions in a sequence are known, there is no way to estimate whether the identified excursion is over or below the threshold. Guessing which bits are not correct would be very time-consuming. While the one-bit change would mean $400$ trials on average, two bits would mean about $400^2$ trials. Complexity grows exponentially and the sniffer gets $50$ bits wrong on average without any reasonable clue which bits are correct and which are not.
 
 If we use generated bit sequence directly as a key, then there might be a risk of such sequence being compromised. However, there are much more use cases \ref{sec:use} and for some of them we do not care if the sequence has been compromised or not, only the majority of sequences has to remain secret.
+
+
+\begin{figure}
+  \includegraphics[width=0.8\textwidth]{../images/boxplotDistancesRottation.png}
+\caption{Boxplot of Hamming distances between generated bit sequences from nodes A, B, and sniffer node during movement of shielding \ref{src:shield}}
+\label{fig:errorsS}
+\end{figure}
 
   \section{Discussion and use cases}\label{sec:use}
   Our bit sequence still needs some post-processing to extract the randomness; the most simple one would be a hash function. Therefore, if we use a correct function, we can expect, that one bit would change cause a change in half of the bits in the resulting key thanks to the avalanche effect \cite{Webster1986}.
@@ -557,102 +572,67 @@ If we use generated bit sequence directly as a key, then there might be a risk o
 
   \section{motivation for educational WSN network}
   The current state of the art WSN devices usually uses specialised hardware and software in order to achieve the best performance available. %\CITE
-  This, unfortunately, is not the ideal prerequisite for an easy to learn matter. In fact, most of WSN devices have rather complicated setup and are quite challenging for novices \cite{hu2010wireless}.
+  This, unfortunately, is not the ideal prerequisite. In fact, most of WSN devices have rather complicated setup and are quite challenging for novices \cite{hu2010wireless}.
 
   Because of such discouragement, it is difficult to teach how to
   work with WSN’s; few hours (at least) are usually required
-  to explain the basics, which is reasonable for a research project or
-  something similar, but for a class exercise, this would turn out to be
+  to explain the basics. It is reasonable for a research project or
+  something similar. Hoewver, for a class exercise, this would turn out to be
   not the most effective use of time, if it would be achievable at all. And
   we have not yet mentioned more advanced topics in this area, such as
   common techniques for encryption or message authentication.
 
-  Issue of this nature can be solved in various ways,
-  in the case of Edu-hoc, we decided to sacrifice performance \ref{sec:hw}; which is not that much important for a network with an educational purpose. On the other hand, using hardware that is really easy to comprehend and use is of a great benefit here. Also having less powerful, but relatively cheap devices (in the range of \$30 rather than \$100 or more) gives the opportunity to lend each the students one of the devices, so that they can try the basics on their own, and also use this device for interactions with the network.
+  Issue of this nature can be solved in various ways, in the case of Edu-hoc, we decided to sacrifice performance \ref{sec:hw}; which is not that much important for a network with an educational purpose. On the other hand, using hardware that is really easy to comprehend and use is of a great benefit here. Also having less powerful, but relatively cheap devices (in the range of \$30 rather than \$100 or more) gives the opportunity to lend each the students one of the devices. They can try the basics on their own, and also use this device for interactions with the network.
 
   \section{Scenario approach (attack and repair)}
-  In order to make learning more enjoyable experience and also to add some challenging part to the learning process, we decided to make Edu-hoc scenario based; each scenario being composed of two distinct parts: first part in the role of an attacker (both enjoyable and educational) and the second part as a code reviewer or developer (primarily educational).
+  In order to make learning more enjoyable experience and also to add some challenging part to the learning process, we decided to make Edu-hoc scenario based. Each scenario is composed of two distinct parts: first part in the role of an attacker (both enjoyable and educational) and the second part as a code reviewer or developer (primarily educational).
 
-  \paragraph{attacker part of a scenario}\label{par:att}
+  Solutions to individual scenarios are not part of this thesis. They should not be publicaly available, since Edu-hoc is being actively used in the lectures.
+
+  \paragraph{Attacker part of a scenario}\label{par:att}
     Students are presented with network application which has known, or easily detectable, vulnerability. Task is to take advantage of such vulnerability and exploit it using own nodes and carefully executed interactions with the network. How successful these efforts were can be easily evaluated by percentage difference from the expected traffic of the network or by presenting learned secret in the submission of the solution. Exact methods of evaluation are described in \ref{sec:eval}.
 
-  \paragraph{reviewer part of a scenario}
+  \paragraph{Reviewer part of a scenario}
     An important part of the educational process is not only to find mistakes, but also to be able to correct them. The task in this part of the scenario is then to take the current source code of an application, which has been deployed on the network during the attacker part \ref{par:att}, correctly identify which mistakes were made and propose changes in the code, which would make the application secure against such kind of an attack. Exact evaluation methods are again described in \ref{sec:eval}.
 
 
     \subsection{1st scenario - Eavesdropping}\label{subsec:1st}
-    The first scenario can be considered really simple and it is by design. Since this scenario is the first encounter with Edu-hoc, we opted for passive attacker approach, without any actual interaction with the network, just listening for any traffic.
+    The first scenario can be considered really easy and it is by design. Since this scenario is the first encounter with Edu-hoc, we opted for passive attacker approach, without any actual interaction with the network, just listening for any traffic.
 
     Eavesdropping is also the first thing one would do if one would be about to attack some network because it does not compromise the presence of an attacker and intercepted messages may provide many useful pieces of information. This is another important reason why this task was selected as a first one, not only it is rather easy to do, but it provides vital information for the rest of the exercises (e.g. which nodes are present in the network, which frequency is used and what are the settings of the radio)
 
-    \paragraph{scenario setting}
-    Each node in the network sends messages, after each message, there is a delay of 1000 ms, therefore any receiving node has time to process the transmitted messages. All messages are sent as a broadcast and nodes within the network do not receive nor process them since it is not needed for successful scenario run. If this would be the case, transmission rates would have been updated accordingly and the scenario would be much more likely to fail on its own, because of single node malfunction, while with current settings, the network can operate without any problems even is several of the nodes would fail.
+    \paragraph{Scenario setting}
+    Each node in the network sends messages, after each message, there is a delay of 1000 ms. Therefore any receiving node has time to process the transmitted messages. All messages are sent as a broadcast. Nodes within the network do not receive nor process the messages since it is not needed for successful scenario run. If this would be the case, transmission rates would have been updated accordingly and the scenario would be much more likely to fail on its own, because of single node malfunction. With current settings, the network can operate without any problems even is several of the nodes would fail.
 
-    \paragraph{attack principle}
-    The attack is very simple, attacker node only has to listen for any traffic present in the network. For best results application has to be able to process as many messages as possible, however any performance changes will affect the end result only slightly (final percentage will be better, but the bottleneck is in the processor of the radio module, so better optimised application will increase the end result only by approximately 10-20\%)
-    \paragraph{application and securing it}
-    The main issue with the application is unencrypted broadcast. This can be fixed quite easily, just by the addition of simple encryption and for simplicity using common shared key. We have to be aware of the fact, that attacker might be able to collect some of the nodes and thus learn such key and compromise it and there are techniques which deal with this problem %CITE
-    However, in our scenario, this is sufficient solution because it is adequate to measure against eavesdropping.
 
     \subsection{2nd scenario - Black hole attack} \label{subsec:2nd}
-    This scenario presents more advanced concepts, dynamic routing in particular. The task is to attack the routing algorithm and diverse all traffic so that the central node does not receive any messages. This scenario requires active attacker, thus some basic interaction with the network.
+    This scenario presents more advanced concept - dynamic routing. The task is to attack the routing algorithm and diverse all traffic so that the central node does not receive any messages. This scenario requires active attacker, thus some basic interaction with the network.
 
-    \paragraph{scenario setting}
+    \paragraph{Scenario setting}
     The scenario is divided into two parts, first parts are shorter and are used to establish routes for this particular run of scenario. Without any attack or interference outside from the network, these routes should be always the same.
 
     In the following part of scenario each node periodically sends messages to the parent node, therefore all messages are routed to the central node. This node then counts all received messages and the final outcome is the number of expected messages compared to the number of actual messages received.
 
-    \paragraph{attack principle}
-    This attack requires some prior knowledge before execution which can be obtained simply by using eavesdropping technique from the previous exercise. This way an attacker can learn how the routing algorithm works (nodes broadcast their current distance to the central node, where central node has distance of 0, all nodes that hear distance announcement message then update their distance and broadcast this updated distance)
-
-    With this knowledge attacker than try to inject message with the same content as the central node does, but earlier than the central node is scheduled to do so. After this, the message from a central node will not improve the position of other nodes and they will not update their distance. Another possible approach is to find an intentional weakness in the algorithm implementation (application allows negative distance values).
-
-    The only thing that remains is to make sure to use nonexisting ID within the network and after the routing tree is established, attacker node can simply disappear, because it is no longer needed.
-
-    \paragraph{application and securing it}
-    In order to fix the application one has to fix two issues; check for negative counter values (which is the easy part and requires usually addition of one condition within the code); and what is more important, implement some kind of authentication mechanism for messages from the central node, or otherwise make sure that the attacker cannot diverse all the traffic only by being a bit faster than the central node.
-
-    Many options are available, the easiest one being preshared random authentication tag, which would be added to the messages. This is really simple countermeasure, but it guarantees that the attacker can't send a valid message before the central node sends it.
-
     \subsection{3rd scenario - Sinkhole attack}\label{subsec:3rd}
     Although very similar to the second scenario, this poses far greater challenge than the previous one. The goal is not only to divert the traffic but also modify it on the fly and send it to the original recipient.
 
-    The greatest issue here is related to the performance, since all messages from the entire network will be routed through single attacker node, therefore most of the messages are very likely to be dropped somewhere in the process, because single node is not capable of receiving and processing messages from every other node in the network, if they do not transmit on very slow rate.
+    The greatest issue here is related to the performance, since all messages from the entire network will be routed through single attacker node, therefore most of the messages are very likely to be dropped somewhere in the process, because single node is not capable of receiving and processing messages from every other node in the network, unless they do transmit on very slow rate.
 
     Task for this scenario is to deliver a modified message to the central node before the original message is delivered; messages with the same identifier but different content are discarded and only the one which was received the earliest is kept at the central node.
 
-    The reason why two very similar scenarios exist, while it could have been only this one, is to present scenarios in a manner of slowly increasing difficulty. If we were to skip the second scenario \ref{subsec:2nd}, the task might be too complicated to some, while this way, required task in the third scenario \ref{subsec:3rd} is only a minor extension to the second one, however, the achieved result is a far greater impact.
+    The reason why two very similar scenarios exist, is to present scenarios in a manner of slowly increasing difficulty. If we were to skip the second scenario \ref{subsec:2nd}, the task might be too complicated to some. This way, the required task in the third scenario \ref{subsec:3rd} is only a minor extension to the second one. However, the achieved result is of a far greater impact.
 
     \paragraph{scenario setting}
     Runtime of this scenario is the same as for the previous one \ref{subsec:2nd}; initial phase of route establishment and after that messages are routed from nodes to the central node. The expected outcome is to divert ad modify as many messages as possible.
 
-    \paragraph{attack principle}
-    The first part of the attack can be executed in the same fashion as the previous one \ref{subsec:2nd} although it is not the ideal way. As the goal is not to prevent all messages from reaching its destination, but to deliver as many modified messages as possible. Therefore it is not a good idea to modify all of the routes in the network, but only as much as the attacker node is capable of handling (i.e. only third of the nodes in the network). This can be done by sending the distance message only to selected nodes instead of broadcasting it.
-
-    Another part of the attack is rather simple, attacker node has to receive all messages which are addressed to it, modify these messages as it is required and send these messages to the central node. Modification usually requires simple text substitution inside the body of the message or task very similar to this one.
-
-    \paragraph{application and securing it}
-    Again as many times with this scenario, the fix is partly the same as per second scenario \ref{subsec:2nd}, which deals with the attack on the routing; either preventing it or detecting it.
-
-    The another part of this fix is primarily an authentication problem, therefore any kind of MAC will be able to secure this application. Therefore the problem of shared key arises again, but as before in first scenario \ref{subsec:1st} one master key will be able to do the job, if we assume, that the attacker does not have access to individual devices, only to radio communication between them.
-
-    The point of the exercise is to deal the problem at hand without complicating it with anything else. Of course, we could add any advanced key distribution schemes  %CITE
-    to the application in order to add countermeasures against master key compromise, but that would make completely different application without any real added value to the original educational purpose.
-
     \subsection{4th scenario - Jamming} \label{subsec:4th}
-    Evey once a while attacker comes around a network, application or protocol which is designed with security in mind, meaning there are no backdoors or weak spots in the design or implementation (really idealistic scenario, however, it is very likely that the attacker does not resource to find or use existing vulnerabilities, thus for such attacker there is no real way how to exploit such application).
+    Evey once a while attacker comes around a network, application or protocol which is designed with security in mind. There are no backdoors or weak spots in the design or implementation. Idealistic scenario, however, it is very likely that the attacker does not have resources to find or use existing vulnerabilities. For such attacker there is no real way how to exploit such application.
 
-    Nevertheless, it is very likely that such attacker would like to cause any kind of damage he is capable of doing. Most likely to make the application, protocol, or network unavailable; most likely by DoS attack %CITE
-    or something similar. For wireless communication it is quite easy to do, since the wireless medium, air to be specific, can be used by only one device at a time. If an attacker is able to utilise all ate available slot for transmissions, then the legitimate user would not be able to transmit anything. Such technique is called jamming and it is quite easy to deploy.
+    Nevertheless, it is very likely that such attacker would like to cause any kind of damage he is capable of. Most likely to make the application, protocol, or network unavailable; most likely by denial of service attack. For wireless communication it is quite easy to do, since the wireless medium, air to be specific, can be used by only one device at a time. If an attacker is able to utilise all the available slots for transmissions, then the legitimate user would not be able to transmit anything. Such technique is called jamming and it is quite easy to deploy.
 
     \paragraph{scenario setting}
-    The setting of this scenario is really simple, all nodes send a message via the fixed routing tree to the central node, who the counts the number of delivered messages. There is no phase of route establishment, only the message delivery phase. The assignment is to prevent delivery of as many messages as possible. Since there is no option to modify the routes etc. the only reasonable way is jamming.
+    The setting of this scenario is simple, all nodes send a message via the fixed routing tree to the central node. the number of delivered messages is then counted. There is no phase of route establishment, only the message delivery phase. The assignment is to prevent delivery of as many messages as possible. Since there is no option to modify the routes etc. the only reasonable way is jamming.
 
-    \paragraph{attack principle}
-    As has been stated before, jamming is the expected way of solving this scenario, although there might be many creative solutions created. With jamming one can either bypass the media access protocol and send data continually, thus preventing everyone else from sending any messages, or the another viable option is to send many valid messages to the central node, thus overloading it and forcing this node to drop many incoming messages, including the valid ones.
-
-    \paragraph{application and securing it}
-    Since this attack does not exploit any weakness, only the actual property of wireless communication and network design, there is not much one can do to prevent such attack, while only modifying the application source code. However, there are ways of dealing with such kind of an attack. Countermeasures are usually based on multiplication of the devices and decentralisation of the whole network. Therefore give two or even more nodes the ability to become the central node, use multiple frequencies etc. %CITE
 
   \section{Evaluation principle}\label{sec:eval}
   Measuring the success can be done in various different ways, Edu-hoc utilises few different methods to decide, whether the attack was successful and how big was the impact of an attack.
@@ -736,14 +716,13 @@ id &    x &    y\\
 
 
 \end{tabularx}
-\caption[Node IDs and placement coordinates]{Node IDs and placement coordinates\protect\footnotemark}
+\caption[Node IDs and placement coordinates]{Node IDs and placement coordinates \\(Coordinates begin from top right corner of map)}
 
 \label{tab:map}
 \end{table}
-\footnotetext{Coordinates begin from top right corner of map}
 
-
-\chapter{RSSI graphs} TODO
+\clearpage
+\chapter{RSSI graphs}
 \begin{figure}[h!!!]
   \includegraphics[height=0.9\textwidth, angle = 90 ]{../images/graph_rssi_01.pdf}
 \caption{sd = 0}
