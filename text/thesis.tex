@@ -88,6 +88,7 @@
 
 \usepackage{wrapfig}
 \usepackage{subcaption}
+\usepackage{tabularx}
 
 \begin{document}
 
@@ -392,16 +393,16 @@ In the optimal conditions, the expected time for a single run is about 30 second
 
 \section{Node placement}
   %TODO plan of mote placement
+We have made several runs of our application with different settings. Nodes A and B were positioned always on the same places (sniffer positions were altered)
+
+  \section{Performance Evaluation}\label{sec:results}
+
+  Quatization algorithm \ref{subsec:quant} is parametrised by $\alpha$ value. In evaluation of our experiments we had set $\alpha = 1/2$. This setting favours higher output rate, because smaller excursions exceed the treshold. Therefore we obtain more data for analysis. If we were to use the output directly as a key, then the setting should be different, preferably calibrated to the environment of the network.
+
+  To analyse the gathered data we used set of R scripts and all data postprocessing was done outside of the nodes. In the real settings, devices would have to do all of the computations on their own. In order to evaluate the produced bit sequences, we used min-entropy \ref{par:min} and frequency test \ref{par:freq}. Both were executed on eight and four-bit chunks of data. The goal was to obtain several measurements of entropy within the data and then use the most conservative estimate of contained randomness. Since we had collected only small amounts of data for individual sources, we decided not to use any of statistical test batteries \cite{rukhin2001statistical}.
 
 
-  \section{Performance Evaluation (results from experiments)}\label{sec:results}
-  We have made several runs of our application with different settings. Nodes A and B were always on the same places (sniffer positions were altered), but the conditions of radio channel itself were different. First, as a base level, we had run the experiment in conditions without any disturbances. After we realised, that the plain static network does not produce any usable data, we tried to introduce other techniques \ref{subsec:jammer} \ref{subsec:people} that would add disturbances to the radio channel, therefore changes in the measured RSSI values.
-
-  To analyse the gathered data we used set of R scripts %CITE R + explain alpha setting
-  and all data postprocessing was done outside of the motes, while in the real settings, devices would have to do all of the computations on their own. In order to evaluate produced bit sequences, we used min-entropy \ref{par:min} and frequency test \ref{par:freq}, both on eight and four-bit chunks of data. The goal was to obtain several measurements of entropy in the data and then use the most conservative of them to estimate contained randomness. Since we had collected only small amounts of data for individual sources, we decided not to use any of statistical test batteries %CITE
-  , because our data either did not match the required amount of input or the results would not be statistically significant for such small sample.
-
-  \paragraph{Min entropy}\label{par:min}
+  \subsection{Min entropy}\label{par:min}
 Min-entropy \cite{barker2012recommendation} is considered the most conservative estimate of unpredictability in information theory. To make a min-entropy estimate of IID\footnote{Independend and identically distributed} source we can use simple calculation as follows, given the dataset with N samples:
 
 
@@ -417,9 +418,9 @@ Min-entropy \cite{barker2012recommendation} is considered the most conservative 
 
 It is important to note, that this calculation of min-entropy estimate is only meaningful for IID sources \cite{barker2012recommendation}, for non-IID sources we have to use other means. Testing sources with dependencies with this min-entropy calculation may result in overestimates and generally output without any meaningful use.
 
-There are many tests for estimating min-entropy contained within the output of non-IID sources, most notably collision test, partial collection test or the compression test \cite{barker2012recommendation}. To us the most meaningful one was the frequency test\cite{barker2012recommendation}, because of its ability to work on small amounts of data, a larger amount of data only increase the accuracy, but the test can provide a meaningful estimate on any amount of data provided.
+There are many tests for estimating min-entropy contained within the output of non-IID sources, most notably collision test, partial collection test or the compression test \cite{barker2012recommendation}. To us the most meaningful one was the frequency test\cite{barker2012recommendation}, because of its ability to work on small amounts of data. A larger amount of data only increases the accuracy, but the test can provide a meaningful estimate on any amount of data provided.
 
-\paragraph{Frequency test}\label{par:freq}
+\subsection{Frequency test}\label{par:freq}
   On first sight, the calculation is similar to the original min-entropy \ref{par:min}. The calculation is following, using $0.005$ as confidence level $\alpha$:
 
   \begin{enumerate}
@@ -697,7 +698,7 @@ We can clearly see, that guessing is also not an option, although individual bit
   \begin{tabularx}{120px}{c|cc}
 
 id &    x &    y\\
-\midrule
+ \hline
 1 &    1498 &    0\\
 2 &    1977 &    207\\
 3 &    1147 &    90\\
@@ -732,8 +733,7 @@ id &    x &    y\\
 \footnotetext{Coordinates begin from top right corner of map}
 
 
-\newpage
-\chapter{RSSI graphs}
+\chapter{RSSI graphs} TODO
 \begin{figure}[h!!!]
   \includegraphics[height=0.9\textwidth, angle = 90 ]{../images/graph_rssi_01.pdf}
 \caption{sd = 0}
