@@ -53,8 +53,8 @@
     advisor       = {RNDr. Petr Švenda, Ph.D.},
     title         = {Edu-hoc: Experimental and educational platform for wireless ad-hoc networking},
     TeXtitle      = {Edu-hoc: Experimental and educational platform for wireless ad-hoc networking},
-    keywords      = {keyword1, keyword2, ...},
-    TeXkeywords   = {keyword1, keyword2, \ldots},
+    keywords      = {TODO keyword1, keyword2, ...},
+    TeXkeywords   = {TODO keyword1, keyword2, \ldots},
 }
 \thesislong{abstract}{
     TODO abstract
@@ -281,7 +281,7 @@ The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm l
   Still, our algorithm can work regardless of the differences in devices. Even two devices with the same configuration can produce different absolute values due to antenna position and overall device manufacturing differences. (many of these devices are partially assembled by hand \footnote{e.g. JeeNode motes come as a ready to assemble kit}.)
 
   \subsection{Quantization principle}
-    Quantization enables extraction of bits from individual values of signal strength. There are many different solutions to this problem \cite{Jana2009Rssi}, two main approaches here are: lossless quantization \cite{Azimi-Sadjadi2010Fading} and contrary to that we have lossy quantization \cite{Mathur2008Rssi}. %TODO quant. is inherently lossy
+    Quantization enables extraction of bits from individual values of signal strength. There are many different solutions to this problem \cite{Jana2009Rssi}, two main approaches here are: lossless quantization \cite{Azimi-Sadjadi2010Fading} and contrary to that we have lossy quantization \cite{Mathur2008Rssi}.
 
     Quantization is always lossy by design; we transform analog measurements of RSSI to single bits. However, the difference between two mentioned approaches is a number of generated bits per single RSSI measurement. Lossless quantization produces bit value from every measurement of signal strength, which is useful for high-performance demands, but it requires guaranteed variance in the radio channel (e.g. the nodes are constantly moving, or the environment is changing) Otherwise, the resulting keys could be weak.
 
@@ -577,7 +577,7 @@ If we use generated bit sequence directly as a key, then there might be a risk o
 \chapter{Education use}\label{ch:edu}
 
   \section{motivation for educational WSN network}
-  The current state of the art WSN devices usually uses specialised hardware and software to achieve the best performance available. %\CITE
+  The current state of the art WSN devices usually use specialised hardware and software to achieve the best performance available. %\CITE
   Unfortunately, this is not the ideal prerequisite. In fact, most of WSN devices have rather complicated setup and are quite challenging for novices \cite{hu2010wireless}.
 
   Because of such discouragement, it is hard to teach how to work with WSN’s; few hours (at least) are usually required to explain the basics. It is reasonable for a research project or something similar. However, for a class exercise, this would turn out to be not the most efficient use of time, if it would be achievable at all. Moreover, we have not yet mentioned more advanced topics in this area, such as common techniques for encryption or message authentication.
