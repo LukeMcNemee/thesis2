@@ -654,15 +654,39 @@ If we use generated bit sequence directly as a key, then there might be a risk o
 
   To achieve such kind of behaviour, we can utilise various approaches, the easiest one being set of bash scripts and setting the automatic execution accordingly. The other option might be modified JeeTool, which would be running continuously and in set intervals would trigger the corresponding actions.
 
-  The last option is the most complicated one but offers the most value.
-  TODO sever
+  We extended this approach with a static html page. The automaticly executed scripts then can modify the contents of html source file, therefore giving the information about current state of the network. Using this approach we can publish information about current scenario, number of active nodes or time left to the next iteration of scenario.
 
   \section{PA197 use and results} \label{sec:PA197}
+  We employed Edu-hoc in the seminars of PA197 course (secure network design),  because we wanted to provide students with hands on experience with WSN. Arduino nodes were used on seminars and students were provided with sample applications for simple send and receive functions.
+
+  During the first week students acomplished to learn the basics of Arduino programming, basic transmissions and two hop communication with three devices. Students also learned basic troubleshooting skills, which are required while working with hardware platforms like Arduino.
+
+  As a asignment for first week we selected first Edu-hoc scenario \ref{subsec:1st}, which was completed by 29 students out of 33 enroled. Some students submitted only small sample of captured messages, which was counted as partially correct solution (working application, but not enough captured messages). This scenario was considered succesful, because majority of the students was able to create a working application and eavesdrop messages.
+
+  In the next lectures students learned how to encrypt messages with AES  and authenticate broadcast using $\mu$Tesla \cite{perrig2002spins}.They were also presented with the basic ideas of routing in wireless sensor networks.
+
+  As a second assignment we selected modified third scenario \ref{subsec:3rd}. The first part stayed intact, the goal was to deliver a modified message. Easch student was assigned unique string to modify messages with. Once this message was delivered to the central node, it responded with a message containing a secret word. This word had to be presented in the correct solution and was unique for each student.
+
+   Only 10 students out of 33 submitted their solutions to the assignment, 3 of these were correct and received full score. Others usually made mistakes during the solution and did not recovered the correct secret word, most of  them received partial score. We do not consider this excercise succesfull, nor we consider it a failure. It was possible to solve this assignment, nevertheless, many students did not even tried to do so. Reasons why were partly caused by too complicated assignmet, partly by students not having enough time to complete it.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Future and related work}\
-  \section{RSSI}
+\chapter{Future work}\label{ch:future}
+Regarding the testbed construction, there are only minor improvements one could do. These are not critical to the testbed functionality in any way. We can alway benefit from more nodes present in the network, which would require expansion to another rooms. Also current situation requires manual detection of failures. Automatic detection of disconected node, preferably with notification system, would be appreciated extension to already present management software.
+
+  \section{Keys from RSSI}
+  We can see one clear goal to acomplish with this usecase. As has been mentioned in \ref{sec:eval}, we did not manage to collect large amount of data. Therefore this should be the primary goal. Gather enough data from individual experiments; at least megabytes of binary data from sequences of secret shared bits combined together.
+
+  Once we obtain large amount of data for each setting, we can then analyse such data with statistical test suites \cite{rukhin2001statistical}. Also we can employ more tests to estimate entropy \cite{barker2012recommendation} within our data.
+
+  If we manage to collect large amounts of data, it would be also usefull to compare various aproached to the quantization problem, since there are multiple solutions published \cite{Azimi-Sadjadi2010Fading} \cite{Jana2009Rssi} \cite{azimi2007robust} and each one can perform differently on our network. Since we collect complete measurements (not only the resulting bit sequences), it is easy to run aditional analysis on our data and compare results.
+
+  Once we manage to select the best performing solution for our network, we can experiment with applications of this approach. For example, we can try to employ this method of generating secret shared bits in the secrecy amplification protocols \cite{2015-wistp-ostadal}.
+
   \section{Edu-hoc}
+  Educational part of this thesis can be extended in two directions. First, we can create more scenarios. As one of possible scenarios, which could be implemented we have sybil atack. This would require implementation of voting scheme, and task of such scenario then would be to alter the expected result of voting. Another scenario could employ relay attack. Goal for an attacker would be to create non existing link in the routing tree, and then utilise this link to his advantage.
+
+  The other direction is related to the user interface. Currently we are able to display the current state of our network, but we cannot give direct feedback. We would like to have responsive web interface, where users could submit their solution to currently running scenario and receive imediate evaluation of their efforts. This is directly connected to fully automated evaluation of solutions, which is currently also not possible, but it would be a appreciated time saving addition on administrator side.
+
 \chapter{Summary}
 
 
