@@ -416,9 +416,9 @@ Min-entropy \cite{barker2012recommendation} is considered the most conservative 
 
 \end{enumerate}
 
-It is important to note, that this calculation of min-entropy estimate is only meaningful for IID sources \cite{barker2012recommendation}, for non-IID sources we have to use other means. Testing sources with dependencies with this min-entropy calculation may result in overestimates and generally output without any meaningful use.
+It is important to note, that this calculation of min-entropy estimate is only meaningful for IID sources \cite{barker2012recommendation}, for non-IID sources we have to use other means. Testing sources with dependencies with this min-entropy calculation may result in overestimates and generally output without any meaningful use. Please note, our source is most likely non-IID source.
 
-There are many tests for estimating min-entropy contained within the output of non-IID sources, most notably collision test, partial collection test or the compression test \cite{barker2012recommendation}. To us the most meaningful one was the frequency test\cite{barker2012recommendation}, because of its ability to work on small amounts of data. A larger amount of data only increases the accuracy, but the test can provide a meaningful estimate on any amount of data provided.
+There are many tests for conservative estimates of entropy contained within the output of non-IID sources, most notably collision test, partial collection test or the compression test \cite{barker2012recommendation}. To us the most meaningful one was the frequency test\cite{barker2012recommendation}, because of its ability to work on small amounts of data. A larger amount of data only increases the accuracy, but the test can provide a meaningful estimate on any amount of data provided.
 
 \subsection{Frequency test}\label{par:freq}
   On first sight, the calculation is similar to the original min-entropy \ref{par:min}. The calculation is following, using $0.005$ as confidence level $\alpha$:
@@ -429,7 +429,7 @@ There are many tests for estimating min-entropy contained within the output of n
     $$\epsilon = \sqrt{\frac{\log(\frac{1}{1-\alpha})}{2\cdot N}}$$
     \item $pmax$ is the probability of most likely observation value.
     $$pmax = max_{i=1..n}(\frac{count_i}{N})$$
-    \item Resulting estimate of min entropy is
+    \item Resulting estimate of entropy is
     $$min-entropy =  -\log_2 (pmax + \epsilon)$$
 
   \end{enumerate}
@@ -441,7 +441,7 @@ There are many tests for estimating min-entropy contained within the output of n
   \begin{table}[h!!!]
     \begin{tabularx}{\textwidth}{llllX}
       \hline
-      Sources: & Plain & Jammer & \begin{tabular}{@{}l@{}}  Moving \\ people\end{tabular} & \begin{tabular}{@{}l@{}}  Moving \\ shielding\end{tabular} \\
+      Sources: & Plain & Jammer & \begin{tabular}{@{}l@{}}  Moving \\ people \ref{subsubsec:people}\end{tabular} & \begin{tabular}{@{}l@{}}  Mechanical \\ obstructions \ref{subsec:shield}\end{tabular} \\
       \hline
 
       Total runs: & 40 & 10 & 424 & 26 \\
@@ -451,7 +451,7 @@ There are many tests for estimating min-entropy contained within the output of n
       \begin{tabular}{@{}l@{}}  Avg. errors \\ produced\end{tabular}&  - & - & 0.41 & 0.00 \\
       \begin{tabular}{@{}l@{}}  Avg. errors \\ on sniffer\end{tabular}&  - & - & 51.00 & 59.88 \\
 \hline
-      \begin{tabular}{@{}l@{}}  Usable runs II.\\ (Both 1s and 0s in output) \end{tabular}&  - & - & 97 & 10 \\
+      \begin{tabular}{@{}l@{}}  Usable runs II.\\ (Both 1s and \\ 0s in output) \end{tabular}&  - & - & 97 & 10 \\
       \begin{tabular}{@{}l@{}}  Avg. bits \\ produced II.\end{tabular}&  - & - & 409.06 & 470.00 \\
 \hline
       \begin{tabular}{@{}l@{}}  Min entropy\\ (8bit chunks)\end{tabular}&  - & - & 25.96 & 34.21 \\
@@ -466,25 +466,26 @@ There are many tests for estimating min-entropy contained within the output of n
     \label{tab:sources}
   \end{table}
   \subsection{Plain source}\label{src:plain}
-  As we can see from the table \ref{tab:sources}, there were no bits produced from this experiment. The reason behind is really simple, there were no disturbances in the %FORCE
+  As we can see from the table \ref{tab:sources}, there were no shared secret bits produced from this experiment. The reason behind is simple, there were no disturbances in the %FORCE
   radio channel, therefore all measurements of RSSI resulted in the same value. Therefore the quantization algorithm \ref{subsec:quant} computes $sd$ equal to 0, thus fails to establish bounds $q^+$ and $q^-$ and there are no bits produced on the output. Sample visualisation can be seen in figure \ref{fig:rssi_01}.
 
-  Since there are no bits produced, there is no point in measuring the entropy of the output. This result can be considered as the pitfall of static networks, without any moving parts or changes in the environment, there is not enough entropy in the radio channel as such, that could be used to extract entropy because there is none. Of course, the greater the area such network covers, disturbances are more probable, but we have to be aware of this problem and be prepared to identify such environment. The main reason being any bits generated in such environment should not be used \cite{Jana2009Rssi}.
+  Since there are no bits produced, there is no point in measuring the entropy of the output. This result can be considered as the pitfall of static networks. Without any moving parts or changes in the environment, there is not enough entropy in the radio channel as such. Therefore no entropy can be exracted, because there is none. Of course, the greater the area covered by network, disturbances are more probable. We have to be aware of this problem and be prepared to identify such environment. The main reason being any bits generated in such environment should not be used \cite{Jana2009Rssi}.
 
   \subsection{Jammer}\label{src:jammer}
-  Friendly jamming can be used as a possible remedy to the problem of static network \ref{subsec:jammer}, creating artificial noise in the network and thus possibly adding some entropy (given that the jamming is not predictable).
+  Friendly jamming can be used as a possible remedy to the problem of static network \ref{subsec:jammer}, creating artificial noise in the network and thus possibly adding some entropy (given that the effects of jamming are not predictable).
 
-  As the results in the table \ref{tab:sources} show, this approach was not successful, mostly because of limitations of used radio modules \ref{par:radio}. While this approach would work with more advanced radios that are capable of subtractions on the signal level and allow for more devices to broadcast at one time. RF12 radio module and its accompanying library, however, does not allow this, mostly because of really simple collision avoidance algorithm. The approach is based on simple principle, not to send messages when there is any other signal present in the wireless medium.
+  As the results in the table \ref{tab:sources} show, this approach was not successful, mostly because of limitations of used radio modules \ref{par:radio}. While this approach would work with more advanced radios that are capable of subtractions on the signal level and allow for more devices to broadcast at one time. RF12 radio module and its accompanying library, however, does not allow this. Mostly because of primitive collision avoidance algorithm used (based on simple principle, not to send messages when there is any other signal present in the wireless medium).
 
-  Therefore our primitive jammer, although jammer itself was able to broadcast anytime, failed. The legitimate nodes A and B could not receive nor broadcast their own messages, because of the collision avoidance. Thus the only effect of jammer was prolonged time needed to exchange 1000 messages between devices.
+  Therefore our primitive jammer, although jammer itself was able to broadcast anytime, failed. The legitimate nodes A and B could not receive nor broadcast their own messages, because of the collision avoidance algorithm. Thus the only effect of jammer was prolonged time needed to exchange 1000 messages between devices.
 
-  To counter this behaviour, we tried to limit the transmission power used by sniffer, even using it without antenna. Once the signal was limited to the required level, that nodes A and B would not be interrupted by it, then we observed same results as if the jammer was not present at all.
+  To counter this behaviour, we tried to limit the transmission power used by sniffer, even using it without antenna. Once the signal was limited to the level, when nodes A and B would not be interrupted by it. We observed same results as if the jammer was not present at all.
 
-  Although there might be other option how to make this approach work, because we limited ourselves to using stock radio modules and available software for radio management, we were not able to produce any bits using this method.
-  Thus we leave out this option for either more advanced users (who might be able to control the radio on the most elemental level, therefore defining own collision avoidance rules etc.) or users with more specialised hardware (e.g. software defined radio modules). %CITE
+  Although there might be other options how to make this approach work, we limited ourselves to using stock radio modules and available software for radio management. Therefore, we were not able to produce any secret shared bits using this method.
+
+  Thus we leave out this option for more advanced users (who might be able to control the radio on the most elemental level, defining own collision avoidance rules etc.) or users with more specialised hardware (e.g. software defined radio modules).
 
   \subsection{Moving people}\label{src:people}
-  This option was not one of the originally intended sources, but during the experiment with plain source, we discovered, that people walking through the monitored area caused much-wanted irregularities in a radio signal. This option would be a viable for busy places like already tried cafeteria \cite{Mathur2008Rssi} or town square. Thanks to the network placement we utilised our classroom and made these measurements during one of the lectures. The data clearly show some patterns, mostly we can observe timeframes which produce bit sequences with high entropy and also timeframes where no bits were generated.
+  The data from experiment with movement of people clearly show some patterns, mostly we can observe timeframes which produce bit sequences with high entropy and also timeframes where no bits were generated. Since our experiments were conducted during lectures, we can expect, that the movement was not durng the whole timeframe of our experiments. Rather we expect time periods with movement and periods without it. Which corresponds to our data.
 
   \begin{figure}
     \includegraphics[height=\textwidth, angle = 90]{../images/graph_rssi_04.pdf}
@@ -492,11 +493,9 @@ There are many tests for estimating min-entropy contained within the output of n
   \label{fig:rssi_04}
   \end{figure}
 
+  Most of the time people remained stationary, therefore with almost no effect on the network. Therefore no secret shared bits were produced during these runs. Once somebody decided to move, we can clearly see excursions in the measured RSSI values. Although movement of people is not random, it is can be considered not predictable, therefore it might be sufficient source of randomness for our purposes.
 
-  These differences can by explained by a simple fact, people do not move in a random fashion. And that is exactly what we can observe in our data, during runs, that produced data people were moving, but most of the time they remained stationary, therefore with almost no effect on the network. Although movement of people is not random, it is can be considered not predictable, therefore it might be sufficient source of randomness for our purposes.
-
-
-  One sample run from this experiment is shown as figure \ref{fig:rssi_04}. From this run, there were 161 bits generated, with zero errors between nodes A and B. And sniffer node made 90 errors, thus about half of the bit sequence was compromised.
+  One sample run from this experiment is shown as figure \ref{fig:rssi_04}. From this run, there were 161 bits generated, with zero errors between nodes A and B. Sniffer node made 90 errors, thus about half of the bit sequence was compromised.
 
   The results show promising values and show us, that there is a potential and more research should be done in this direction. We can see a clear trend in data, once we filter out unusable runs (either because no bits were produced, or because produced bit sequence contained only zeroes), we can see, that about one-quarter of runs is suitable for bit extraction. Of course, these runs are not evenly distributed in our sample, they are rather clustered. On average, we can generate about 400 bits from one successful run. As we can see from the results of min-entropy \ref{par:min} and frequency test \ref{par:freq}, the most conservative estimate is about 26 bits of entropy contained within these data. Thus on average we would like to utilise five consecutive runs, in order to generate a usable key.
 
@@ -509,7 +508,7 @@ There are many tests for estimating min-entropy contained within the output of n
   there are clearly visible excursions that do repeat in somewhat regular fashion.
 
 
-  \subsection{Speed (bits of key per time)}
+  \subsection{Speed (shared secret bit rate)}
   One run (exchange of 1000 messages) takes approximately 30 seconds to complete. This is under a condition, that these two nodes are only one to use the wireless medium, otherwise the required time would be different.
 
   Anyway, approximately 30 seconds to exchange values and then some minor time for calculations and exchange of two messages with identified excursions (which are negligible regarding the time).  From these 1000 values we can obtain about 25 bits of entropy on average \ref{src:people}, therefore we can gather about 50 bits per minute.
@@ -531,6 +530,7 @@ There are many tests for estimating min-entropy contained within the output of n
 
 On the other hand, our bit sequence still needs some post processing in order to extract the randomness \ref{sec:use}, the most simple one would be a hash function. Therefore, if we use a correct function, we can expect, that one different bit would cause a change in half of the bits in the resulting key thanks to the avalanche effect \cite{Webster1986}.
 
+TODO attacker results
 We can clearly see, that guessing is also not an option, although individual bit positions in a sequence are known, there is no way to estimate whether the identified excursion is over or below the threshold. Guessing which bits are not correct is also not an option while guessing just one-bit change would mean $400$ trials on average, two bits would mean about $400^2$ trials. Complexity for this case grows exponentially and the sniffer gets $50$ bits wrong on average without any reasonable clue which bits are correct and which are not.
 
   \begin{figure}
