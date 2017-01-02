@@ -489,20 +489,20 @@ There are many tests for conservative estimates of entropy contained within the 
 
   \begin{figure}
     \includegraphics[height=\textwidth, angle = 90]{../images/graph_rssi_04.pdf}
-  \caption{TODO add numbers to description}
+  \caption{Graph with RSSI measurements for nodes A, B and sniffer. 161 excursions did match on nodes AB (161 secret shared bits produced) with 0 errors. 90 bits were compromised to the sniffer node.}
   \label{fig:rssi_04}
   \end{figure}
 
   Most of the time people remained stationary, therefore with almost no effect on the network. Therefore no secret shared bits were produced during these runs. Once somebody decided to move, we can clearly see excursions in the measured RSSI values. Although movement of people is not random, it is can be considered not predictable, therefore it might be sufficient source of randomness for our purposes.
 
-  One sample run from this experiment is shown as figure \ref{fig:rssi_04}. From this run, there were 161 bits generated, with zero errors between nodes A and B. Sniffer node made 90 errors, thus about half of the bit sequence was compromised.
+  One sample run from this experiment is shown on figure \ref{fig:rssi_04}. This run generated 161 bits secret shared bits, with zero errors between nodes A and B. Sniffer node made 90 errors, thus about half of the bit sequence was compromised.
 
-  The results show promising values and show us, that there is a potential and more research should be done in this direction. We can see a clear trend in data, once we filter out unusable runs (either because no bits were produced, or because produced bit sequence contained only zeroes), we can see, that about one-quarter of runs is suitable for bit extraction. Of course, these runs are not evenly distributed in our sample, they are rather clustered. On average, we can generate about 400 bits from one successful run. As we can see from the results of min-entropy \ref{par:min} and frequency test \ref{par:freq}, the most conservative estimate is about 26 bits of entropy contained within these data. Thus on average we would like to utilise five consecutive runs, in order to generate a usable key.
+  The results show promising values and more research should be done in this direction. We can see a clear trend in data, once we filter out unusable runs (either because no bits were produced, or because produced bit sequence contained only zeroes). About one-quarter of runs is suitable for bit extraction. Of course, these runs are not evenly distributed in our sample, they are rather clustered. On average, we can generate about 400 bits from one successful run. As we can see from the results of min-entropy \ref{par:min} and frequency test \ref{par:freq}, the most conservative estimate is about 26 bits of entropy contained within these data. On average we would like to utilise five consecutive runs, in order to generate a usable key.
 
   \subsection{Moving shielding}\label{src:shield}
   In the last experiment, motivated by the promising data from previous one, we tried to introduce disturbances in the radio channel without the presence of any person \ref{subsec:shield}. In the table we can see, that this approach achieved almost the same results as the previous one \ref{src:people}.
 
-  Unfortunately, due to an error, we did not manage to collect any larger amount of data, therefore there is not much we can conclude from these results. However, the current results are promising, averages of generated bits and entropy estimates are slightly better than in other experiments.  These values might decrease with more experiments, but given the fact, that these results were produced on a network without any interference from outside, this area is definitely worth looking into.
+  Unfortunately, due to an error\footnote{Malfunction of automated application upload to the device, thus presence of person was required to upload the application. However, presence of person was prohibited during the experiment itself, because it would affect the data. With experiment duration of 30 seconds, this was nearly impossible to manage.}, we did not manage to collect any larger amount of data. Therefore there is not much we can conclude from these results. However, the results are promising, averages of generated bits and entropy estimates are slightly better than in other experiments. Values from this experiemnt, compared to the oters, can be seen in table \ref{tab:sources}. Values might decrease with more experiments, but given the fact, that these results were produced on a network without any interference from outside, our approach with moving shielding is worth looking into.
 
   The big question regarding this source is the predictability of such data, because as we can see on graph of sample run \ref{fig:rssi_02}
   there are clearly visible excursions that do repeat in somewhat regular fashion.
@@ -511,15 +511,15 @@ There are many tests for conservative estimates of entropy contained within the 
   \subsection{Speed (shared secret bit rate)}
   One run (exchange of 1000 messages) takes approximately 30 seconds to complete. This is under a condition, that these two nodes are only one to use the wireless medium, otherwise the required time would be different.
 
-  Anyway, approximately 30 seconds to exchange values and then some minor time for calculations and exchange of two messages with identified excursions (which are negligible regarding the time).  From these 1000 values we can obtain about 25 bits of entropy on average \ref{src:people}, therefore we can gather about 50 bits per minute.
+  Approximately 30 seconds to exchange values and then some minor time for calculations and exchange of two messages with identified excursions (which are negligible regarding the time).  From these 1000 values we can obtain about 25 bits of entropy on average \ref{src:people}, therefore we can gather about 50 bits per minute.
 
-  This is comparable to the original result 1 bit/sec of Mathur et.al. \cite{Mathur2008Rssi}, however, we were capable of exchanging way fewer messages per minute than the original proposal (our rate 1000 msgs/30 sec is not comparable to 4000 msgs/sec achieved by Mathur et.al.), probably due to the nature of used devices \ref{sec:hw}.
+  This is comparable to the original result 1 bit/sec of Mathur et.al. \cite{Mathur2008Rssi}, however, we were capable of exchanging smaller number of messages per minute than the original proposal (our rate 1000 msgs/30 sec is not comparable to 4000 msgs/sec achieved by Mathur et.al.), probably due to the nature of used devices \ref{sec:hw}.
+
+
   \subsection{Possible errors}
   Question about reliability surely comes to mind. We have no direct guarantee, values and measurement on individual nodes are clearly not symmetrical, we only expect them to be highly correlated.
 
   As we can see on the boxplots \ref{fig:errorsT} \ref{fig:errorsS}, the errors between nodes A and B are indeed scarce, therefore there is reasonable probability, that the nodes A and B will be able to establish the common key, using the obtained bit sequence from quantization algorithm \ref{subsec:quant}.
-
-  The other important part is how many bits were compromised to the sniffer node and potential attacker. As we can see, on average there is an hamming distance of 50 bits between output bit sequence for nodes A and B and bit sequence derived at sniffer node. Of course, there are excursions in both directions, therefore we cannot entirely guarantee that the derived bit sequence is secret.
 
 
   \begin{figure}
@@ -528,18 +528,28 @@ There are many tests for conservative estimates of entropy contained within the 
   \label{fig:errorsT}
   \end{figure}
 
-On the other hand, our bit sequence still needs some post processing in order to extract the randomness \ref{sec:use}, the most simple one would be a hash function. Therefore, if we use a correct function, we can expect, that one different bit would cause a change in half of the bits in the resulting key thanks to the avalanche effect \cite{Webster1986}.
-
-TODO attacker results
-We can clearly see, that guessing is also not an option, although individual bit positions in a sequence are known, there is no way to estimate whether the identified excursion is over or below the threshold. Guessing which bits are not correct is also not an option while guessing just one-bit change would mean $400$ trials on average, two bits would mean about $400^2$ trials. Complexity for this case grows exponentially and the sniffer gets $50$ bits wrong on average without any reasonable clue which bits are correct and which are not.
-
   \begin{figure}
     \includegraphics[width=\textwidth]{../images/boxplotDistancesRottation.png}
   \caption{Boxplot of Hamming distances between generated bit sequences from nodes A, B, and sniffer node during movement of shielding \ref{src:shield}}
   \label{fig:errorsS}
   \end{figure}
 
+
+
+\section{Attacker results}
+
+One of the most important parts is how many bits were compromised to the sniffer node and potential attacker. As we can see \ref{fig:errorsT} \ref{fig:errorsS}, on average there is an hamming distance of 50 bits between output bit sequence for nodes A and B and bit sequence derived at sniffer node. Of course, there are exceptions in both directions, therefore we cannot  guarantee that the derived bit sequence is secret in every case.
+
+On the attacker side, guessing is also not an option. Although individual bit positions in a sequence are known, there is no way to estimate whether the identified excursion is over or below the threshold. Guessing which bits are not correct would be very time consuming. While just one-bit change would mean $400$ trials on average, two bits would mean about $400^2$ trials. Complexity for this case grows exponentially and the sniffer gets $50$ bits wrong on average without any reasonable clue which bits are correct and which are not.
+
+If we use generated bit sequence directly as a key, than there might be risk of such sequence being compromised. However, there are many more usecases \ref{sec:use} and for some of them we do not care if the sequence has been compromised or not, only the majority of sequences has to remain secret.
+
   \section{Discussion and use cases}\label{sec:use}
+  Our bit sequence still needs some post processing in order to extract the randomness, the most simple one would be a hash function. Therefore, if we use a correct function, we can expect, that one bit would change cause a change in half of the bits in the resulting key thanks to the avalanche effect \cite{Webster1986}.
+
+  There are many usecases for this source of entropy. We can use this algoritm directly, when two devices without any preshared data would like to comunicate over secured channel. Then we use our bitsequences directly (or after some postprocessing) as a key for encryption of communication.
+
+  Other different use could be improving secrecy of already secured network. Such algorithm usually utilise other neighbouring nodes to transfer additional key material \cite{2015-wistp-ostadal}. With use of our algorithm we can generate additional key material directly between these two nodes, even if currently used key is compromised. This additional material then could be used to secure the direct connection again.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
