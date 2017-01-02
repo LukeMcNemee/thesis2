@@ -23,7 +23,7 @@
   %% <http://mirrors.ctan.org/macros/latex/contrib/fithesis/guide/mu/fi.pdf>.
 ]{fithesis3}
 %% The following section sets up the locales used in the thesis.
-\usepackage[resetfonts]{cmap} %% We need to load the T2A font encoding
+\usepackage[resetfonts]{cmap} %% We need to load the a T2A font encoding
 \usepackage[T1,T2A]{fontenc}  %% to use the Cyrillic fonts with Russian texts.
 \usepackage[
   main=english, %% By using `czech` or `slovak` as the main locale
@@ -168,7 +168,7 @@ The second use case of our network is related to the usually difficult first exp
   \subsection{Code and data upload and download (\ref{enu:upload}) and (\ref{enu:data})}
   Code upload and download is usually only a problem for a long-term network. Primarily for the network with development or research purposes, because this goal usually requires frequent changes of source code, thus a convenient way of doing so. In any other kind of network, software is typically uploaded only once and before the network deployment. However, we also should have a solution for doing so (it does not have to be convenient), because a device that cannot be updated is dangerous.
 
-  When the solution for code upload is required for already placed devices, there are two main options, either updated over the connected cable or some FOTA\footnote{firmware over the air} solution. The latter one would be preferred for battery powered networks since it does not require any additional cables.
+  When the solution for code upload period for already placed devices, there are two main options, either updated over the connected cable or some FOTA\footnote{firmware over the air} solution. The latter one would be preferred for battery powered networks since it does not require any additional cables.
 
   In a case of power provided through a cable, it is usually the best option to use this cable to provide software uploads and updates as well. The cable is already present, and it is the most reliable way of doing so. The same applies to data transfers; cable connection is the most stable and straightforward solution, when the cable is not present, such functions have to be provided via the radio.
 
@@ -341,7 +341,7 @@ The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm l
   \paragraph{Movement of people}\label{subsubsec:people}
   Initially, we tried to avoid this kind of disturbance as much as was possible, because the movement of people is unpredictable (to certain extend) and such experiments are very hard (nearly impossible) to replicate.
 
-  After we acknowledged the need for artificial disturbances, movement of people was the most easy one to utilise. Unless we place our network in isolated environment, we can usually expect movement of people within the area of our network. Although this movement can be arranged, in most situations we can expect it to be somehow randomised. Therefore, the way it affects our RSSI measurements is also unpredictable to certain extend.
+  After we acknowledged the need for artificial disturbances, movement of people was the most easy one to utilise. Unless we place our network in isolated environment, we can usually expect movement of The within the area of our network. Although this movement can be arranged, in most situations we can expect it to be somehow randomised. Therefore, the way it affects our RSSI measurements is also unpredictable to certain extend.
 
   \paragraph{Mechanical obstructions}\label{subsec:shield}
   Inspired by the results we obtained from experiments with movement of people, we tried to produce similar disturbances with a use of a mechanical device. This device was constructed from cardboard (structure itself) and aluminium foil (side shields), and its movement was enabled by a single stepper motor. Appearance of our device can be seen on figure \ref{fig:device}. %TODO dimensions
@@ -372,7 +372,7 @@ The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm l
 
 
   \section{Experiment setting}
-   To collect data from a real-world network we created a custom application. Such data then were processed by quantization algorithm \ref{subsec:quant} and produced bit sequences were analysed regarding the entropy and usability for cryptographic keys \ref{sec:results}.
+   To collect data from a real-world network we created a custom application. Such data then were processed by quantization algorithm \ref{subsec: quant} and produced bit sequences were analysed regarding the entropy and usability for cryptographic keys \ref{sec:results}.
 
    By default, JeeNode platform is not able to directly obtain analog value of RSSI from radio module. The addition of short jumper wire between corresponding radio module pin and Arduino analog input pin is required \cite{RSSI_RF12B_mod}.
 
@@ -577,56 +577,50 @@ If we use generated bit sequence directly as a key, then there might be a risk o
 \chapter{Education use}\label{ch:edu}
 
   \section{motivation for educational WSN network}
-  The current state of the art WSN devices usually uses specialised hardware and software in order to achieve the best performance available. %\CITE
-  This, unfortunately, is not the ideal prerequisite. In fact, most of WSN devices have rather complicated setup and are quite challenging for novices \cite{hu2010wireless}.
+  The current state of the art WSN devices usually uses specialised hardware and software to achieve the best performance available. %\CITE
+  Unfortunately, this is not the ideal prerequisite. In fact, most of WSN devices have rather complicated setup and are quite challenging for novices \cite{hu2010wireless}.
 
-  Because of such discouragement, it is difficult to teach how to
-  work with WSN’s; few hours (at least) are usually required
-  to explain the basics. It is reasonable for a research project or
-  something similar. Hoewver, for a class exercise, this would turn out to be
-  not the most effective use of time, if it would be achievable at all. And
-  we have not yet mentioned more advanced topics in this area, such as
-  common techniques for encryption or message authentication.
+  Because of such discouragement, it is hard to teach how to work with WSN’s; few hours (at least) are usually required to explain the basics. It is reasonable for a research project or something similar. However, for a class exercise, this would turn out to be not the most efficient use of time, if it would be achievable at all. Moreover, we have not yet mentioned more advanced topics in this area, such as common techniques for encryption or message authentication.
 
-  Issue of this nature can be solved in various ways, in the case of Edu-hoc, we decided to sacrifice performance \ref{sec:hw}; which is not that much important for a network with an educational purpose. On the other hand, using hardware that is really easy to comprehend and use is of a great benefit here. Also having less powerful, but relatively cheap devices (in the range of \$30 rather than \$100 or more) gives the opportunity to lend each the students one of the devices. They can try the basics on their own, and also use this device for interactions with the network.
+  The issue of this nature can be solved in various ways, in the case of Edu-hoc, we decided to sacrifice performance \ref{sec:hw}; which is not that much necessary for a network with an educational purpose. On the other hand, using hardware that is really easy to comprehend and use is of a great benefit here. Also having less capable, but relatively cheap devices (in the range of \$30 rather than \$100 or more) gives the opportunity to lend each the students one of the devices. They can try the basics on their own, and also use this device for interactions with the network.
 
   \section{Scenario approach (attack and repair)}
-  In order to make learning more enjoyable experience and also to add some challenging part to the learning process, we decided to make Edu-hoc scenario based. Each scenario is composed of two distinct parts: first part in the role of an attacker (both enjoyable and educational) and the second part as a code reviewer or developer (primarily educational).
+  To make learning more enjoyable experience and also to add some challenging part to the learning process, we decided to make Edu-hoc scenario based. Each scenario is composed of two distinct parts: the first part in the role of an attacker (both enjoyable and educational) and the second part as a code reviewer or developer (primarily educational).
 
-  Solutions to individual scenarios are not part of this thesis. They should not be publicaly available, since Edu-hoc is being actively used in the lectures.
+  Solutions to particular scenarios are not part of this thesis. They should not be publicly available since Edu-hoc is actively used in the lectures.
 
   \paragraph{Attacker part of a scenario}\label{par:att}
-    Students are presented with network application which has known, or easily detectable, vulnerability. Task is to take advantage of such vulnerability and exploit it using own nodes and carefully executed interactions with the network. How successful these efforts were can be easily evaluated by percentage difference from the expected traffic of the network or by presenting learned secret in the submission of the solution. Exact methods of evaluation are described in \ref{sec:eval}.
+    Students are presented with network application which has known, or easily detectable, vulnerability. Task is to take advantage of such vulnerability and exploit it using own nodes and carefully executed interactions with the network. How successful these efforts were can be easily evaluated by percentage difference from the normal traffic of the network or by presenting learned secret in the submission of the solution. Exact methods of evaluation are described in \ref{sec:eval}.
 
   \paragraph{Reviewer part of a scenario}
-    An important part of the educational process is not only to find mistakes, but also to be able to correct them. The task in this part of the scenario is then to take the current source code of an application, which has been deployed on the network during the attacker part \ref{par:att}, correctly identify which mistakes were made and propose changes in the code, which would make the application secure against such kind of an attack. Exact evaluation methods are again described in \ref{sec:eval}.
+    An important aspect of the educational process is not only to find mistakes, but also to be able to correct them. The task in this part of the scenario is then to take the current source code of an application, which has been deployed on the network during the attacker part \ref{par:att}, correctly identify which mistakes were made and propose changes in the code, which would make the application secure against such kind of an attack. Exact evaluation methods are again described in \ref{sec:eval}.
 
 
     \subsection{1st scenario - Eavesdropping}\label{subsec:1st}
-    The first scenario can be considered really easy and it is by design. Since this scenario is the first encounter with Edu-hoc, we opted for passive attacker approach, without any actual interaction with the network, just listening for any traffic.
+    The first scenario can be considered really easy, and it is by design. Since this scenario is the first encounter with Edu-hoc, we opted for passive attacker approach, without any actual interaction with the network, just listening for any traffic.
 
     Eavesdropping is also the first thing one would do if one would be about to attack some network because it does not compromise the presence of an attacker and intercepted messages may provide many useful pieces of information. This is another important reason why this task was selected as a first one, not only it is rather easy to do, but it provides vital information for the rest of the exercises (e.g. which nodes are present in the network, which frequency is used and what are the settings of the radio)
 
     \paragraph{Scenario setting}
-    Each node in the network sends messages, after each message, there is a delay of 1000 ms. Therefore any receiving node has time to process the transmitted messages. All messages are sent as a broadcast. Nodes within the network do not receive nor process the messages since it is not needed for successful scenario run. If this would be the case, transmission rates would have been updated accordingly and the scenario would be much more likely to fail on its own, because of single node malfunction. With current settings, the network can operate without any problems even is several of the nodes would fail.
+    Each node in the network sends messages, after each message, there is a delay of 1000 ms. Therefore any receiving node has time to process the transmitted messages. All messages are sent as a broadcast. Nodes within the network do not receive nor process the messages since it is not needed for successful scenario run. If this were the case, transmission rates would have to be updated accordingly, and the scenario would be much more likely to fail on its own, because of single node malfunction. With current settings, the network can operate without any problems even is several of the nodes would fail.
 
 
     \subsection{2nd scenario - Black hole attack} \label{subsec:2nd}
     This scenario presents more advanced concept - dynamic routing. The task is to attack the routing algorithm and diverse all traffic so that the central node does not receive any messages. This scenario requires active attacker, thus some basic interaction with the network.
 
     \paragraph{Scenario setting}
-    The scenario is divided into two parts, first parts are shorter and are used to establish routes for this particular run of scenario. Without any attack or interference outside from the network, these routes should be always the same.
+    The scenario is divided into two parts, first parts are shorter and are used to establish routes for this particular run of scenario. Without any attack or interference outside from the network, these routes should always be the same.
 
-    In the following part of scenario each node periodically sends messages to the parent node, therefore all messages are routed to the central node. This node then counts all received messages and the final outcome is the number of expected messages compared to the number of actual messages received.
+    In the following part of scenario each node periodically sends messages to the parent node, therefore all messages are routed to the central node. This node then counts all received messages, and the outcome is the number of expected messages compared to the number of actual messages received.
 
     \subsection{3rd scenario - Sinkhole attack}\label{subsec:3rd}
     Although very similar to the second scenario, this poses far greater challenge than the previous one. The goal is not only to divert the traffic but also modify it on the fly and send it to the original recipient.
 
-    The greatest issue here is related to the performance, since all messages from the entire network will be routed through single attacker node, therefore most of the messages are very likely to be dropped somewhere in the process, because single node is not capable of receiving and processing messages from every other node in the network, unless they do transmit on very slow rate.
+    The greatest issue here is related to the performance; all messages from the entire network will be routed through single attacker node. Most of the messages are very likely to be dropped somewhere in the process since a single node is not capable of receiving and processing messages from every other node in the network unless they do transmit at a very slow rate.
 
     Task for this scenario is to deliver a modified message to the central node before the original message is delivered; messages with the same identifier but different content are discarded and only the one which was received the earliest is kept at the central node.
 
-    The reason why two very similar scenarios exist, is to present scenarios in a manner of slowly increasing difficulty. If we were to skip the second scenario \ref{subsec:2nd}, the task might be too complicated to some. This way, the required task in the third scenario \ref{subsec:3rd} is only a minor extension to the second one. However, the achieved result is of a far greater impact.
+    The reason why two very similar scenarios exist, is to present scenarios in a manner of slowly increasing difficulty. If we were to skip the second scenario \ref{subsec:2nd}, the task might be too complicated to some. This way, the required task in the third scenario \ref{subsec:3rd} is only a minor extension to the second one. However, the achieved result possesses a far greater impact.
 
     \paragraph{scenario setting}
     Runtime of this scenario is the same as for the previous one \ref{subsec:2nd}; initial phase of route establishment and after that messages are routed from nodes to the central node. The expected outcome is to divert ad modify as many messages as possible.
@@ -634,31 +628,31 @@ If we use generated bit sequence directly as a key, then there might be a risk o
     \subsection{4th scenario - Jamming} \label{subsec:4th}
     Evey once a while attacker comes around a network, application or protocol which is designed with security in mind. There are no backdoors or weak spots in the design or implementation. Idealistic scenario, however, it is very likely that the attacker does not have resources to find or use existing vulnerabilities. For such attacker there is no real way how to exploit such application.
 
-    Nevertheless, it is very likely that such attacker would like to cause any kind of damage he is capable of. Most likely to make the application, protocol, or network unavailable; most likely by denial of service attack. For wireless communication it is quite easy to do, since the wireless medium, air to be specific, can be used by only one device at a time. If an attacker is able to utilise all the available slots for transmissions, then the legitimate user would not be able to transmit anything. Such technique is called jamming and it is quite easy to deploy.
+    Nevertheless, it is very likely that such attacker would like to cause any damage he can do. Probably make the application, protocol, or network unavailable; most likely by denial of service attack. For wireless communication it is quite easy to do, since the wireless medium, air to be specific, can be used by only one device at a time. If an attacker can utilise all the available slots for transmissions, then the legitimate user would not be able to transmit anything. Such technique is called jamming, and it is quite easy to deploy.
 
     \paragraph{scenario setting}
-    The setting of this scenario is simple, all nodes send a message via the fixed routing tree to the central node. the number of delivered messages is then counted. There is no phase of route establishment, only the message delivery phase. The assignment is to prevent delivery of as many messages as possible. Since there is no option to modify the routes etc. the only reasonable way is jamming.
+    The setting of this scenario is simple, all nodes send a message via the fixed routing tree to the central node. The number of delivered messages is then counted. There is no phase of route establishment, only the message delivery phase. The assignment is to prevent delivery of as many messages as possible. Since there is no option to modify the routes etc. the only reasonable way is jamming.
 
 
   \section{Evaluation principle}\label{sec:eval}
-  Measuring the success can be done in various different ways, Edu-hoc utilises few different methods to decide, whether the attack was successful and how big was the impact of an attack.
+  Measuring the success can be done in various ways, Edu-hoc utilises few different methods to decide, whether the intervention was successful and how significant was the impact of an attack.
 
-  Evaluation for each scenario is a little bit different because there are different objectives. The task of first scenario \ref{subsec:1st} is to capture as many messages as possible, therefore the evaluation is done as a simple comparison between the set of captured messages and set of pre-computed messages that are known to be transmitted in the time period of scenario run. Comparing these two inputs line by line we get intersection of these two sets, that contains all successfully captured messages and are stripped of all the duplicates and possible fraud messages. A number of messages in the resultin set is then compared to the expected number of messages. From this comparison we receive the final percentage evaluation, the higher the number, the better the result.
+  Evaluation for each scenario is a little bit different because there are different objectives. The task of first scenario \ref{subsec:1st} is to capture as many messages as possible. Therefore the evaluation is done as a simple comparison between the set of captured messages and set of pre-computed messages that are known to be transmitted in the time period of scenario run. Comparing these two inputs line by line we get intersection of these two sets, that contains all successfully captured messages and are stripped of all the duplicates and possible fraud messages. A count of messages in the result set is then compared to the expected number of messages. From this comparison we receive the final percentage evaluation, the higher the number, the better the result.
 
-  The second and the fourth scenario \ref{subsec:2nd} \ref{subsec:4th} have the same goal, only differ in the scenario settings, which can be omitted for the evaluation purposes. The common goal is to prevent as many messages as possible from delivery to the central node. The way it is done is rather simple, the central node counts every delivered message and the resulting number is compared with the expected amount of messages.
+  The second and the fourth scenario \ref{subsec:2nd} \ref{subsec:4th} have the same goal, only differ in the scenario settings, which can be omitted for the evaluation purposes. The common goal is to prevent as many messages as possible from delivery to the central node. The way it is done is rather simple; the central node counts every delivered message, and the resulting number is compared with the expected amount of messages.
 
-  Unfortunately, this design of scenario lacks in the evaluation one important thing, the credit for the attack cannot be given to any participant, because we have no identifier involved. Messages only vanish, but we do not know, whether it was by joint work of multiple attackers, one really successful one or by a fault in the network itself. Therefore there is not much of use for such scenario in the courses. Therefore, modified versions of scenarios have been used \ref{sec:PA197}.
+  Unfortunately, this design of scenario lacks in the evaluation one important thing, the credit for the attack cannot be given to any participant, because we have no identifier involved. Messages only vanish, but we do not know, whether it was by joint work of multiple attackers, one successful one or by a fault in the network itself. Therefore there is not much of use for such scenario in the courses. Therefore, modified versions of scenarios have been used \ref{sec:PA197}.
 
-  The third scenario \ref{subsec:3rd} utilises message modification, which can be used for identification purposes. Messages on the central node are not only counted, but also compared to the expected ones and differences are noted\footnote{the amount of computation on this level would limit the usability of the node. Node only sends received messages over the serial port to the server, where the actual evaluation is done}.
+  The third scenario \ref{subsec:3rd} utilises message modification, which can be used for identification purposes. Messages on the central node are not only counted, but also compared to the expected ones and differences are noted\footnote{the amount of computation on this level would limit the usability of the node. A node only sends received messages over the serial port to the server, where the actual evaluation is done}.
 
   Since students are assigned a unique identifier to modify the messages with, we can easily distinguish between participants and evaluate how successful they were in this task.
 
   The last option which can be utilised in evaluation is a submission of secret, which was received from interaction with the network. Node either responds to received message with such secret or the secret has to be extracted from the communication in the network. Such secret can be a short word, number or something of similar nature. Such secret can be unique for each participant, which makes te evaluation an easy task.
 
   \section{Web interface and auto run}
-  Edu-hoc was designed as a long-term exercise, thus single scenarios are expected to run for days, possibly week or longer. However, it would be extremely impractical to repeat single scenario only once during the whole time. We would like to present fresh scenario to everyone involved,  and also we would like to reset the scenario once a while. This will ensure correct initial settings. Moreover, if we set the intervals right, everyone will be able to test out several solutions within a reasonably short timeframe.
+  Edu-hoc was designed as a long-term exercise. Thus individual scenarios are expected to run for days, possibly week or longer. However, it would be extremely impractical to repeat single scenario only once during the whole time. We would like to present fresh scenario to everyone involved,  and also we would like to reset the scenario once a while. This will ensure correct initial settings. Moreover, if we set the intervals right, everyone will be able to test out several solutions within a reasonably short timeframe.
 
-  To achieve such kind of behaviour, we can utilise various approaches, the easiest one being set of bash scripts and setting the automatic execution   accordingly. The other option might be modified JeeTool, which would be running continuously and in set intervals would trigger the corresponding actions.
+  To achieve such kind of behaviour, we can utilise various approaches, the easiest one being set of bash scripts and setting the automatic execution accordingly. The other option might be modified JeeTool, which would be running continuously and in set intervals would trigger the corresponding actions.
 
   The last option is the most complicated one but offers the most value.
   TODO sever
