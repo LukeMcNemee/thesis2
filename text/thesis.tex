@@ -53,15 +53,18 @@
     advisor       = {RNDr. Petr Švenda, Ph.D.},
     title         = {Edu-hoc: Experimental and educational platform for wireless ad-hoc networking},
     TeXtitle      = {Edu-hoc: Experimental and educational platform for wireless ad-hoc networking},
-    keywords      = {TODO keyword1, keyword2, ...},
-    TeXkeywords   = {TODO keyword1, keyword2, \ldots},
+    keywords      = {Wireless sensor network, Radio channel, RSSI, Arduino, Key derivaton},
+    TeXkeywords   = {Wireless sensor network, Radio channel, RSSI, Arduino, Key derivaton},
 }
 \thesislong{abstract}{
-    TODO abstract
+        This thesis describes both theoretical and practical part of testbed construction for wireless sensor networks based on Arduino platform. Two use cases for this testbed are presented. First, we utilise radio channel fading for key generation purposes. We have conducted several experiments with different settings and analysed resulting data. From these experiments, we have obtained conservative estimates of entropy within collected data. The second use case has an educational goal. We show our approach with scenario-based learning, and we present use of our platform during lectures.
 }
 \thesislong{thanks}{
-    TODO thanks
+I am very grateful to Petr Švenda, as he introduced me to the idea of key generation from RSSI measurement, which turned out to be very prommising. He also had endless patience and kept my motivation high.
 
+I am thankful to all my colleagues from CRoCS for positive atmosphere, fruitfull discussions and mutual motivation.
+
+Special thanks go to my girfriend Petra for keeping me sane during the whole time of my studies, her understanding and support.
 }
 %% The following section sets up the bibliography.
 \usepackage{csquotes}
@@ -753,20 +756,20 @@ id &    x &    y\\
 \clearpage
 \chapter{RSSI graphs}
 \begin{figure}[h!!!]
-  \includegraphics[height=0.9\textwidth, angle = 90 ]{../images/graph_rssi_01.pdf}
-\caption{sd = 0 TODO}
+  \includegraphics[height=\textwidth, angle = 90 ]{../images/graph_rssi_01.pdf}
+\caption{No bits were generated from this run because almost no disturbances were present in the network.}
 \label{fig:rssi_01}
 \end{figure}
 
 \begin{figure}
   \includegraphics[height=\textwidth, angle = 90 ]{../images/graph_rssi_02.pdf}
-\caption{TODO}
+\caption{An example of a succesfull run. 451 bits were generated with 0 errors between nodes A and B. 43 bits were compromised by the sniffer. The only issue is the repetitive nature of produced disturbances}
 \label{fig:rssi_02}
 \end{figure}
 
 \begin{figure}
   \includegraphics[height=\textwidth, angle = 90 ]{../images/graph_rssi_03.pdf}
-\caption{1000 bits output TODO}
+\caption{An example of a seemingly very successful run. Every bit was identified as an excursion. Therefore full 1000 bits was used for output. However, there were 276 errors between nodes A and B, while 478 bits were compromised.}
 \label{fig:rssi_03}
 \end{figure}
 
