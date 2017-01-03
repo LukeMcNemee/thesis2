@@ -692,7 +692,9 @@ The first part of this thesis is about the construction of wireless sensor netwo
 
 In the next part, our decisions regarding the network build are presented, together with reasoning for each of our decisions. This part also covers the build itself, together with description od JeeLink nodes, which were selected as a primary device for our network. In the last section of this part JeeTool is introduced as a software created for management of our network.
 
-Thesis then presents two usecases for our new network. 
+Thesis then presents two usecases for our new network. We discuss rather novel approach to key generation using radio channel fading. Theoretic principles of this approach are presented, together with results from our experiments. Although we had not gathered enough data from our experiments, data we have so faw show promising results. We have established, that static network without disturbances does not carry enough entropy. Therefore such network cannot produce almost any secret shared bits. However, if we ensure presence of disturbances, either from movement of people or mechanical obstructions of radio signal, it is possible to garher entropy from signal measurements. In addition, our experiments show, that these measurements are correlated on two participating nodes. Thus we can ustilise these measurements to produce shared keys between two devices.
+
+The second presented usecase has an educational goal. We show our solution to learnig the basics of ad-hoc networking through scenario based approach. Each scenario presents a simple task; and individual scenarios have incrementaly higher difficulty. The goal of each is to exploit vulnerability in the network using own devices and then make modification to the source code to prevent such attack in the future. With partial success we employed this approach in seminars of PA197 (only 3 students completed the second task). 
 
 %%bibliography
 %%==============================================================
@@ -752,19 +754,19 @@ id &    x &    y\\
 \chapter{RSSI graphs}
 \begin{figure}[h!!!]
   \includegraphics[height=0.9\textwidth, angle = 90 ]{../images/graph_rssi_01.pdf}
-\caption{sd = 0}
+\caption{sd = 0 TODO}
 \label{fig:rssi_01}
 \end{figure}
 
 \begin{figure}
   \includegraphics[height=\textwidth, angle = 90 ]{../images/graph_rssi_02.pdf}
-\caption{spikes}
+\caption{TODO}
 \label{fig:rssi_02}
 \end{figure}
 
 \begin{figure}
   \includegraphics[height=\textwidth, angle = 90 ]{../images/graph_rssi_03.pdf}
-\caption{1000 bits output}
+\caption{1000 bits output TODO}
 \label{fig:rssi_03}
 \end{figure}
 
