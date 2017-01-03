@@ -108,13 +108,13 @@ Special thanks go to my girfriend Petra for keeping me sane during the whole tim
 %\newtheorem*{remark}{Remark}
 
 \chapter{Introduction}
-Wireless sensor networks\footnote{WSN} are typically highly distributed networks with many individual devices. We consider networks with tens up to thousands of individual nodes\footnote{from high-level view each device can be considered a vertex or node in a network graph} that communicate with each other over radio. The most common use case for these devices is monitoring near environment around them. Thus they are equipped with various sensors. Applications of these networks are very broad; they are being used to control forest fires \cite{li2006wireless}, research whale migration patterns \cite{haas2006new}, or monitoring of the structural health of bridges and tunnels \cite{stajano2008steel}.
+Wireless sensor networks (WSN) are typically highly distributed networks with many individual devices. We consider networks with tens up to thousands of individual nodes\footnote{from high-level view each device can be considered a vertex or node in a network graph} that communicate with each other over radio. The most common use case for these devices is monitoring close environment. Thus they are equipped with various sensors. Applications of these networks are very broad; they are being used to control forest fires \cite{li2006wireless}, research whale migration patterns \cite{haas2006new}, or monitoring of the structural health of bridges and tunnels \cite{stajano2008steel}.
 
-One of the goals of this thesis was to create multi-purpose WSN platform for Arduino devices \cite{Arduino}. That includes an initial design of such platform, implementation of all the required software and the actual build of the network itself. As it is today, in WSN world does not exist one unifying platform, that everyone would  use. Therefore we opted to create our solution that would be the best fit for our use cases. Decisions related to design choices are discussed in chapter \ref{ch:analysis}. Details about the build itself as well as a description of created software are included in chapter \ref{ch:testbed}.
+The first goal of this thesis was to create multi-purpose management platform for WSN based on Arduino devices \cite{Arduino}. That includes an initial design of such platform, implementation of all the required software and the actual build of the network itself. No single unifying platform for WSN everyone ould agree upon exists today. Therefore we opted to create our solution that would be the best fit for our use cases. Decisions related to design choices are discussed in chapter \ref{ch:analysis}. Details about the build of our network as well as a description of created software are included in chapter \ref{ch:testbed}.
 
-The other goal of this thesis was implementation and execution of two use cases for our newly created WSN platform. The first use case was a transformation of work done by Mathur et.al. \cite{Mathur2008Rssi} to the WSN environment. Their results show interesting potential in randomness extraction from radio fading channel. However, these were produced on devices capable of much more than what we used for the construction of our network (Mathur et.al. used both FPGA-based development platforms for 802.11 standard and laptops with Atheros WiFi cards compared to our Arduino devices). The principles of bit extraction from radio channel fading are described in chapter \ref{ch:research} and results are discussed in section \ref{sec:results}.
+The other goal of this thesis was implementation and execution of two use cases for our newly created WSN platform. The first use case was a transformation of work done by Mathur et.al. \cite{Mathur2008Rssi} to the WSN environment. The Mathur's results show interesting potential in randomness extraction from radio fading channel. However, these were produced on devices capable of much more than what we used for the construction of our network (Mathur et.al. used both FPGA-based development platforms for 802.11 standard and laptops with Atheros WiFi cards compared to our Arduino devices). The principles of bit extraction from radio channel fading are described in chapter \ref{ch:research} and results are discussed in section \ref{sec:results}.
 
-The second use case of our network is related to the usually difficult first experience with WSN. As a remedy to this problem, the second use case is an educational one. The goal was to create an ad-hoc network, that would be easy to use and would help to introduce various concepts used in WSNs. This use case was demonstrated during seminars of PA197 course (Secure Network Design), and slightly modified versions of particular scenarios were used as marked assignments. Basic principles of this use case, detailed descriptions of scenarios and specifics of use during seminars are described in chapter \ref{ch:edu}.
+The second use case of our network is related to the usually difficult first experience with WSN and remedy to this problem. The second use case is an educational one. The goal was to create an ad-hoc network, that would be easy to use and would help to introduce various concepts used in WSNs. This use case was utilised during seminars of PA197 course (Secure Network Design). Basic principles of this use case, detailed descriptions of scenarios and specifics of use during seminars are described in chapter \ref{ch:edu}.
 
 \chapter{Creating WSN network - Problem analysis}\label{ch:analysis}
   To create functioning WSN network, one must ask and answer many questions which define the shape and parameters of such network. These issues include following points:
@@ -208,8 +208,10 @@ New network was designed with both research \ref{ch:research} and educational \r
   \begin{center}
     \includegraphics[width=0.48\textwidth]{../images/jeelink.png}
   \end{center}
+  \vspace{-20pt}
   \caption{JeeLink}
   \label{fig:jeelink}
+\vspace{20pt}
 \end{wrapfigure}
 
 \paragraph{JeeNode USB and JeeLink}\label{par:jeeLink}
@@ -250,7 +252,6 @@ The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm l
 
 \section{JeeTool}\label{sec:jeetool}
 
-%TODO short intro?
 
 \paragraph{Motivation}
   Few nodes can be managed manually without any major problems, most frequently using  Arduino IDE \cite{Arduino} directly. This approach is working without problems for up to three devices, and it would be possible to manage more devices this way, but the usability is lowered with each addition.
@@ -294,12 +295,11 @@ The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm l
 
     \subsection{Quantization algorithm}\label{subsec:quant}
 
-    %general principle and image from suman jana
     \begin{figure}[h!!]
       \begin{center}
         \includegraphics[width=\textwidth]{../images/quant_alg.png}
       \end{center}
-      \caption{Sample quantizer. Values between tresholds are dropped. Values greater than the upper treshold are encoded as 1, values below lower treshold are encoded as 0. Therefore the output in this case will be 1010011 \cite{Jana2009Rssi}.}
+      \caption{Sample quantizer. Values between tresholds are dropped. Values greater than the upper treshold are encoded as 1, values below lower treshold are encoded as 0. Therefore the output in this case will be 1010011. Image used is from paper by Jana et.al. \cite{Jana2009Rssi}.}
       \label{fig:quant_alg}
     \end{figure}
 
@@ -344,13 +344,13 @@ The radio module is equipped with omnidirectional whip antenna ($\approx$ 8 cm l
   \paragraph{Movement of people}\label{subsubsec:people}
   Initially, we tried to avoid this kind of disturbance as much as was possible, because the movement of people is unpredictable (to certain extend) and such experiments are very hard (nearly impossible) to replicate.
 
-  After we acknowledged the need for artificial disturbances, movement of people was the most easy one to utilise. Unless we place our network in isolated environment, we can usually expect movement of The within the area of our network. Although this movement can be arranged, in most situations we can expect it to be somehow randomised. Therefore, the way it affects our RSSI measurements is also unpredictable to certain extend.
+  After we acknowledged the need for artificial disturbances, movement of people was the most easy one to utilise. Unless we place our network in isolated environment, we can usually expect movement of people within the area of our network. Although this movement can be arranged, in most situations we can expect it to be somehow randomised. Therefore, the way it affects our RSSI measurements is also unpredictable to certain extend.
 
   \paragraph{Mechanical obstructions}\label{subsec:shield}
-  Inspired by the results we obtained from experiments with movement of people, we tried to produce similar disturbances with a use of a mechanical device. This device was constructed from cardboard (structure itself) and aluminium foil (side shields), and its movement was enabled by a single stepper motor. Appearance of our device can be seen on figure \ref{fig:device}. %TODO dimensions
+  Inspired by the results we obtained from experiments with movement of people, we tried to produce similar disturbances with a use of a mechanical device. This device was constructed from cardboard (structure itself) and aluminium foil (side shields), and its movement was enabled by a single stepper motor. Appearance of our device can be seen on figure \ref{fig:device}. Two shields are 45 cm from each other, they are rectangular with dimensions 20 cm x 35 cm. Both shileds are slighly curved.
 
 
-\begin{figure}
+\begin{figure}[h!!!]
   \begin{subfigure}[b]{0.5\textwidth}
     \includegraphics[width=\textwidth]{../images/top.png}
     \caption{Top view}
